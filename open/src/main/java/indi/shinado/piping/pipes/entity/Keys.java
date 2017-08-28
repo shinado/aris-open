@@ -13,6 +13,9 @@ public class Keys {
     public static final String ACTION = "$";
     public static final String ACTION_REGEX = "\\$";
 
+    public static final String ACTION_START = "${";
+    public static final String ACTION_END = "}";
+
     public static final String RESOURCE = "&";
     public static final String RESOURCE_REGEX = "\\&";
 

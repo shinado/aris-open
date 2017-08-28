@@ -1,10 +1,12 @@
 package indi.ss.sample;
 
-import indi.shinado.piping.pipes.action.DefaultInputActionPipe;
+import indi.shinado.piping.pipes.action.SimpleActionPipe;
 import indi.shinado.piping.pipes.entity.Pipe;
-import indi.shinado.piping.pipes.entity.SearchableName;
 
-public class YourPipe extends DefaultInputActionPipe{
+/**
+ * write your pipe here
+ */
+public class YourPipe extends SimpleActionPipe{
 
     public YourPipe(int id) {
         super(id);
@@ -16,23 +18,13 @@ public class YourPipe extends DefaultInputActionPipe{
     }
 
     @Override
-    public SearchableName getSearchable() {
-        return new SearchableName("na", "me");
-    }
-
-    @Override
-    public void onParamsEmpty(Pipe rs, OutputCallback callback) {
-
-    }
-
-    @Override
-    public void onParamsNotEmpty(Pipe rs, OutputCallback callback) {
-
-    }
-
-    @Override
     public void acceptInput(Pipe result, String input, Pipe.PreviousPipes previous, OutputCallback callback) {
+        callback.onOutput(result.getDisplayName() + " accept: "+input);
+    }
 
+    @Override
+    protected void doExecute(Pipe rs, OutputCallback callback) {
+        callback.onOutput("do execute " + rs.getDisplayName());
     }
 
 }

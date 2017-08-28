@@ -1,6 +1,7 @@
 package indi.shinado.piping.pipes.entity;
 
 import android.annotation.TargetApi;
+import android.app.PendingIntent;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -49,6 +50,9 @@ public class Pipe implements Comparable<Pipe>, Displayable, Parcelable {
 
     //for analysis
     public String executeBody = "";
+
+    //????
+    public PendingIntent pendingIntent = null;
 
     public Pipe() {
     }
@@ -154,6 +158,15 @@ public class Pipe implements Comparable<Pipe>, Displayable, Parcelable {
     }
 
     public boolean startExecution() {
+        if (pendingIntent != null) {
+            try {
+                pendingIntent.send();
+                return true;
+            } catch (PendingIntent.CanceledException e) {
+                e.printStackTrace();
+            }
+        }
+
         if (basePipe != null) {
             basePipe.startExecution(this);
             return true;
