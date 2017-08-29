@@ -2,8 +2,6 @@ package indi.ss.sample;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-
 import indi.shinado.piping.launcher.Console;
 import indi.shinado.piping.pipes.BasePipe;
 import indi.shinado.piping.pipes.entity.Pipe;

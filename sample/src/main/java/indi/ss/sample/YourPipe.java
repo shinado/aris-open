@@ -6,7 +6,7 @@ import indi.shinado.piping.pipes.entity.Pipe;
 /**
  * write your pipe here
  */
-public class YourPipe extends SimpleActionPipe{
+public class YourPipe extends SimpleActionPipe {
 
     public YourPipe(int id) {
         super(id);
