@@ -9,15 +9,15 @@ public class SearchableName {
      * accepting no languages other than English
      * however, accepting pronunciation of other languages such as Chinese
      */
-    public SearchableName(String... name){
+    public SearchableName(String... name) {
         this.name = name;
     }
 
-    public String[] getNames(){
+    public String[] getNames() {
         return name;
     }
 
-    public void setSyntac(String syntax){
+    public void setSyntac(String syntax) {
         this.syntax = syntax;
     }
 
@@ -48,7 +48,38 @@ public class SearchableName {
         return false;
     }
 
-    private String removeSpace(String key){
+    public int getKeyIndex(String key) {
+        return getKeyIndex(key, true);
+    }
+
+    private int getKeyIndex(String key, boolean first) {
+        int i = 2;
+        //set key index
+        //with highest priority
+        if (first) {
+            if (key.equals(toString())) {
+                return 0;
+            }
+            if (toString().startsWith(key)) {
+                return 1;
+            }
+        }
+
+        for (String str : getNames()) {
+            if (str.isEmpty()) continue;
+            if (str.startsWith(key)) break;
+
+            if (key.startsWith(str)) {
+                i = getKeyIndex(key.replace(str, ""), false);
+                break;
+            }
+            i++;
+        }
+
+        return i;
+    }
+
+    private String removeSpace(String key) {
         return key.replace(" ", "");
     }
 
@@ -87,9 +118,9 @@ public class SearchableName {
         }
     }
 
-    public String toSimpleString(){
+    public String toSimpleString() {
         String string = "";
-        for (String str: name){
+        for (String str : name) {
             if (str.length() > 0)
                 string += str.charAt(0);
         }
@@ -97,15 +128,15 @@ public class SearchableName {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         String string = "";
-        for (String str: name){
+        for (String str : name) {
             string += str;
         }
         return string;
     }
 
-    public boolean equals(String name){
+    public boolean equals(String name) {
         return toString().equals(name) ||
                 (syntax != null && name.startsWith(syntax) && name.endsWith(syntax));
     }

@@ -14,13 +14,9 @@ public abstract class BasePipe {
 
     protected int id;
 
-    //from version 3
-//    private BaseLauncherView baseLauncherView;
-
-    //same as baseLauncherView, to support old version
-    protected Context context;
-    protected Console console;
-    protected IPipeManager pipeManager;
+    private Context context;
+    private Console console;
+    private IPipeManager pipeManager;
 
     private OutputCallback mConsoleCallback;
 
@@ -131,7 +127,6 @@ public abstract class BasePipe {
         }
 
         return i;
-
     }
 
     /**
@@ -143,7 +138,8 @@ public abstract class BasePipe {
      * ["we", "chat"] -> 3
      * so that "kakao talk" will come first
      */
-    public int getKeyIndex(Pipe item, String body) {
+    private int getKeyIndex(Pipe item, String body) {
+//        return item.getSearchableName().getKeyIndex(body);
         return getKeyIndex(item, body, true);
     }
 
@@ -168,7 +164,7 @@ public abstract class BasePipe {
         this.context = context;
     }
 
-    public OutputCallback getConsoleCallback() {
+    protected OutputCallback getConsoleCallback() {
         return mConsoleCallback;
     }
 
@@ -233,7 +229,7 @@ public abstract class BasePipe {
     public void onPreviousDeselected(Pipe result) {
     }
 
-    public Context getContext() {
+    protected Context getContext() {
         return context;
     }
 
@@ -252,7 +248,7 @@ public abstract class BasePipe {
         void onOutput(String output);
     }
 
-    public interface SearchResultCallback {
+    protected interface SearchResultCallback {
         void onSearchResult(TreeSet<Pipe> results, Instruction input);
     }
 
