@@ -14,17 +14,17 @@ public class YourPipe extends SimpleActionPipe{
 
     @Override
     public String getDisplayName() {
-        return "name";
+        return "your pipe";
     }
 
     @Override
     public void acceptInput(Pipe result, String input, Pipe.PreviousPipes previous, OutputCallback callback) {
-        callback.onOutput(result.getDisplayName() + " accept: "+input);
+        callback.onOutput(result.getDisplayName() + " accept: " + input + " from " + previous.get().getDisplayName());
     }
 
     @Override
     protected void doExecute(Pipe rs, OutputCallback callback) {
-        callback.onOutput("do execute " + rs.getDisplayName());
+        callback.onOutput("executing " + rs.getDisplayName());
     }
 
 }

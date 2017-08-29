@@ -73,6 +73,13 @@ public class Pipe implements Comparable<Pipe>, Displayable, Parcelable {
         this.executable = simple;
     }
 
+    public Pipe(int id, String simple, String value) {
+        this(id);
+        this.displayName = simple;
+        this.searchableName = new SearchableName(simple);
+        this.executable = value;
+    }
+
     public Pipe(int id, Instruction instruction) {
         this(id);
         this.instruction = instruction;

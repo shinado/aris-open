@@ -1,4 +1,4 @@
-package indi.shinado.piping.utils;
+package indi.shinado.piping.util;
 
 import android.os.Handler;
 

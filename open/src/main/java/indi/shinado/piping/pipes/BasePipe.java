@@ -14,9 +14,9 @@ public abstract class BasePipe {
 
     protected int id;
 
-    private Context context;
-    private Console console;
-    private IPipeManager pipeManager;
+    protected Context context;
+    protected Console console;
+    protected IPipeManager pipeManager;
 
     private OutputCallback mConsoleCallback;
 
