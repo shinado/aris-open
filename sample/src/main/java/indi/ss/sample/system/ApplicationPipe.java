@@ -1,9 +1,9 @@
 package indi.ss.sample.system;
 
-import indi.shinado.piping.pipes.action.SimpleActionPipe;
-import indi.shinado.piping.pipes.entity.Pipe;
-import indi.shinado.piping.pipes.impl.ShareIntent;
-import indi.shinado.piping.util.JsonUtil;
+import com.ss.aris.open.pipes.action.SimpleActionPipe;
+import com.ss.aris.open.pipes.entity.Pipe;
+import com.ss.aris.open.pipes.impl.ShareIntent;
+import com.ss.aris.open.util.JsonUtil;
 
 public class ApplicationPipe extends SimpleActionPipe{
 

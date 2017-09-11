@@ -2,11 +2,14 @@ package indi.ss.sample;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import indi.shinado.piping.launcher.Console;
-import indi.shinado.piping.pipes.BasePipe;
-import indi.shinado.piping.pipes.entity.Pipe;
-import indi.shinado.piping.pipes.entity.SearchableName;
-import indi.shinado.piping.pipes.search.translator.AbsTranslator;
+
+import com.ss.aris.open.pipes.BasePipe;
+import com.ss.aris.open.pipes.entity.Pipe;
+import com.ss.aris.open.pipes.entity.SearchableName;
+import com.ss.aris.open.pipes.search.translator.AbsTranslator;
+import com.ss.aris.open.w.Console;
+
+import indi.ss.sample.action.YourPipe;
 import indi.ss.sample.system.ApplicationPipe;
 
 public class MainActivity extends AppCompatActivity {
@@ -80,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }, new BasePipe.OnItemsLoadedListener() {
             @Override
-            public void onItemsLoaded(int id, int total) {
+            public void onItemsLoaded(BasePipe p, int total) {
 
             }
         }, 1);

@@ -2,15 +2,15 @@ package indi.ss.sample;
 
 import android.util.Log;
 
-import indi.shinado.piping.launcher.CharacterInputCallback;
-import indi.shinado.piping.launcher.Console;
-import indi.shinado.piping.launcher.InputCallback;
-import indi.shinado.piping.launcher.KeyDownCallback;
-import indi.shinado.piping.launcher.OnTypingFinishCallback;
-import indi.shinado.piping.launcher.SingleLineInputCallback;
-import indi.shinado.piping.launcher.TypingOption;
-import indi.shinado.piping.pipes.BasePipe;
-import indi.shinado.piping.pipes.entity.Pipe;
+import com.ss.aris.open.w.CharacterInputCallback;
+import com.ss.aris.open.w.Console;
+import com.ss.aris.open.w.InputCallback;
+import com.ss.aris.open.w.KeyDownCallback;
+import com.ss.aris.open.w.OnTypingFinishCallback;
+import com.ss.aris.open.w.SingleLineInputCallback;
+import com.ss.aris.open.w.TypingOption;
+import com.ss.aris.open.pipes.BasePipe;
+import com.ss.aris.open.pipes.entity.Pipe;
 
 public class LogConsole implements Console{
 
