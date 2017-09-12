@@ -2,8 +2,8 @@ package com.ss.aris.open.pipes.entity;
 
 public class Keys {
 
-    public static final String PIPE = ".";
-    public static final String PIPE_REGEX = "\\.";
+    public static final String PIPE = "->";
+    public static final String PIPE_REGEX = "->";
 
     public static final String SPACE = " ";
     public static final String DIVIDER = "/";

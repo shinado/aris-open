@@ -3,6 +3,8 @@ package com.ss.aris.open.w;
 import com.ss.aris.open.TargetVersion;
 import com.ss.aris.open.pipes.BasePipe;
 import com.ss.aris.open.pipes.entity.Pipe;
+import com.ss.aris.open.w.text.OnTypingFinishCallback;
+import com.ss.aris.open.w.text.TypingOption;
 
 public interface Console {
 

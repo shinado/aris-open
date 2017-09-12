@@ -1,18 +1,22 @@
 package indi.ss.sample;
 
+import android.graphics.Typeface;
 import android.util.Log;
 
 import com.ss.aris.open.w.CharacterInputCallback;
-import com.ss.aris.open.w.Console;
 import com.ss.aris.open.w.InputCallback;
 import com.ss.aris.open.w.KeyDownCallback;
-import com.ss.aris.open.w.OnTypingFinishCallback;
 import com.ss.aris.open.w.SingleLineInputCallback;
-import com.ss.aris.open.w.TypingOption;
 import com.ss.aris.open.pipes.BasePipe;
 import com.ss.aris.open.pipes.entity.Pipe;
+import com.ss.aris.open.w.impl.DeviceConsole;
+import com.ss.aris.open.w.impl.PermissionCallback;
+import com.ss.aris.open.w.text.OnTypingFinishCallback;
+import com.ss.aris.open.w.text.TypingOption;
 
-public class LogConsole implements Console{
+import java.util.Collection;
+
+public class LogConsole implements DeviceConsole {
 
     private void log(String msg){
         Log.d("LogConsole", msg);
@@ -166,6 +170,49 @@ public class LogConsole implements Console{
                 display(output);
             }
         };
+    }
+
+    @Override
+    public Typeface getTypeface() {
+        return null;
+    }
+
+    @Override
+    public void onSystemReady() {
+        log("system ready");
+    }
+
+    @Override
+    public void displayResult(Collection<Pipe> pipes, int selection) {
+        StringBuilder sb = new StringBuilder();
+        for (Pipe p : pipes){
+            sb.append(p.getDisplayName())
+                    .append(", ")
+                    .append(p.getExecutable())
+                    .append("\n");
+        }
+
+        log(sb.toString());
+    }
+
+    @Override
+    public void onEnter(Pipe pipe) {
+        log("enter: " + pipe.getDisplayName());
+    }
+
+    @Override
+    public void onSelected(Pipe pipe) {
+        log("select: " + pipe.getDisplayName());
+    }
+
+    @Override
+    public void onNothing() {
+        log("nothing");
+    }
+
+    @Override
+    public void requestPermission(String[] permissions, PermissionCallback callback) {
+
     }
 
 }

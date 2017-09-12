@@ -6,4 +6,5 @@ public interface IText {
     void setTextColor(int color);
     void setTextSize(float textSize);
     void reloadExecutingString();
+    void loadFont(String value);
 }

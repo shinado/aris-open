@@ -3,7 +3,10 @@ package com.ss.aris.open.pipes;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.util.Log;
+
 import java.util.TreeSet;
+
+import com.ss.aris.open.pipes.entity.Keys;
 import com.ss.aris.open.w.Console;
 import com.ss.aris.open.pipes.entity.Instruction;
 import com.ss.aris.open.pipes.entity.Pipe;
@@ -149,7 +152,7 @@ public abstract class BasePipe {
         return pipeManager;
     }
 
-    void setPipeManager(IPipeManager pipeManager) {
+    public void setPipeManager(IPipeManager pipeManager) {
         this.pipeManager = pipeManager;
     }
 
@@ -170,27 +173,37 @@ public abstract class BasePipe {
         return mConsoleCallback;
     }
 
-    void doSearch(String input, int length, Pipe previous, SearchResultCallback callback) {
-        if (input.isEmpty()) {
-            if (previous != null) {
-                if (acceptable(previous)) {
-                    Pipe df = getDefaultPipe();
-                    if (df != null) {
-                        TreeSet<Pipe> results = new TreeSet<>();
-                        results.add(df);
-                        callback.onSearchResult(results, new Instruction(""));
-                        return;
-                    }
-                }
+    public void doSearch(String input, int length, Pipe previous, SearchResultCallback callback) {
+        if (input.endsWith(Keys.PIPE)) {
+            TreeSet<Pipe> results = getResultsOnConnect(input, previous);
+            if (results != null) {
+                callback.onSearchResult(results, new Instruction(input));
+                return;
             }
         }
 
         search(input, length, previous, callback);
     }
 
+    protected TreeSet<Pipe> getResultsOnConnect(String input, Pipe previous) {
+        if (previous != null) {
+            if (acceptable(previous)) {
+                Pipe df = getDefaultPipe();
+                if (df != null) {
+                    fulfill(df, new Instruction(input));
+                    TreeSet<Pipe> results = new TreeSet<>();
+                    results.add(df);
+                    return results;
+                }
+            }
+        }
+
+        return null;
+    }
+
     private boolean acceptable(Pipe previous) {
         int id = previous.getId();
-        int acc = getAcceptType();
+        int acc = getAcceptTypeOnConnect();
         if (acc == TYPE_NONE) return false;
         if (acc == TYPE_ALL) return true;
 
@@ -282,13 +295,13 @@ public abstract class BasePipe {
     public void refresh() {
     }
 
-    public void onInstalled(){
+    public void onInstalled() {
     }
 
-    public void onDestroy(){
+    public void onDestroy() {
     }
 
-    protected void onCreate(){
+    public void onCreate() {
 
     }
 
@@ -301,7 +314,7 @@ public abstract class BasePipe {
         void onOutput(String output);
     }
 
-    protected interface SearchResultCallback {
+    public interface SearchResultCallback {
         void onSearchResult(TreeSet<Pipe> results, Instruction input);
     }
 
@@ -309,7 +322,7 @@ public abstract class BasePipe {
         return null;
     }
 
-    protected int getAcceptType() {
-        return TYPE_ALL;
+    protected int getAcceptTypeOnConnect() {
+        return TYPE_NONE;
     }
 }

@@ -61,7 +61,7 @@ public class Instruction {
                 } else {
                     if (s.contains(Keys.PIPE)) {
                         int indexDot = s.lastIndexOf(Keys.PIPE);
-                        right = s.substring(indexDot + 1);
+                        right = s.substring(indexDot + Keys.PIPE.length());
                         left = s.substring(0, indexDot);
                         break;
                     }
@@ -85,7 +85,7 @@ public class Instruction {
                 } else {
                     this.pre = input.substring(0, indexOfDot);
                 }
-                right = input.substring(indexOfDot + 1, input.length());
+                right = input.substring(indexOfDot + Keys.PIPE.length(), input.length());
             }
         }
 
