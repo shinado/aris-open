@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.TreeSet;
 
-import com.ss.aris.open.w.Console;
+import com.ss.aris.open.console.Console;
 import com.ss.aris.open.pipes.BasePipe;
 
 public class Pipe implements Comparable<Pipe>, Displayable, Parcelable {

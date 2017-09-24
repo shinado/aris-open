@@ -7,7 +7,7 @@ import android.util.Log;
 import java.util.TreeSet;
 
 import com.ss.aris.open.pipes.entity.Keys;
-import com.ss.aris.open.w.Console;
+import com.ss.aris.open.console.Console;
 import com.ss.aris.open.pipes.entity.Instruction;
 import com.ss.aris.open.pipes.entity.Pipe;
 import com.ss.aris.open.pipes.entity.SearchableName;
@@ -207,7 +207,9 @@ public abstract class BasePipe {
         if (acc == TYPE_NONE) return false;
         if (acc == TYPE_ALL) return true;
 
-        if (check(TYPE_APPLICATION, acc) && id == PConstants.ID_APPLICATION) {
+        if (check(TYPE_APPLICATION, acc) &&
+                id == PConstants.ID_APPLICATION &&
+                previous.getPrevious().get() == null) {
             return true;
         }
         if (check(TYPE_CONTACT, acc) && id == PConstants.ID_CONTACT) {

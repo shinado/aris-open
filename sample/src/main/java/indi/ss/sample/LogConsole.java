@@ -3,16 +3,16 @@ package indi.ss.sample;
 import android.graphics.Typeface;
 import android.util.Log;
 
-import com.ss.aris.open.w.CharacterInputCallback;
-import com.ss.aris.open.w.InputCallback;
-import com.ss.aris.open.w.KeyDownCallback;
-import com.ss.aris.open.w.SingleLineInputCallback;
+import com.ss.aris.open.console.CharacterInputCallback;
+import com.ss.aris.open.console.InputCallback;
+import com.ss.aris.open.console.KeyDownCallback;
+import com.ss.aris.open.console.SingleLineInputCallback;
 import com.ss.aris.open.pipes.BasePipe;
 import com.ss.aris.open.pipes.entity.Pipe;
-import com.ss.aris.open.w.impl.DeviceConsole;
-import com.ss.aris.open.w.impl.PermissionCallback;
-import com.ss.aris.open.w.text.OnTypingFinishCallback;
-import com.ss.aris.open.w.text.TypingOption;
+import com.ss.aris.open.console.impl.DeviceConsole;
+import com.ss.aris.open.console.impl.PermissionCallback;
+import com.ss.aris.open.console.text.OnTypingFinishCallback;
+import com.ss.aris.open.console.text.TypingOption;
 
 import java.util.Collection;
 

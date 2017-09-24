@@ -1,1 +1,1 @@
-include ':open', ':sample', ':launcher', ':pipes'
+include ':open', ':sample', ':launcher', ':pipes', ':dx'

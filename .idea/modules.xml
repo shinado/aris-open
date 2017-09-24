@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Aris-open.iml" filepath="$PROJECT_DIR$/Aris-open.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aris-open.iml" filepath="$PROJECT_DIR$/aris-open.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dx/dx.iml" filepath="$PROJECT_DIR$/dx/dx.iml" />
       <module fileurl="file://$PROJECT_DIR$/launcher/launcher.iml" filepath="$PROJECT_DIR$/launcher/launcher.iml" />
       <module fileurl="file://$PROJECT_DIR$/open/open.iml" filepath="$PROJECT_DIR$/open/open.iml" />
       <module fileurl="file://$PROJECT_DIR$/pipes/pipes.iml" filepath="$PROJECT_DIR$/pipes/pipes.iml" />
