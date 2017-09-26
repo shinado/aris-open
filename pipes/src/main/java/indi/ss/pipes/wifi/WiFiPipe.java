@@ -171,7 +171,7 @@ public class WiFiPipe extends DefaultInputActionPipe {
                                             }
 
                                         }
-                                    });
+                                    }, true);
                                 }
                             });
                         }

@@ -76,13 +76,13 @@ public interface Console {
      * callback after user press ENTER key
      */
     @TargetVersion(4)
-    void waitForSingleLineInput(SingleLineInputCallback inputCallback);
+    void waitForSingleLineInput(SingleLineInputCallback inputCallback, boolean requireClipboard);
 
     /**
      * callback after user press ENTER key
      */
     @TargetVersion(4)
-    void waitForPasswordInput(SingleLineInputCallback inputCallback);
+    void waitForPasswordInput(SingleLineInputCallback inputCallback, boolean requireClipboard);
 
     /**
      * for single character input
