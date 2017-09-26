@@ -9,6 +9,8 @@ public class PConstants {
     public static final int ID_HELP = 17;
     public static final int ID_MANAGER = 18;
     public static final int ID_STORE = 19;
+    public static final int ID_DISABLE = 20;
+    public static final int ID_ENABLE = 21;
     public static final int ID_TEXT = 3;
     public static final int ID_APPLICATION = 2;
     public static final int ID_CONTACT = 1;

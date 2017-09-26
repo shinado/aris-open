@@ -55,7 +55,6 @@ public class Pipe implements Comparable<Pipe>, Displayable, Parcelable {
     //????
     public PendingIntent pendingIntent = null;
 
-
     public Pipe() {
     }
 
