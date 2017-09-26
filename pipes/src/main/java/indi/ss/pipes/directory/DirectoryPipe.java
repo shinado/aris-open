@@ -29,6 +29,7 @@ import com.ss.aris.open.pipes.entity.Keys;
 import com.ss.aris.open.pipes.entity.Pipe;
 import com.ss.aris.open.pipes.entity.SearchableName;
 import com.ss.aris.open.pipes.impl.ShareIntent;
+import com.ss.aris.open.pipes.impl.interfaces.Configable;
 import com.ss.aris.open.pipes.impl.interfaces.Helpable;
 import com.ss.aris.open.pipes.search.FullSearchActionPipe;
 import com.ss.aris.open.pipes.search.translator.AbsTranslator;
@@ -52,7 +53,7 @@ import com.ss.aris.open.util.JsonUtil;
  * cd download/folder.latest
  */
 @TargetVersion(1061)
-public class DirectoryPipe extends FullSearchActionPipe implements Helpable {
+public class DirectoryPipe extends FullSearchActionPipe implements Helpable, Configable {
 
     public static final String HEAD = "file";
 
@@ -471,9 +472,10 @@ public class DirectoryPipe extends FullSearchActionPipe implements Helpable {
 //        if (mTranslator == null) {
 //            mTranslator = new ChineseTranslator(getContext());
 //        }
+
         Pipe pipe = new Pipe(getId(),
                 displayName + (file.isDirectory() ? File.separator : ""),
-                mTranslator == null ? new SearchableName(displayName):
+                mTranslator == null ? new SearchableName(displayName.toLowerCase()):
                 mTranslator.getName(displayName),
                 new PRI(HEAD, path).toString());
         putItemInMap(pipe);
@@ -500,6 +502,7 @@ public class DirectoryPipe extends FullSearchActionPipe implements Helpable {
     @Override
     public void load(final AbsTranslator translator, final OnItemsLoadedListener listener, final int total) {
         //nothing to search unless cd is handled
+        mTranslator = translator;
         listener.onItemsLoaded(this, total);
     }
 
@@ -583,6 +586,11 @@ public class DirectoryPipe extends FullSearchActionPipe implements Helpable {
                 "http://arislauncher.com/aris/guide/2017/07/25/cd/").toString();
     }
 
+    @Override
+    public void config() {
+
+    }
+
     class FileTask extends AsyncTask<String, Integer, String> {
 
         @Override
@@ -652,6 +660,13 @@ public class DirectoryPipe extends FullSearchActionPipe implements Helpable {
             }
         }
         return super.getByValue(value);
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        config();
     }
 
     public static Pipe ofFilePath(String path) {

@@ -1,6 +1,7 @@
 package com.ss.aris.open.console;
 
 import com.ss.aris.open.TargetVersion;
+import com.ss.aris.open.console.text.OnTextClickListener;
 import com.ss.aris.open.pipes.BasePipe;
 import com.ss.aris.open.pipes.entity.Pipe;
 import com.ss.aris.open.console.text.OnTypingFinishCallback;
@@ -29,7 +30,7 @@ public interface Console {
      * to TYPE in a string with animation
      */
     @TargetVersion(4)
-    void input(String string, OnTypingFinishCallback callback, TypingOption option);
+    void input(String string, OnTypingFinishCallback callback, TypingOption option, OnTextClickListener listener);
 
     /**
      * to display a string immediately without animation

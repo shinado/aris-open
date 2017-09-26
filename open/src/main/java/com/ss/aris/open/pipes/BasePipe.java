@@ -2,10 +2,12 @@ package com.ss.aris.open.pipes;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import java.util.TreeSet;
 
+import com.ss.aris.open.pipes.configs.Configurations;
 import com.ss.aris.open.pipes.entity.Keys;
 import com.ss.aris.open.console.Console;
 import com.ss.aris.open.pipes.entity.Instruction;
@@ -25,6 +27,7 @@ public abstract class BasePipe {
     protected int id;
 
     protected Context context;
+    protected Configurations configurations;
     protected Console console;
     protected IPipeManager pipeManager;
 
@@ -127,6 +130,7 @@ public abstract class BasePipe {
                     i = getKeyIndex(item, body.replace(str, ""), false);
                     break;
                 }
+
                 i++;
             }
         }
@@ -167,6 +171,7 @@ public abstract class BasePipe {
 
     public void setContext(Context context) {
         this.context = context;
+        configurations = new Configurations(context);
     }
 
     protected OutputCallback getConsoleCallback() {
@@ -201,7 +206,7 @@ public abstract class BasePipe {
         return null;
     }
 
-    private boolean acceptable(Pipe previous) {
+    protected boolean acceptable(Pipe previous) {
         int id = previous.getId();
         int acc = getAcceptTypeOnConnect();
         if (acc == TYPE_NONE) return false;
@@ -311,7 +316,14 @@ public abstract class BasePipe {
         void onItemsLoaded(BasePipe pipe, int total);
     }
 
-    //added since version 3
+    public interface OnOutputClickListener{
+        void onClick(String value);
+    }
+
+    public interface AdvancedOutputCallback extends OutputCallback{
+        void onOutput(String output, OnOutputClickListener listener);
+    }
+
     public interface OutputCallback {
         void onOutput(String output);
     }
@@ -327,4 +339,6 @@ public abstract class BasePipe {
     protected int getAcceptTypeOnConnect() {
         return TYPE_NONE;
     }
+
+
 }

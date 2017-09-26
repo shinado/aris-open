@@ -3,9 +3,10 @@
 buildscript {
     repositories {
         jcenter()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.0'
+        classpath 'com.android.tools.build:gradle:3.0.0-beta6'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -15,14 +16,15 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        google()
     }
 
     project.ext {
-        mBuildToolsVersion = "25.0.2"
+        mBuildToolsVersion = "26.0.1"
         mMinSdkVersion = 15
         mTargetSdkVersion = 25
-        mCompileSdkVersion = 25
-        supportLibraryVersion = "25.3.0"
+        mCompileSdkVersion = 26
+        supportLibraryVersion = "26.1.0"
         sourceCompatibilityVersion = JavaVersion.VERSION_1_7
         targetCompatibilityVersion = JavaVersion.VERSION_1_7
     }

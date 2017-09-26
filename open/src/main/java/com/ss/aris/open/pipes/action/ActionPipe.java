@@ -30,13 +30,18 @@ public abstract class ActionPipe extends BasePipe{
 
     public Pipe search(Instruction input) {
         if (input.input.isEmpty()){
-            return null;
+            if (configurations.needHistory() && asOutput()){
+                return new Pipe(getResult());
+            }else {
+                return null;
+            }
         }
 
         //create a new pipe
         Pipe result = new Pipe(getResult());
         fulfill(result, input);
         String body = input.body;
+
         //give it to TextPipe
 //        if (body.startsWith(Keys.ACTION)){
 //            body = body.replaceFirst(Keys.ACTION, "");
@@ -74,6 +79,10 @@ public abstract class ActionPipe extends BasePipe{
             return result;
 
         return null;
+    }
+
+    protected boolean asOutput(){
+        return true;
     }
 
 }

@@ -25,15 +25,20 @@ public class Main {
 //            System.out.println(p);
 //        }
 
+        //if you wish to dex only one item
+        String NAME = "directory";
+        String dxPath = "/Users/ss/Library/Android/sdk/build-tools/26.0.1/";
+
         String PACKAGE = "indi/ss/pipes";
-//        File root = new File("/workspace/fcm/aris-open/pipes/build/intermediates/classes/release");
-        String dx = "/Users/ss/workspace/fcm/dx/temp/";
-        String output = "/Users/ss/workspace/fcm/dx/output/";
-        File pipes = new File("/Users/ss/workspace/fcm/aris-open/pipes/build/intermediates/classes/release/" + PACKAGE);
+        String dx = "/Users/ss/workspace/application/dx/temp/";
+        String output = "/Users/ss/workspace/application/dx/output/";
+        File pipes = new File("/Users/ss/workspace/application/aris-open/pipes/build/intermediates/classes/debug/" + PACKAGE);
 
         new File(output).mkdirs();
         String[] list = pipes.list();
         for (String name : list) {
+            if (NAME != null && !NAME.equals(name)) continue;
+
             String from = pipes.getAbsolutePath() + "/" + name;
             File child = new File(from);
             if (child.isDirectory()) {
@@ -44,10 +49,9 @@ public class Main {
                         for (String d : dexes) {
                             String to = dx + name + "/" + PACKAGE + "/" + name;
                             boolean b = new File(to).mkdirs();
-                            System.out.println("mkdir: " + b);
                             copy(new File(from + "/" + d), new File(to + "/" + d));
 
-                            String dxPath = "/Users/ss/Library/Android/sdk/build-tools/25.0.3/";
+                            System.out.println("output: " + dx + name);
                             executeCommand(dxPath + "dx --dex --output=" + output + name + ".dex " + dx + name);
                         }
                     }

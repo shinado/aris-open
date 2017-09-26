@@ -112,7 +112,7 @@ public class SearchableName {
                     //for item "facebook", since it's split as ["fa", "ce", "boo", "k"]
                     //by commenting firstTime&&, contains("fb") returns false, contains("fc") returns true
                     //otherwise, they both return true
-                    firstTime &&
+//                    firstTime &&
                             contains(name, key, i + 1, true);
 
         }

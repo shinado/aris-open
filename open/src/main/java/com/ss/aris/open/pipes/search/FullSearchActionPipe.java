@@ -2,9 +2,7 @@ package com.ss.aris.open.pipes.search;
 
 import android.annotation.TargetApi;
 import android.util.Log;
-
 import java.util.TreeSet;
-
 import com.ss.aris.open.pipes.BasePipe;
 import com.ss.aris.open.pipes.entity.Instruction;
 import com.ss.aris.open.pipes.entity.Pipe;
@@ -14,6 +12,7 @@ import com.ss.aris.open.pipes.search.translator.AbsTranslator;
 //start
 //-> dosth
 //start dosth
+
 public abstract class FullSearchActionPipe extends SearchablePipe {
 
     protected Pipe defaultExitPipe;
@@ -84,6 +83,10 @@ public abstract class FullSearchActionPipe extends SearchablePipe {
                     if (result.getSearchableName().contains(result.getInstruction().body)) {
                         results.add(result);
                     }
+                }else {
+                    if (configurations.needHistory() && asOutput()){
+                        results.add(new Pipe(getDefaultPipe()));
+                    }
                 }
                 return results;
             }
@@ -149,7 +152,6 @@ public abstract class FullSearchActionPipe extends SearchablePipe {
         }
     }
 
-
     @Override
     public void load(AbsTranslator translator, BasePipe.OnItemsLoadedListener listener, int total) {
         listener.onItemsLoaded(this, total);
@@ -160,4 +162,9 @@ public abstract class FullSearchActionPipe extends SearchablePipe {
     protected abstract void doExecute(Pipe rs, BasePipe.OutputCallback callback);
 
     public abstract Pipe getDefaultPipe();
+
+    @SuppressWarnings("WeakerAccess")
+    protected boolean asOutput(){
+        return true;
+    }
 }

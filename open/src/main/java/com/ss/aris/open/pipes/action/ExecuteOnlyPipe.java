@@ -77,6 +77,5 @@ public abstract class ExecuteOnlyPipe extends ActionPipe {
         getConsole().input(getDisplayName() + " does not accept parameters. ");
     }
 
-
 }
 

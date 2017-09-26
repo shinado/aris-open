@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-
 import com.ss.aris.open.pipes.PConstants;
 import com.ss.aris.open.pipes.action.DefaultInputActionPipe;
 import com.ss.aris.open.pipes.entity.Pipe;
@@ -62,6 +61,11 @@ public class ApkPipe extends DefaultInputActionPipe {
     @Override
     protected int getAcceptTypeOnConnect() {
         return TYPE_APPLICATION;
+    }
+
+    @Override
+    protected boolean asOutput() {
+        return false;
     }
 
 }

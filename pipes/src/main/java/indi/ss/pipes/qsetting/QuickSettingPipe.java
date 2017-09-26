@@ -106,9 +106,8 @@ public class QuickSettingPipe extends FullSearchActionPipe {
                 getConsole().input("Can not execute " + rs.getExecutable());
             }
             end();
-            //WHAT????
-//        }else {
-//            callback.onOutput("qSetting");
+        }else {
+            callback.onOutput("qSetting");
         }
     }
 
@@ -119,7 +118,6 @@ public class QuickSettingPipe extends FullSearchActionPipe {
 
     @Override
     public void onDestroy() {
-
     }
 
 
