@@ -14,7 +14,7 @@ public class YourPipe extends SimpleActionPipe {
 
     @Override
     public String getDisplayName() {
-        return "your pipe";
+        return "yourPipe";
     }
 
     @Override

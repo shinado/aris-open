@@ -217,9 +217,11 @@ public abstract class BasePipe {
                 previous.getPrevious().get() == null) {
             return true;
         }
+
         if (check(TYPE_CONTACT, acc) && id == PConstants.ID_CONTACT) {
             return true;
         }
+
         if (check(TYPE_TEXT, acc) && (id == PConstants.ID_TEXT || id == PConstants.ID_CLIPBOARD)) {
             return true;
         }

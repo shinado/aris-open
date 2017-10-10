@@ -2,18 +2,18 @@ package indi.ss.sample;
 
 import android.graphics.Typeface;
 import android.util.Log;
-
 import com.ss.aris.open.console.CharacterInputCallback;
 import com.ss.aris.open.console.InputCallback;
 import com.ss.aris.open.console.KeyDownCallback;
 import com.ss.aris.open.console.SingleLineInputCallback;
+import com.ss.aris.open.console.text.OnTextClickListener;
 import com.ss.aris.open.pipes.BasePipe;
+import com.ss.aris.open.pipes.entity.Instruction;
 import com.ss.aris.open.pipes.entity.Pipe;
 import com.ss.aris.open.console.impl.DeviceConsole;
 import com.ss.aris.open.console.impl.PermissionCallback;
 import com.ss.aris.open.console.text.OnTypingFinishCallback;
 import com.ss.aris.open.console.text.TypingOption;
-
 import java.util.Collection;
 
 public class LogConsole implements DeviceConsole {
@@ -38,8 +38,8 @@ public class LogConsole implements DeviceConsole {
     }
 
     @Override
-    public void input(String string, OnTypingFinishCallback callback, TypingOption option) {
-        log("input: " + string);
+    public void input(String string, OnTypingFinishCallback callback, TypingOption option, OnTextClickListener listener) {
+        log("input:" + string);
     }
 
     @Override
@@ -50,6 +50,11 @@ public class LogConsole implements DeviceConsole {
     @Override
     public void display(String string, Pipe tag) {
         log("display with tag: " + string);
+    }
+
+    @Override
+    public void displayInput(String string) {
+
     }
 
     @Override
@@ -83,15 +88,13 @@ public class LogConsole implements DeviceConsole {
     }
 
     @Override
-    public void waitForSingleLineInput(SingleLineInputCallback inputCallback) {
-        log("wait for line");
-        inputCallback.onUserInput("Replace this line");
+    public void waitForSingleLineInput(SingleLineInputCallback inputCallback, boolean requireClipboard) {
+
     }
 
     @Override
-    public void waitForPasswordInput(SingleLineInputCallback inputCallback) {
-        log("wait for pwd");
-        inputCallback.onUserInput("password");
+    public void waitForPasswordInput(SingleLineInputCallback inputCallback, boolean requireClipboard) {
+
     }
 
     @Override
@@ -183,9 +186,9 @@ public class LogConsole implements DeviceConsole {
     }
 
     @Override
-    public void displayResult(Collection<Pipe> pipes, int selection) {
+    public void displayResult(Collection<Pipe> pipe, Instruction instruction, int selection) {
         StringBuilder sb = new StringBuilder();
-        for (Pipe p : pipes){
+        for (Pipe p : pipe){
             sb.append(p.getDisplayName())
                     .append(", ")
                     .append(p.getExecutable())

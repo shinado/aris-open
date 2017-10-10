@@ -84,7 +84,7 @@ public abstract class FullSearchActionPipe extends SearchablePipe {
                         results.add(result);
                     }
                 }else {
-                    if (configurations.needHistory() && asOutput()){
+                    if (configurations != null && configurations.needHistory() && asOutput()){
                         results.add(new Pipe(getDefaultPipe()));
                     }
                 }

@@ -11,6 +11,7 @@ import android.os.Environment;
 import android.os.FileObserver;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -19,7 +20,13 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TreeSet;
+
 import com.ss.aris.open.TargetVersion;
+import com.ss.aris.open.account.AccountManager;
+import com.ss.aris.open.account.IAccount;
+import com.ss.aris.open.console.text.OnTextClickListener;
+import com.ss.aris.open.console.text.TypingOption;
+import com.ss.aris.open.payment.PaymentManager;
 import com.ss.aris.open.pipes.entity.PipeArray;
 import com.ss.aris.open.console.CharacterInputCallback;
 import com.ss.aris.open.console.impl.DeviceConsole;
@@ -37,7 +44,15 @@ import com.ss.aris.open.pipes.pri.PRI;
 import com.ss.aris.open.util.IntentUtil;
 import com.ss.aris.open.util.JsonUtil;
 
+import indi.shinado.piping.saas.IFoundCallback;
+import indi.shinado.piping.saas.IFoundMetaCallback;
+import indi.shinado.piping.saas.ISObject;
+import indi.shinado.piping.saas.ISQuery;
+import indi.shinado.piping.saas.ISucceedCallback;
+import indi.shinado.piping.saas.SaasFactory;
+
 //TODO in folder, clear connection operator
+
 /**
  * for a preview version
  * cd download
@@ -104,26 +119,39 @@ public class DirectoryPipe extends FullSearchActionPipe implements Helpable, Con
     }
 
     private void start(final boolean justStart) {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
-            ((DeviceConsole) getConsole()).requestPermission(
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    new PermissionCallback() {
-                        @Override
-                        public void onPermissionResult(boolean granted, boolean first) {
-                            if (granted) {
-                                onPermissionGranted(justStart);
-                                if (first) {
-                                    getConsole().showInputMethod();
+//        checkAvailability();
+        if (available) {
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
+                ((DeviceConsole) getConsole()).requestPermission(
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        new PermissionCallback() {
+                            @Override
+                            public void onPermissionResult(boolean granted, boolean first) {
+                                if (granted) {
+                                    onPermissionGranted(justStart);
+                                    if (first) {
+                                        getConsole().showInputMethod();
+                                    }
+                                } else {
+                                    getConsole().display("\n Permission not granted, abort. ");
+                                    end();
                                 }
-                            } else {
-                                getConsole().display("\n Permission not granted, abort. ");
-                                end();
                             }
                         }
-                    }
-            );
-        } else {
-            onPermissionGranted(justStart);
+                );
+            } else {
+                onPermissionGranted(justStart);
+            }
+        }else {
+            getConsole().input("I'm afraid your tutorial is over. " +
+                            "Tap here to purchase this pipe to have full access to this function. ",
+                    null, new TypingOption(), new OnTextClickListener() {
+                        @Override
+                        public void onTextClicked(String value) {
+                            PaymentManager.getPayment(context).start(
+                                    "pipe:"+getId()+"//onetime");
+                        }
+                    });
         }
     }
 
@@ -348,7 +376,7 @@ public class DirectoryPipe extends FullSearchActionPipe implements Helpable, Con
 //                        Log.d(TAG, "shareURI: " + uri.toString());
 //                        shareIntent.extras.put(Intent.EXTRA_STREAM, uri.toString());
 //                    } else {
-                        shareIntent.extras.put(Intent.EXTRA_STREAM, "file://" + directory);
+                    shareIntent.extras.put(Intent.EXTRA_STREAM, "file://" + directory);
 //                    }
 
                     outputCallback.onOutput(shareIntent.toString());
@@ -359,26 +387,31 @@ public class DirectoryPipe extends FullSearchActionPipe implements Helpable, Con
 
     private void executeFile(Pipe rs) {
         String directory = getDirectory(rs);
-        if (directory.endsWith(".pip")) {
+        if (directory.endsWith(".dx")) {
+            //load dx
+
+        } else if (directory.endsWith(".pip")) {
             //TODO
         } else {
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_VIEW);
 
-            Uri uri = FileProvider.getUriForFile(
-                    context, context.getApplicationContext().getPackageName() + ".FILE_PROVIDER",
-                    new File(directory));
+            Uri uri = Uri.fromFile(new File(directory));
+//            FileProvider.getUriForFile(
+//                    context, context.getApplicationContext().getPackageName() + ".FILE_PROVIDER",
+//                    new File(directory));
 
             String type = IntentUtil.getMIMEType(directory);
             intent.setDataAndType(uri, type);
 
-            List<ResolveInfo> resInfoList = context.getPackageManager().queryIntentActivities(
-                    intent, PackageManager.MATCH_DEFAULT_ONLY);
-            for (ResolveInfo resolveInfo : resInfoList) {
-                String packageName = resolveInfo.activityInfo.packageName;
-                context.grantUriPermission(packageName, uri,
-                        Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            }
+//            List<ResolveInfo> resInfoList = context.getPackageManager().queryIntentActivities(
+//                    intent, PackageManager.MATCH_DEFAULT_ONLY);
+//            for (ResolveInfo resolveInfo : resInfoList) {
+//                String packageName = resolveInfo.activityInfo.packageName;
+//                context.grantUriPermission(packageName, uri,
+//                        Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//            }
+
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
@@ -475,8 +508,8 @@ public class DirectoryPipe extends FullSearchActionPipe implements Helpable, Con
 
         Pipe pipe = new Pipe(getId(),
                 displayName + (file.isDirectory() ? File.separator : ""),
-                mTranslator == null ? new SearchableName(displayName.toLowerCase()):
-                mTranslator.getName(displayName),
+                mTranslator == null ? new SearchableName(displayName.toLowerCase()) :
+                        mTranslator.getName(displayName),
                 new PRI(HEAD, path).toString());
         putItemInMap(pipe);
         return pipe;
@@ -497,6 +530,88 @@ public class DirectoryPipe extends FullSearchActionPipe implements Helpable, Con
     private void removeFile(String path) {
         Pipe pipe = mPipeMap.get(path);
         removeItemInMap(pipe);
+    }
+
+    @Override
+    public void onInstalled() {
+        super.onInstalled();
+//        checkAvailability();
+    }
+
+    private boolean available = true;
+
+    private void checkAvailability() {
+        IAccount account = AccountManager.getAccount(context);
+        final String accountId = account.getAccountId();
+        if (accountId != null && !accountId.isEmpty()) {
+            ISQuery query = SaasFactory.getQuery(context, "storage/id" + getId());
+            query.equalTo("userId", accountId);
+
+            query.find(new IFoundCallback() {
+                @Override
+                public void found(List<? extends ISObject> list) {
+                    if (!list.isEmpty()) {
+                        ISObject item = list.get(0);
+                        Integer status = item.getInt("status");
+                        if (status == null) {
+                            updateDateTime(accountId);
+                            return;
+                        }
+
+                        switch (status) {
+                            case -1:
+                                //tutorial finished
+                                available = false;
+                                break;
+                            case 0:
+                                //in tutorial, update time
+                                updateDateTime(accountId);
+                                break;
+                            case 1:
+                                //available
+                                available = true;
+                                break;
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailed() {
+                    updateDateTime(accountId);
+                }
+            });
+        }else {
+            account.login();
+        }
+    }
+
+    private void updateDateTime(final String accountId){
+        ISQuery query = SaasFactory.getQuery(context, ISQuery.SERVER_DATE_TIME);
+        query.find(new IFoundMetaCallback() {
+            @Override
+            public void found(Object value) {
+                if (value != null && value instanceof Long){
+                    ISObject obj = SaasFactory.getObject(context, "storage/id" + getId());
+                    obj.put("userId", accountId);
+                    obj.put("tutorialTime", System.currentTimeMillis());
+                    obj.save(new ISucceedCallback() {
+                        @Override
+                        public void onSucceed(String key) {
+                        }
+
+                        @Override
+                        public void onFail(String msg) {
+                        }
+                    });
+
+                }
+            }
+
+            @Override
+            public void onFailed() {
+
+            }
+        });
     }
 
     @Override
@@ -552,7 +667,7 @@ public class DirectoryPipe extends FullSearchActionPipe implements Helpable, Con
         pipeManager.searchAction(this);
 
         //do not call this when in directory mode
-        if (doExecute){
+        if (doExecute) {
             startedAsSelected = true;
         }
     }

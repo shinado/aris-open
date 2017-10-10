@@ -30,7 +30,7 @@ public abstract class ActionPipe extends BasePipe{
 
     public Pipe search(Instruction input) {
         if (input.input.isEmpty()){
-            if (configurations.needHistory() && asOutput()){
+            if (configurations != null && configurations.needHistory() && asOutput()){
                 return new Pipe(getResult());
             }else {
                 return null;

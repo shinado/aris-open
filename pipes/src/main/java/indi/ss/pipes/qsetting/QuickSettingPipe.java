@@ -10,7 +10,6 @@ import com.ss.aris.open.pipes.entity.Pipe;
 import com.ss.aris.open.pipes.entity.SearchableName;
 import com.ss.aris.open.pipes.search.FullSearchActionPipe;
 
-// Failed resolution of: Lindi/shinado/piping/pipes/search/FullSearchActionPipe;
 @TargetApi(8)
 public class QuickSettingPipe extends FullSearchActionPipe {
 
@@ -38,7 +37,7 @@ public class QuickSettingPipe extends FullSearchActionPipe {
             Settings.ACTION_WIFI_SETTINGS,
             Settings.ACTION_LOCALE_SETTINGS,
             Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS,
-            Settings.ACTION_HOME_SETTINGS
+            Settings.ACTION_HOME_SETTINGS,
     };
 
     public QuickSettingPipe(int id) {

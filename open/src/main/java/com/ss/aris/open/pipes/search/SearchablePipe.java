@@ -174,12 +174,11 @@ public abstract class SearchablePipe extends BasePipe {
             if (results.contains(vo)) {
                 cacheDeletedSearchKeys(key, vo);
 
-                Log.d("Searchable", "remove item:" + key + ", " + vo.getExecutable());
-                Log.d("Searchable", "before remove: " + results.size());
                 results.remove(vo);
-                Log.d("Searchable", "after remove: " + results.size());
             }
         }
+
+        resultMap.remove(vo.getExecutable());
     }
 
     /**

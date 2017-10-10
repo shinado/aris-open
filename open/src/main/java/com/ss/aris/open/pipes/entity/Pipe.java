@@ -34,7 +34,7 @@ public class Pipe implements Comparable<Pipe>, Displayable, Parcelable {
 
     private PreviousPipes previous;
 
-    private Instruction instruction;
+    private Instruction instruction = new Instruction("");
 
     private String executable = "";
 

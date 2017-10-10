@@ -15,10 +15,11 @@ public interface Console {
     void input(String input);
 
     /**
-     * to run a script
+     * to run the script
+     * you probably don't want to use it right now
      */
     @TargetVersion(8)
-    void runScript(String script);
+    void runScript(String script, OnEnterListener onEnterListener);
 
     /**
      * to show input method
@@ -45,11 +46,17 @@ public interface Console {
     @TargetVersion(1106)
     void display(String string, Pipe tag);
 
+    /**
+     * to display a string on input area
+     * @param string
+     */
+    void displayInput(String string);
+
     void replaceCurrentLine(String line);
 
     /**
      * block user input
-     * won't be able to input
+     * users won't be able to input
      */
     void blockInput();
 
@@ -133,9 +140,11 @@ public interface Console {
     @TargetVersion(4)
     void setIndicator(String indicator);
 
+    @Deprecated
     @TargetVersion(11)
     void setInputType(int inputType);
 
+    @Deprecated
     @TargetVersion(11)
     int getInputType();
 

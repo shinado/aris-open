@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.graphics.Typeface;
 import java.util.Collection;
 import com.ss.aris.open.console.Console;
+import com.ss.aris.open.pipes.entity.Instruction;
 import com.ss.aris.open.pipes.entity.Pipe;
 
 public interface DeviceConsole extends Console {
@@ -12,7 +13,7 @@ public interface DeviceConsole extends Console {
 
     void onSystemReady();
 
-    void displayResult(Collection<Pipe> pipe, int selection);
+    void displayResult(Collection<Pipe> pipe, Instruction instruction, int selection);
 
     void onEnter(Pipe pipe);
 

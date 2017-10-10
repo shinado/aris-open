@@ -15,6 +15,7 @@ import com.ss.aris.open.pipes.search.translator.AbsTranslator;
 import com.ss.aris.open.pipes.pri.PRI;
 import com.ss.aris.open.util.VersionUtils;
 
+@Deprecated
 public class WebsitePipe extends SearchablePipe implements Helpable {
 
     private Pipe addPipe;
