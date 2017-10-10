@@ -73,7 +73,7 @@ public abstract class BasePipe {
             } else {
                 BasePipe base = prev.getBasePipe();
                 if (base != null) {
-                    prev.getBasePipe().execute(prev, new OutputCallback() {
+                    base.execute(prev, new OutputCallback() {
                         @Override
                         public void onOutput(String input) {
 //                            getConsole().releaseInput();

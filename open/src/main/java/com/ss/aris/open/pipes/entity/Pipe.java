@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.TreeSet;
 
 import com.ss.aris.open.console.Console;
 import com.ss.aris.open.pipes.BasePipe;
+import com.ss.aris.open.pipes.NullPipe;
 
 public class Pipe implements Comparable<Pipe>, Displayable, Parcelable {
 
@@ -148,7 +150,7 @@ public class Pipe implements Comparable<Pipe>, Displayable, Parcelable {
         }
     }
 
-    public BasePipe getBasePipe() {
+    public @Nullable BasePipe getBasePipe() {
 //        if (basePipe == null) {
 //            return new NullPipe(-1);
 //            throw new BasePipeNotSetException(getClass().getSimpleName() + " must set BasePipe in getDefaultPipe() in BasePipe");

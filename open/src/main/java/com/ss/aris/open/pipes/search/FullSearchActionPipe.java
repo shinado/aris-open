@@ -2,7 +2,9 @@ package com.ss.aris.open.pipes.search;
 
 import android.annotation.TargetApi;
 import android.util.Log;
+
 import java.util.TreeSet;
+
 import com.ss.aris.open.pipes.BasePipe;
 import com.ss.aris.open.pipes.entity.Instruction;
 import com.ss.aris.open.pipes.entity.Pipe;
@@ -40,11 +42,11 @@ public abstract class FullSearchActionPipe extends SearchablePipe {
     }
 
     @TargetApi(1050)
-    protected void endAsSelected(){
+    protected void endAsSelected() {
         startedAsSelected = false;
     }
 
-    private void start(){
+    private void start() {
         hasStarted = true;
         putItemInMap(defaultExitPipe);
         pipeManager.searchAction(this);
@@ -78,14 +80,20 @@ public abstract class FullSearchActionPipe extends SearchablePipe {
                 TreeSet<Pipe> results = new TreeSet<>();
                 if (!input.isEmpty()) {
                     //create a new pipe
-                    Pipe result = new Pipe(getDefaultPipe());
-                    fulfill(result, new Instruction(input));
-                    if (result.getSearchableName().contains(result.getInstruction().body)) {
-                        results.add(result);
+                    Pipe defaultPipe = getDefaultPipe();
+                    if (defaultPipe != null) {
+                        Pipe result = new Pipe(defaultPipe);
+                        fulfill(result, new Instruction(input));
+                        if (result.getSearchableName().contains(result.getInstruction().body)) {
+                            results.add(result);
+                        }
                     }
-                }else {
-                    if (configurations != null && configurations.needHistory() && asOutput()){
-                        results.add(new Pipe(getDefaultPipe()));
+                } else {
+                    if (configurations != null && configurations.needHistory() && asOutput()) {
+                        Pipe defaultPipe = getDefaultPipe();
+                        if (defaultPipe != null) {
+                            results.add(new Pipe(defaultPipe));
+                        }
                     }
                 }
                 return results;
@@ -98,9 +106,9 @@ public abstract class FullSearchActionPipe extends SearchablePipe {
         super.onSelectedAsStart(result);
 
         if (result.equals(getDefaultPipe())) {
-            if (hasStarted){
+            if (hasStarted) {
                 onSecondStart = true;
-            }else {
+            } else {
                 getConsole().setIndicator(result.getDisplayName());
                 startAsSelected();
             }
@@ -112,7 +120,7 @@ public abstract class FullSearchActionPipe extends SearchablePipe {
         super.onUnselectedAsStart(result);
         Log.d("Indicator", "when unselected");
 
-        if (!onSecondStart){
+        if (!onSecondStart) {
             getConsole().setIndicator("");
             end();
         }
@@ -123,7 +131,7 @@ public abstract class FullSearchActionPipe extends SearchablePipe {
         //accept anyway
         //so script executor shall work
 //        if (hasStarted) {
-            doAcceptInput(result, input, previous, callback);
+        doAcceptInput(result, input, previous, callback);
 //        }
     }
 
@@ -146,7 +154,7 @@ public abstract class FullSearchActionPipe extends SearchablePipe {
             end();
         } else {
             doExecute(rs, getConsoleCallback());
-            if (startedAsSelected){
+            if (startedAsSelected) {
                 endAsSelected();
             }
         }
@@ -164,7 +172,7 @@ public abstract class FullSearchActionPipe extends SearchablePipe {
     public abstract Pipe getDefaultPipe();
 
     @SuppressWarnings("WeakerAccess")
-    protected boolean asOutput(){
+    protected boolean asOutput() {
         return true;
     }
 }
