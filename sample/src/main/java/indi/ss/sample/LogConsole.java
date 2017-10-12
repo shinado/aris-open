@@ -5,6 +5,7 @@ import android.util.Log;
 import com.ss.aris.open.console.CharacterInputCallback;
 import com.ss.aris.open.console.InputCallback;
 import com.ss.aris.open.console.KeyDownCallback;
+import com.ss.aris.open.console.OnEnterListener;
 import com.ss.aris.open.console.SingleLineInputCallback;
 import com.ss.aris.open.console.text.OnTextClickListener;
 import com.ss.aris.open.pipes.BasePipe;
@@ -28,7 +29,7 @@ public class LogConsole implements DeviceConsole {
     }
 
     @Override
-    public void runScript(String script) {
+    public void runScript(String script, OnEnterListener onEnterListener) {
         log("runScript: " + script);
     }
 

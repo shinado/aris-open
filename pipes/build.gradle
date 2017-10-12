@@ -19,7 +19,5 @@ android {
 }
 
 dependencies {
-
     compile project(path: ':open')
-
 }
