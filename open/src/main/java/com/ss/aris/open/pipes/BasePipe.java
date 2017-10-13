@@ -25,6 +25,7 @@ public abstract class BasePipe {
     protected static final int TYPE_TEXT = 8;
 
     protected boolean hasDestroyed = false;
+    private boolean hasRunnable = false;
     protected int id;
 
     protected Context context;
@@ -345,6 +346,9 @@ public abstract class BasePipe {
     }
 
     protected void addNotifyTimeCircle(final long ms) {
+        if (hasRunnable) return;
+
+        hasRunnable = true;
         final Pipe dp = getDefaultPipe();
         if (dp != null) {
             final Handler handler = new Handler();

@@ -29,6 +29,8 @@ public class TimePipe extends DefaultInputActionPipe implements Helpable{
         callback.onOutput(
                 new SimpleDateFormat("yyyy-MM-dd hh:mm:ss",
                 Locale.getDefault()).format(new Date()));
+
+        addNotifyTimeCircle(60 * 1000);
     }
 
     @Override
