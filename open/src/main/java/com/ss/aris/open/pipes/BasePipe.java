@@ -2,7 +2,7 @@ package com.ss.aris.open.pipes;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
+import android.os.Handler;
 import android.util.Log;
 
 import java.util.TreeSet;
@@ -24,6 +24,7 @@ public abstract class BasePipe {
     protected static final int TYPE_PIPE = 4;
     protected static final int TYPE_TEXT = 8;
 
+    protected boolean hasDestroyed = false;
     protected int id;
 
     protected Context context;
@@ -308,21 +309,22 @@ public abstract class BasePipe {
     }
 
     public void onDestroy() {
+        hasDestroyed = true;
     }
 
     public void onCreate() {
-
+        hasDestroyed = false;
     }
 
     public interface OnItemsLoadedListener {
         void onItemsLoaded(BasePipe pipe, int total);
     }
 
-    public interface OnOutputClickListener{
+    public interface OnOutputClickListener {
         void onClick(String value);
     }
 
-    public interface AdvancedOutputCallback extends OutputCallback{
+    public interface AdvancedOutputCallback extends OutputCallback {
         void onOutput(String output, OnOutputClickListener listener);
     }
 
@@ -342,5 +344,20 @@ public abstract class BasePipe {
         return TYPE_NONE;
     }
 
+    protected void addNotifyTimeCircle(final long ms) {
+        final Pipe dp = getDefaultPipe();
+        if (dp != null) {
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (hasDestroyed) return;
+
+                    getConsole().notify(dp);
+                    handler.postDelayed(this, ms);
+                }
+            }, ms);
+        }
+    }
 
 }
