@@ -2,10 +2,20 @@ package com.ss.aris.open.console.functionality;
 
 
 public interface IText {
-    void setInitText();
-    void selectTextColor(OnTextColorSelectListener listener);
+
+    enum ColorType{
+        BASE,
+        INIT,
+        FEED,
+        APP,
+        CONTACT,
+        PIPE
+    }
+
+    void selectTextColor(ColorType type, OnTextColorSelectListener listener);
+    void setTextColor(ColorType type, int color);
+
     void selectTextSize(OnTextSizeSetListener listener);
-    void setTextColor(int color);
     void setTextSize(float textSize);
     void reloadExecutingString();
     void loadFont(String value);

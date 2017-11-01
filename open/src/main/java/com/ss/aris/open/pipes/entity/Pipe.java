@@ -15,10 +15,8 @@ import java.util.TreeSet;
 
 import com.ss.aris.open.console.Console;
 import com.ss.aris.open.pipes.BasePipe;
-import com.ss.aris.open.pipes.NullPipe;
 
 public class Pipe implements Comparable<Pipe>, Displayable, Parcelable {
-
 
     public static final int TYPE_SEARCHABLE = 100;
 

@@ -2,6 +2,8 @@ package com.ss.aris.open.console.impl;
 
 import android.annotation.TargetApi;
 import android.graphics.Typeface;
+import android.widget.TextView;
+
 import java.util.Collection;
 import com.ss.aris.open.console.Console;
 import com.ss.aris.open.pipes.entity.Instruction;
@@ -20,6 +22,8 @@ public interface DeviceConsole extends Console {
     void onSelected(Pipe pipe);
 
     void onNothing();
+
+    TextView getDisplayTextView();
 
     @TargetApi(5)
     void requestPermission(String[] permissions, PermissionCallback callback);

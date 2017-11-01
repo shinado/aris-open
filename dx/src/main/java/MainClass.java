@@ -1,5 +1,3 @@
-package com.example;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,7 +16,7 @@ import java.io.OutputStream;
  * directory
  * ...
  */
-public class Main {
+public class MainClass {
     public static void main(String[] args) {
 //        String[] l = new File("/").list();
 //        for (String p : l) {
@@ -26,13 +24,13 @@ public class Main {
 //        }
 
         //if you wish to dex only one item
-        String NAME = "directory";
+        String NAME = "snake";
         String dxPath = "/Users/ss/Library/Android/sdk/build-tools/26.0.1/";
 
         String PACKAGE = "indi/ss/pipes";
         String dx = "/Users/ss/workspace/application/dx/temp/";
         String output = "/Users/ss/workspace/application/dx/output/";
-        File pipes = new File("/Users/ss/workspace/application/aris-open/pipes/build/intermediates/classes/debug/" + PACKAGE);
+        File pipes = new File("/Users/ss/workspace/application/aris-open/pipes/build/intermediates/classes/release/" + PACKAGE);
 
         new File(output).mkdirs();
         String[] list = pipes.list();

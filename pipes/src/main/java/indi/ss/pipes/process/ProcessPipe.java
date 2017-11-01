@@ -5,11 +5,9 @@ import android.content.Context;
 import android.text.format.Formatter;
 import java.io.IOException;
 import java.util.List;
-
 import com.ss.aris.open.pipes.action.DefaultInputActionPipe;
 import com.ss.aris.open.pipes.entity.Pipe;
 import com.ss.aris.open.pipes.entity.SearchableName;
-
 import indi.ss.pipes.process.models.AndroidAppProcess;
 import indi.ss.pipes.process.models.Status;
 

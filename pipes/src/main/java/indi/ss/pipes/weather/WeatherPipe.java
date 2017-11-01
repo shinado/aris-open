@@ -1,16 +1,24 @@
 package indi.ss.pipes.weather;
 
 import android.Manifest;
+
+import com.ss.aris.open.TargetVersion;
 import com.ss.aris.open.console.impl.DeviceConsole;
 import com.ss.aris.open.console.impl.PermissionCallback;
 import com.ss.aris.open.pipes.action.DefaultInputActionPipe;
 import com.ss.aris.open.pipes.entity.Pipe;
 import com.ss.aris.open.pipes.entity.SearchableName;
 import com.ss.aris.open.util.VersionUtils;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import indi.ss.pipes.weather.yweathergetter4a.ArisWeather;
 import indi.ss.pipes.weather.yweathergetter4a.IWeather;
 import indi.ss.pipes.weather.yweathergetter4a.yahoo.YahooWeatherInfoListener;
 
+@TargetVersion(1142)
 public class WeatherPipe extends DefaultInputActionPipe {
 
     public WeatherPipe(int id) {
@@ -34,7 +42,7 @@ public class WeatherPipe extends DefaultInputActionPipe {
         }
 
         ((DeviceConsole) getConsole()).requestPermission(
-                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                 new PermissionCallback() {
                     @Override
                     public void onPermissionResult(boolean granted, boolean first) {
@@ -51,9 +59,13 @@ public class WeatherPipe extends DefaultInputActionPipe {
                                         public void gotWeatherInfo(IWeather weatherInfo) {
                                             if (weatherInfo != null && !get) {
                                                 get = true;
-                                                    callback.onOutput(
-                                                            new WeatherImageConverter()
-                                                                    .getString(weatherInfo));
+                                                callback.onOutput(
+                                                        getCurrentTime() + "\n" +
+                                                        new WeatherImageConverter()
+                                                                .getString(weatherInfo));
+                                                if (callback instanceof DisplayOutputCallback) {
+                                                    addNotifyTimeCircle(20* 60 * 1000);
+                                                }
                                             } else {
                                                 callback.onOutput("Unable to get weather information. ");
                                             }
@@ -65,9 +77,13 @@ public class WeatherPipe extends DefaultInputActionPipe {
         );
     }
 
+    private String getCurrentTime(){
+        return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault())
+                .format(new Date());
+    }
+
     @Override
     public void onParamsNotEmpty(Pipe rs, OutputCallback callback) {
-
     }
 
     @Override
@@ -84,18 +100,23 @@ public class WeatherPipe extends DefaultInputActionPipe {
                     public void gotWeatherInfo(IWeather weatherInfo) {
                         if (weatherInfo != null && !get) {
                             get = true;
-//                            if (callback == getConsoleCallback()){
-                                callback.onOutput(
-                                        new WeatherImageConverter()
-                                                .getString(weatherInfo));
-//                            }else {
-//                                callback.onOutput(JsonUtil.toJson(weatherInfo));
-//                            }
+                            callback.onOutput(
+                                    getCurrentTime() + "\n" +
+                                    new WeatherImageConverter()
+                                            .getString(weatherInfo));
+                            if (callback instanceof DisplayOutputCallback) {
+                                addNotifyTimeCircle(30 * 60 * 1000);
+                            }
                         } else {
                             callback.onOutput("Unable to get weather information. ");
                         }
                     }
                 }, input);
+    }
+
+    @Override
+    public boolean asDisplay() {
+        return true;
     }
 
 }

@@ -26,7 +26,7 @@ public class LockPipe extends ExecuteOnlyPipe{
     public void onParamsEmpty(Pipe rs, OutputCallback callback) {
         Console console = getConsole();
         if (console instanceof ILock){
-            ((ILock) console).lock();
+            ((ILock) console).lock(null);
         }
     }
 

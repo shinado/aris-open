@@ -1,6 +1,7 @@
 package com.ss.aris.open.pipes.entity;
 
 import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,11 +27,11 @@ public class Instruction {
 
     public String[] params;
 
-    public Map<String, String> getParameterMap(){
+    public Map<String, String> getParameterMap() {
         HashMap<String, String> map = new HashMap<>();
-        if (params.length > 0){
-            for (int i=0; i<params.length/2; i++){
-                map.put(params[i*2], i*2+1 >= params.length ? "":params[i*2+1]);
+        if (params.length > 0) {
+            for (int i = 0; i < params.length / 2; i++) {
+                map.put(params[i * 2], i * 2 + 1 >= params.length ? "" : params[i * 2 + 1]);
             }
         }
         return map;
@@ -89,29 +90,37 @@ public class Instruction {
             }
         }
 
-        if (right.contains("\"")) {
-            //not allowed, for now
-        }else {
-            String split[] = right.split(Keys.SPACE);
-            if (split.length > 0){
-                boolean bodyFound = false;
-                List<String> parameters = new ArrayList<>();
-                for (int i=0; i<split.length; i++){
-                    if (!split[i].isEmpty()){
-                        if (!bodyFound){
-                            body = split[i];
-                            bodyFound = true;
-                        }else {
-                            parameters.add(split[i]);
-                        }
+//        if (right.contains("\"")) {
+//        }else {
+        String split[] = right.split(Keys.SPACE);
+        if (split.length > 0) {
+            boolean bodyFound = false;
+            List<String> parameters = new ArrayList<>();
+            for (int i = 0; i < split.length; i++) {
+                if (!split[i].isEmpty()) {
+                    if (!bodyFound) {
+                        body = split[i];
+                        bodyFound = true;
+                    } else {
+                        parameters.add(split[i]);
                     }
                 }
-
-                this.params = parameters.toArray(new String[parameters.size()]);
             }
+
+            this.params = parameters.toArray(new String[parameters.size()]);
         }
+//        }
 
         Log.d("Instruction", "pre: " + pre + ", body: " + body);
+    }
+
+    public String fullBody() {
+        StringBuilder sb = new StringBuilder(body);
+        if (!isParamsEmpty()) {
+            for (String p : params) sb.append(" ").append(p);
+        }
+
+        return sb.toString();
     }
 
     //why?

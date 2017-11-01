@@ -2,20 +2,21 @@ package indi.ss.pipes.youdao;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
-import com.ss.aris.open.pipes.action.DefaultInputActionPipe;
+import com.ss.aris.open.TargetVersion;
+import com.ss.aris.open.pipes.action.AcceptablePipe;
 import com.ss.aris.open.pipes.entity.Keys;
 import com.ss.aris.open.pipes.entity.Pipe;
 import com.ss.aris.open.pipes.entity.SearchableName;
 import com.ss.aris.open.pipes.impl.interfaces.Helpable;
 import com.ss.aris.open.util.HttpUtil;
 
-public class YDTranslatePipe extends DefaultInputActionPipe implements Helpable{
+@TargetVersion(1136)
+public class YDTranslatePipe extends AcceptablePipe implements Helpable{
 
     private static final String NAME = "$translating";
 
@@ -124,4 +125,5 @@ public class YDTranslatePipe extends DefaultInputActionPipe implements Helpable{
     public String getHelp() {
         return HELP;
     }
+
 }

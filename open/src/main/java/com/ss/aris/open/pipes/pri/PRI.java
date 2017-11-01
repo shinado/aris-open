@@ -1,6 +1,5 @@
 package com.ss.aris.open.pipes.pri;
 
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 

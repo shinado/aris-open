@@ -1,6 +1,5 @@
 package com.ss.aris.open.pipes.action;
 
-
 import com.ss.aris.open.pipes.entity.Pipe;
 
 public abstract class SimpleActionPipe extends DefaultInputActionPipe{

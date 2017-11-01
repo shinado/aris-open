@@ -2,6 +2,7 @@ package com.ss.aris.open.pipes.action;
 
 import java.util.TreeSet;
 
+import com.ss.aris.open.TargetVersion;
 import com.ss.aris.open.pipes.BasePipe;
 import com.ss.aris.open.pipes.entity.Instruction;
 import com.ss.aris.open.pipes.entity.Pipe;
@@ -77,12 +78,16 @@ public abstract class ActionPipe extends BasePipe{
         Pipe result = getResult();
         if (result.getExecutable().equals(value))
             return result;
-
         return null;
     }
 
     protected boolean asOutput(){
         return true;
+    }
+
+    @TargetVersion(1142)
+    public boolean asDisplay(){
+        return false;
     }
 
 }

@@ -7,6 +7,7 @@ import android.util.Log;
 
 import java.util.TreeSet;
 
+import com.ss.aris.open.TargetVersion;
 import com.ss.aris.open.pipes.configs.Configurations;
 import com.ss.aris.open.pipes.entity.Keys;
 import com.ss.aris.open.console.Console;
@@ -204,7 +205,6 @@ public abstract class BasePipe {
                 }
             }
         }
-
         return null;
     }
 
@@ -317,12 +317,22 @@ public abstract class BasePipe {
         hasDestroyed = false;
     }
 
+    @TargetVersion(1144)
+    public void onResume(){}
+
+    @TargetVersion(1144)
+    public void onPause(){}
+
     public interface OnItemsLoadedListener {
         void onItemsLoaded(BasePipe pipe, int total);
     }
 
     public interface OnOutputClickListener {
         void onClick(String value);
+    }
+
+    @TargetVersion(1132)
+    public interface DisplayOutputCallback extends OutputCallback {
     }
 
     public interface AdvancedOutputCallback extends OutputCallback {
@@ -345,6 +355,7 @@ public abstract class BasePipe {
         return TYPE_NONE;
     }
 
+    @TargetVersion(1132)
     protected void addNotifyTimeCircle(final long ms) {
         if (hasRunnable) return;
 

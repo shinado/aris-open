@@ -1,5 +1,7 @@
 package com.ss.aris.open.util;
 
+import android.content.Context;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -7,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by Administrator on 2015/11/9.
@@ -17,6 +20,17 @@ public class FileUtil {
         File file = new File(dir);
         if (!file.exists() || !file.isDirectory()) {
             file.mkdir();
+        }
+    }
+
+    public static String getFileName(String url){
+        int start = url.lastIndexOf("/");
+        int end = url.length();
+        try {
+            return url.substring(start + 1, end);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
         }
     }
 
@@ -67,6 +81,21 @@ public class FileUtil {
         }
 
         return text.toString();
+    }
+
+    public static String getStringFromAssets(Context context, String name){
+        try {
+            InputStream in = context.getResources().getAssets().open(name);
+            int length = in.available();
+            byte[] buffer = new byte[length];
+            in.read(buffer);
+            in.close();
+            return new String(buffer, "UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
 }

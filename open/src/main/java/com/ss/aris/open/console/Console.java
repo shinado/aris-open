@@ -1,5 +1,7 @@
 package com.ss.aris.open.console;
 
+import android.view.View;
+
 import com.ss.aris.open.TargetVersion;
 import com.ss.aris.open.console.text.OnTextClickListener;
 import com.ss.aris.open.pipes.BasePipe;
@@ -20,6 +22,9 @@ public interface Console {
      */
     @TargetVersion(8)
     void runScript(String script, OnEnterListener onEnterListener);
+
+    @TargetVersion(1143)
+    void shareIntentByScript(String script);
 
     /**
      * to show input method
@@ -76,8 +81,8 @@ public interface Console {
     @TargetVersion(4)
     void intercept();
 
-    @TargetVersion(4)
-    String getLastInput();
+    @TargetVersion(1142)
+    String getLastInput(int index);
 
     /**
      * callback after user press ENTER key
@@ -129,11 +134,9 @@ public interface Console {
     @TargetVersion(4)
     void quitBlind();
 
-    @Deprecated
     @TargetVersion(4)
     void addInputCallback(InputCallback inputCallback);
 
-    @Deprecated
     @TargetVersion(4)
     void removeInputCallback(InputCallback inputCallback);
 
@@ -161,6 +164,12 @@ public interface Console {
      * to notify a pipe by name to refresh
      */
     void notifyByName(String name);
+
+    @TargetVersion(1144)
+    void reshowTerminal();
+
+    @TargetVersion(1144)
+    void replaceCurrentView(View view);
 
     BasePipe.OutputCallback getOutputCallback();
 

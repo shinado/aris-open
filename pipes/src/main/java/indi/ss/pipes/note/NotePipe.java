@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import java.util.Map;
 import java.util.TreeMap;
+
+import com.ss.aris.open.TargetVersion;
+import com.ss.aris.open.pipes.action.AcceptablePipe;
 import com.ss.aris.open.pipes.action.DefaultInputActionPipe;
 import com.ss.aris.open.pipes.entity.Keys;
 import com.ss.aris.open.pipes.entity.Pipe;
@@ -16,7 +19,8 @@ import com.ss.aris.open.pipes.impl.interfaces.Helpable;
 //note 1.clear
 //note >1.clear
 //note >=1.clear
-public class NotePipe extends DefaultInputActionPipe implements Clearable, Helpable{
+@TargetVersion(1136)
+public class NotePipe extends AcceptablePipe implements Clearable, Helpable{
 
     private static final String NAME = "anote";
 
@@ -80,6 +84,7 @@ public class NotePipe extends DefaultInputActionPipe implements Clearable, Helpa
                 .putInt("index", index+1)
                 .apply();
         getConsole().notify(getDefaultPipe());
+        getConsole().input("Note added. ");
     }
 
     @Override

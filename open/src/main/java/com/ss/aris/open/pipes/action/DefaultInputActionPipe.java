@@ -1,6 +1,7 @@
 package com.ss.aris.open.pipes.action;
 
 import com.ss.aris.open.pipes.entity.Instruction;
+import com.ss.aris.open.pipes.entity.Keys;
 import com.ss.aris.open.pipes.entity.Pipe;
 import com.ss.aris.open.pipes.entity.SearchableName;
 
@@ -54,7 +55,7 @@ public abstract class DefaultInputActionPipe extends ActionPipe {
      * @return a name for searching
      */
     public SearchableName getSearchable(){
-        return new SearchableName(getDisplayName());
+        return new SearchableName(getDisplayName().replaceFirst(Keys.ACTION_REGEX, ""));
     }
 
     /**
