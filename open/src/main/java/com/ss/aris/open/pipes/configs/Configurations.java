@@ -19,4 +19,12 @@ public class Configurations {
         return sharedPreferences.getBoolean("history", true);
     }
 
+    public void setDeveloper(boolean b){
+        sharedPreferences.edit().putBoolean("isDeveloper", b).apply();
+    }
+
+    public boolean isDeveloper(){
+        return sharedPreferences.getBoolean("isDeveloper", false);
+    }
+
 }

@@ -15,7 +15,8 @@ public abstract class DefaultInputActionPipe extends ActionPipe {
         mResult.setBasePipe(this);
         mResult.setDisplayName(getDisplayName());
         mResult.setSearchableName(getSearchable());
-        mResult.setExecutable("action://" + mResult.getDisplayName());
+//        mResult.setExecutable("pipe://id="+getId()+"/exe="+mResult.getDisplayName());
+        mResult.setExecutable("$" + mResult.getDisplayName());
     }
 
     @Override
@@ -35,6 +36,11 @@ public abstract class DefaultInputActionPipe extends ActionPipe {
 
     @Override
     public void intercept() {
+    }
+
+    @Override
+    public void acceptInput(Pipe result, String input, Pipe.PreviousPipes previous, OutputCallback callback) {
+        callback.onOutput(getDisplayName());
     }
 
     private void execute(Pipe rs, OutputCallback callback){

@@ -58,7 +58,7 @@ public class WiFiPipe extends DefaultInputActionPipe {
         }
         switch (wm.getWifiState()) {
             case WifiManager.WIFI_STATE_DISABLING:
-                callback.onOutput("WiFi is being disabled");
+                callback.onOutput("wifi=10");
                 break;
             case WifiManager.WIFI_STATE_DISABLED:
                 if (callback == getConsoleCallback()) {
@@ -77,22 +77,22 @@ public class WiFiPipe extends DefaultInputActionPipe {
                         }
                     }, 10 * 1000);
                 } else {
-                    callback.onOutput("WiFi is off.");
+                    callback.onOutput("wifi=0");
                 }
                 break;
             case WifiManager.WIFI_STATE_ENABLING:
-                callback.onOutput("WiFi is being enabled");
+                callback.onOutput("wifi=01");
                 break;
             case WifiManager.WIFI_STATE_ENABLED:
                 if (callback == getConsoleCallback()) {
                     callback.onOutput("WiFi is on, now disabling...");
                     wm.setWifiEnabled(false);
                 } else {
-                    callback.onOutput("WiFi is on.");
+                    callback.onOutput("wifi=1");
                 }
                 break;
             case WifiManager.WIFI_STATE_UNKNOWN:
-                callback.onOutput("Unknown error");
+                callback.onOutput("Unknown Error");
             default:
                 break;
         }

@@ -4,7 +4,6 @@ public class PConstants {
 
     public static final int ID_CONFIG = 10;
     public static final int ID_CLIPBOARD = 11;
-    public static final int ID_STRING = 12;
     public static final int ID_CLEAR = 14;
     public static final int ID_RESTART = 16;
     public static final int ID_HELP = 17;

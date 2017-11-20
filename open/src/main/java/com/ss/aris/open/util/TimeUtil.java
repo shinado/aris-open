@@ -2,11 +2,16 @@ package com.ss.aris.open.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Administrator on 2015/12/28.
  */
 public class TimeUtil {
+
+    public static String getTimeWithSecond(){
+        return new SimpleDateFormat("hh:mm:ss").format(new Date());
+    }
 
     /**
      *
@@ -19,7 +24,6 @@ public class TimeUtil {
         int week = cal.get(Calendar.DAY_OF_WEEK);
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
         String time = sdf.format(cal.getTime());
-
 
         return new String[]{time, WEEKs[week], getDay(day, month)};
     }

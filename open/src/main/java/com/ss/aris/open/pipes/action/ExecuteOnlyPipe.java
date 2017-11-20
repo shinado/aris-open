@@ -24,7 +24,7 @@ public abstract class ExecuteOnlyPipe extends ActionPipe {
 
     @Override
     public void getOutput(Pipe result, OutputCallback callback) {
-        getConsole().input("Output not supported in " + getDisplayName() );
+        callback.onOutput("Output not supported in " + getDisplayName() );
     }
 
     @Override

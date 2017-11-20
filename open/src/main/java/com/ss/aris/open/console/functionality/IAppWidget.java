@@ -7,6 +7,7 @@ public interface IAppWidget {
 
     void addWidget(int id, AppWidgetProviderInfo info);
     void addWidget(View view);
+    void removeWidget(View view);
     void pickWidget();
     void clearWidgets();
 

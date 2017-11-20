@@ -34,8 +34,7 @@ public class FileUtil {
         }
     }
 
-    public static byte[] getBytes(String path){
-        File file = new File(path);
+    public static byte[] getBytes(File file){
         int size = (int) file.length();
         byte[] bytes = new byte[size];
         try {
@@ -49,6 +48,11 @@ public class FileUtil {
         }
 
         return bytes;
+    }
+
+    public static byte[] getBytes(String path){
+        File file = new File(path);
+        return getBytes(file);
     }
 
     public static String getName(String path){
