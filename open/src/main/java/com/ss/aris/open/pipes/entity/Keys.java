@@ -9,6 +9,7 @@ public class Keys {
     public static final String DIVIDER = "/";
 
     public static final String PARAMETER = "-";
+    public static final String ARRAY = ";";
 
     public static final String ACTION = "$";
     public static final String ACTION_REGEX = "\\$";

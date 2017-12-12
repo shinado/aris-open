@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import com.ss.aris.open.TargetVersion;
 import com.ss.aris.open.console.impl.DeviceConsole;
 import com.ss.aris.open.console.impl.PermissionCallback;
+import com.ss.aris.open.pipes.PConstants;
 import com.ss.aris.open.pipes.action.DefaultInputActionPipe;
 import com.ss.aris.open.pipes.entity.Pipe;
 import com.ss.aris.open.pipes.entity.SearchableName;
@@ -13,6 +14,8 @@ import com.ss.aris.open.util.VersionUtils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TreeSet;
+
 import indi.ss.pipes.weather.yweathergetter4a.ArisWeather;
 import indi.ss.pipes.weather.yweathergetter4a.IWeather;
 import indi.ss.pipes.weather.yweathergetter4a.yahoo.YahooWeatherInfoListener;
@@ -104,7 +107,17 @@ public class WeatherPipe extends DefaultInputActionPipe {
 
     @Override
     public void acceptInput(Pipe result, String input, Pipe.PreviousPipes previous, OutputCallback callback) {
-        getWeatherByCity(input, callback);
+        if (previous.get().getId() != PConstants.ID_TEXT){
+            TreeSet<Pipe> allPrevious = previous.getAll();
+            for (Pipe p: allPrevious){
+                if (p.getId() == PConstants.ID_TEXT){
+                    getWeatherByCity(p.getExecutable(), callback);
+                    return;
+                }
+            }
+        }else {
+            getWeatherByCity(input, callback);
+        }
     }
 
     private void getWeatherByCity(String city, final OutputCallback callback){

@@ -33,6 +33,16 @@ public class AbsQuery implements ISQuery{
     }
 
     @Override
+    public ISQuery orderByDescending(String key) {
+        return null;
+    }
+
+    @Override
+    public ISQuery orderByAscending(String key) {
+        return null;
+    }
+
+    @Override
     public void find(IFoundCallback callback) {
         callback.onFailed();
     }

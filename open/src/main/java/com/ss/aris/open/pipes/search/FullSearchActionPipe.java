@@ -28,7 +28,7 @@ public abstract class FullSearchActionPipe extends SearchablePipe {
     }
 
     @Override
-    public Pipe getByValue(String value) {
+    public Pipe getByValue(String value, String params) {
         return null;
     }
 

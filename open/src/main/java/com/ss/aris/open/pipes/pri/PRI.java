@@ -51,16 +51,44 @@ public class PRI {
     public String getExecutable() {
         if (value.contains("/")) {
             String[] split = value.split("/");
-            String base = split[split.length - 1];
-            base = base.replace("exe=", "");
+            for (String base : split) {
+                if (base.contains("exe=")) {
+                    try {
+                        return URLDecoder.decode(base.replace("exe=", ""), "utf-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                        return "";
+                    }
+                }
+            }
+
+            //if not founded
             try {
-                return URLDecoder.decode(base, "utf-8");
+                return URLDecoder.decode(split[split.length - 1], "utf-8");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
         }
 
         return value;
+    }
+
+    public String getParams() {
+        if (value.contains("/")) {
+            String[] split = value.split("/");
+            for (String base : split) {
+                if (base.contains("params=")) {
+                    try {
+                        return URLDecoder.decode(base.replace("params=", ""), "utf-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                        return "";
+                    }
+                }
+            }
+        }
+
+        return "";
     }
 
     public String toString() {

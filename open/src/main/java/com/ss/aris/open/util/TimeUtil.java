@@ -4,10 +4,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * Created by Administrator on 2015/12/28.
- */
 public class TimeUtil {
+
+    public static String getDateTime(long ms){
+        return new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date(ms));
+    }
 
     public static String getTimeWithSecond(){
         return new SimpleDateFormat("hh:mm:ss").format(new Date());

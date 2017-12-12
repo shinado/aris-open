@@ -9,6 +9,8 @@ public interface ISQuery {
     ISQuery noEqualTo(String key, Object value);
     ISQuery lessThan(String key, Object value);
     ISQuery greaterThan(String key, Object value);
+    ISQuery orderByDescending(String key);
+    ISQuery orderByAscending(String key);
 
     void find(IFoundCallback callback);
     void find(IFoundMetaCallback callback);

@@ -27,6 +27,15 @@ public class Instruction {
 
     public String[] params;
 
+    public String getParams() {
+        StringBuilder value = new StringBuilder();
+        for (String str: params){
+            value.append(str).append(" ");
+        }
+
+        return (value.length() == 0) ? "" : value.substring(0, value.length()-1);
+    }
+
     public Map<String, String> getParameterMap() {
         HashMap<String, String> map = new HashMap<>();
         if (params.length > 0) {
@@ -99,7 +108,7 @@ public class Instruction {
             for (int i = 0; i < split.length; i++) {
                 if (!split[i].isEmpty()) {
                     if (!bodyFound) {
-                        body = split[i];
+                        body = split[i].toLowerCase();
                         bodyFound = true;
                     } else {
                         parameters.add(split[i]);

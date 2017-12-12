@@ -1,6 +1,8 @@
 package indi.shinado.piping.saas.abs;
 
 
+import java.util.Date;
+
 import indi.shinado.piping.saas.ISObject;
 import indi.shinado.piping.saas.ISucceedCallback;
 
@@ -32,6 +34,11 @@ public class AbsObject implements ISObject{
     }
 
     @Override
+    public void increment(String key) {
+
+    }
+
+    @Override
     public String getString(String key) {
         return "";
     }
@@ -42,8 +49,13 @@ public class AbsObject implements ISObject{
     }
 
     @Override
-    public double getLong(String key) {
+    public long getLong(String key) {
         return 0;
+    }
+
+    @Override
+    public Date getDate(String key) {
+        return null;
     }
 
     @Override

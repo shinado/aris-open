@@ -13,54 +13,66 @@ import okhttp3.ResponseBody;
 public class HttpUtil {
 
     public static void post(String url, final OnSimpleStringResponse callback) {
-        final Handler handler = new Handler();
+        if (url != null && (url.startsWith("http://") || url.startsWith("https://"))) {
+            final Handler handler = new Handler();
 
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+//                .addHeader("Content-Type", "application/json")
+                    .url(url)
+                    .build();
 
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, final IOException e) {
+                    e.printStackTrace();
 
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        callback.failed();
-                    }
-                });
-            }
-
-            @Override
-            public void onResponse(Call call, okhttp3.Response response) throws IOException {
-                if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-
-                ResponseBody body = response.body();
-                if (body != null) {
-                    final String string = body.string();
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                                callback.onResponse(string);
-                        }
-                    });
-                } else {
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            callback.failed();
+                            callback.failed(e.getMessage());
                         }
                     });
                 }
-            }
-        });
+
+                @Override
+                public void onResponse(Call call, final okhttp3.Response response) throws IOException {
+                    if (!response.isSuccessful()) {
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                callback.failed(response.message());
+                            }
+                        });
+                    }
+
+                    ResponseBody body = response.body();
+                    if (body != null) {
+                        final String string = body.string();
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                callback.onResponse(string);
+                            }
+                        });
+                    } else {
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                callback.failed("Body is null");
+                            }
+                        });
+                    }
+                }
+            });
+        } else {
+            callback.failed("Wrong url");
+        }
     }
 
     public interface OnSimpleStringResponse {
         void onResponse(String string);
 
-        void failed();
+        void failed(String msg);
     }
 }

@@ -73,7 +73,8 @@ public abstract class SearchablePipe extends BasePipe {
             //get nothing
             return new TreeSet<>();
         }
-        if (!value.isParamsEmpty()){
+
+        if (!isParameterAllowded() && !value.isParamsEmpty()){
             //does not take parameters
             return new TreeSet<>();
         }
@@ -83,6 +84,10 @@ public abstract class SearchablePipe extends BasePipe {
             result = fulfill(result, value);
             return result;
         }
+    }
+
+    protected boolean isParameterAllowded(){
+        return false;
     }
 
     private TreeSet<Pipe> search(String key, String body) {

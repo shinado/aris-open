@@ -15,7 +15,7 @@ import com.ss.aris.open.pipes.entity.SearchableName;
 import com.ss.aris.open.pipes.impl.interfaces.Helpable;
 import com.ss.aris.open.util.HttpUtil;
 
-@TargetVersion(1136)
+@TargetVersion(1170)
 public class YDTranslatePipe extends AcceptablePipe implements Helpable{
 
     private static final String NAME = "$translating";
@@ -92,8 +92,8 @@ public class YDTranslatePipe extends AcceptablePipe implements Helpable{
             }
 
             @Override
-            public void failed() {
-                callback.onOutput("error");
+            public void failed(String msg) {
+                callback.onOutput(msg);
             }
         });
     }

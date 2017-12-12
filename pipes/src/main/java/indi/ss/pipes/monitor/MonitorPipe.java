@@ -142,7 +142,7 @@ public class MonitorPipe extends SimpleActionPipe {
                 s += "░";
             }
         }
-
         return s;
     }
+
 }

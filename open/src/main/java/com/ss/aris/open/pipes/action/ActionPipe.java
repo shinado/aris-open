@@ -74,10 +74,15 @@ public abstract class ActionPipe extends BasePipe{
         return getResult().getDisplayName();
     }
 
-    public Pipe getByValue(String value){
+    @Override
+    public Pipe getByValue(String value, String params){
         Pipe result = getResult();
-        if (result.getExecutable().equals(value))
+        if (result.getExecutable().equals(value)){
+            if (!params.isEmpty()){
+                result.getInstruction().params = params.split(" ");
+            }
             return result;
+        }
         return null;
     }
 

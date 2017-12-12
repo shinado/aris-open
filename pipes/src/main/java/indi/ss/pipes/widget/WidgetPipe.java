@@ -73,7 +73,7 @@ public class WidgetPipe extends SearchablePipe {
     }
 
     @Override
-    public Pipe getByValue(String value) {
+    public Pipe getByValue(String value, String params) {
         return null;
     }
 

@@ -71,7 +71,9 @@ public abstract class BasePipe {
             //better not to get previous from rs
             final Pipe.PreviousPipes newPrevious
                     = new Pipe.PreviousPipes(previous);
-            if (rs.ignoreInput()) {
+
+            if (rs.donotExecute()) {
+//                setDonotExecute(rs);
                 acceptInput(rs, "", newPrevious, callback);
             } else {
                 BasePipe base = prev.getBasePipe();
@@ -87,6 +89,17 @@ public abstract class BasePipe {
             }
         } else {
             tryGetOutput(rs, callback);
+        }
+    }
+
+    private void setDonotExecute(Pipe rs){
+        rs.setDonotExecute(true);
+        Pipe.PreviousPipes previous = rs.getPrevious();
+        if (previous != null){
+            TreeSet<Pipe> all = previous.getAll();
+            for (Pipe p: all){
+                setDonotExecute(p);
+            }
         }
     }
 
@@ -271,7 +284,7 @@ public abstract class BasePipe {
 
     public abstract void load(AbsTranslator translator, OnItemsLoadedListener listener, int total);
 
-    public abstract Pipe getByValue(String value);
+    public abstract Pipe getByValue(String value, String params);
 
     //added in 2016-03-16
     //intercept

@@ -47,7 +47,7 @@ public class Pipe implements Comparable<Pipe>, Displayable, Parcelable {
     //deprecated,
     private int typeIndex = TYPE_ACTION;
 
-    private boolean ignoreInput = false;
+    private boolean donotExecute = false;
 
     //for analysis
     public String executeBody = "";
@@ -223,16 +223,16 @@ public class Pipe implements Comparable<Pipe>, Displayable, Parcelable {
         this.frequency = frequency;
     }
 
-    public boolean ignoreInput() {
-        return ignoreInput;
+    public boolean donotExecute() {
+        return donotExecute;
     }
 
     /**
      * when set true, the input pipe will not execute
      * therefore it gets an empty string as input
      */
-    public void setIgnoreInput(boolean ignoreInput) {
-        this.ignoreInput = ignoreInput;
+    public void setDonotExecute(boolean donotExecute) {
+        this.donotExecute = donotExecute;
     }
 
     @Override
@@ -424,7 +424,7 @@ public class Pipe implements Comparable<Pipe>, Displayable, Parcelable {
 
     public Pipe(Pipe another) {
         this.setBasePipe(another.getBasePipe());
-        this.setIgnoreInput(another.ignoreInput());
+        this.setDonotExecute(another.donotExecute());
         this.setDisplayName(another.getDisplayName());
         this.setExecutable(another.getExecutable());
         this.setFrequency(another.getFrequency());

@@ -9,6 +9,8 @@ public interface IWidget {
 
     void onCreate(Context context, Console console);
 
+    void onDestroy();
+
     void onResume();
 
     void onPause();
