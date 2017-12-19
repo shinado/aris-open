@@ -17,6 +17,7 @@ import com.ss.aris.open.pipes.search.translator.AbsTranslator;
 
 public abstract class FullSearchActionPipe extends SearchablePipe {
 
+    private String TAG = "FullSearchActionPipe ";
     protected Pipe defaultExitPipe;
     protected boolean hasStarted = false;
     protected boolean startedAsSelected = false;
@@ -105,20 +106,23 @@ public abstract class FullSearchActionPipe extends SearchablePipe {
     public void onSelectedAsStart(Pipe result) {
         super.onSelectedAsStart(result);
 
-        if (result.equals(getDefaultPipe())) {
+        Log.d(TAG, "onSelectedAsStart: " + hasStarted + ", " +
+                (result.equals(getDefaultPipe())));
+
+//        if (result.equals(getDefaultPipe())) {
             if (hasStarted) {
                 onSecondStart = true;
             } else {
                 getConsole().setIndicator(result.getDisplayName());
                 startAsSelected();
             }
-        }
+//        }
     }
 
     @Override
     public void onUnselectedAsStart(Pipe result) {
         super.onUnselectedAsStart(result);
-        Log.d("Indicator", "when unselected");
+        Log.d(TAG, "when unselected: " + onSecondStart);
 
         if (!onSecondStart) {
             getConsole().setIndicator("");

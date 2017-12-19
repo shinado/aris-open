@@ -2,11 +2,13 @@ package com.ss.aris.open.pipes.entity;
 
 import android.annotation.TargetApi;
 import android.app.PendingIntent;
+import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,11 +51,10 @@ public class Pipe implements Comparable<Pipe>, Displayable, Parcelable {
 
     private boolean donotExecute = false;
 
-    //for analysis
-    public String executeBody = "";
-
     //????
     public PendingIntent pendingIntent = null;
+
+    public long lastModified = 0;
 
     public Pipe() {
     }
@@ -148,7 +149,8 @@ public class Pipe implements Comparable<Pipe>, Displayable, Parcelable {
         }
     }
 
-    public @Nullable BasePipe getBasePipe() {
+    public @Nullable
+    BasePipe getBasePipe() {
 //        if (basePipe == null) {
 //            return new NullPipe(-1);
 //            throw new BasePipeNotSetException(getClass().getSimpleName() + " must set BasePipe in getDefaultPipe() in BasePipe");
@@ -293,6 +295,11 @@ public class Pipe implements Comparable<Pipe>, Displayable, Parcelable {
     public void setAcceptableParams(Pipe... params) {
         acceptableParams = new ArrayList<>();
         Collections.addAll(acceptableParams, params);
+    }
+
+    public void displayIcon(ImageView imageView) {
+        BasePipe basePipe = getBasePipe();
+        if (basePipe != null) basePipe.displayIcon(this, imageView);
     }
 
     @Override

@@ -1,13 +1,20 @@
 package com.ss.aris.open.pipes;
 
 import android.annotation.TargetApi;
+import android.content.ComponentName;
 import android.content.Context;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.ImageView;
 
 import java.util.TreeSet;
 
+import com.aris.open.R;
 import com.ss.aris.open.TargetVersion;
+import com.ss.aris.open.icons.AbsIconPackManager;
 import com.ss.aris.open.pipes.configs.Configurations;
 import com.ss.aris.open.pipes.entity.Keys;
 import com.ss.aris.open.console.Console;
@@ -35,6 +42,8 @@ public abstract class BasePipe {
     protected IPipeManager pipeManager;
 
     private OutputCallback mConsoleCallback;
+
+    protected AbsIconPackManager ipManager;
 
     public BasePipe(int id) {
         this.id = id;
@@ -190,6 +199,11 @@ public abstract class BasePipe {
         configurations = new Configurations(context);
     }
 
+    @TargetVersion(1184)
+    public void setIpManager(AbsIconPackManager ipManager){
+        this.ipManager = ipManager;
+    }
+
     protected OutputCallback getConsoleCallback() {
         return mConsoleCallback;
     }
@@ -336,6 +350,7 @@ public abstract class BasePipe {
     @TargetVersion(1144)
     public void onPause(){}
 
+
     public interface OnItemsLoadedListener {
         void onItemsLoaded(BasePipe pipe, int total);
     }
@@ -385,6 +400,25 @@ public abstract class BasePipe {
                     handler.postDelayed(this, ms);
                 }
             }, ms);
+        }
+    }
+
+    @TargetVersion(1182)
+    public int resolveDefaultIcon(Pipe pipe){
+        return R.drawable.ic_pipe;
+//        return new BitmapDrawable(context.getResources(),
+//                BitmapFactory.decodeResource(
+//                        context.getResources(), R.drawable.ic_pipe));
+    }
+
+    @TargetVersion(1182)
+    public void displayIcon(Pipe pipe, ImageView imageView) {
+        if (ipManager == null){
+            imageView.setImageResource(resolveDefaultIcon(pipe));
+        }else {
+            boolean b = ipManager.loadIconForPackage(
+                    imageView, new ComponentName("id="+getId(), ""));
+            if (!b) imageView.setImageResource(resolveDefaultIcon(pipe));
         }
     }
 

@@ -11,6 +11,8 @@ public class PConstants {
     public static final int ID_STORE = 19;
     public static final int ID_DISABLE = 20;
     public static final int ID_ENABLE = 21;
+    public static final int ID_DIRECTORY = 22;
+    public static final int ID_CONTACT_ARIS = 23;
 
     public static final int ID_POST = 60;
 
