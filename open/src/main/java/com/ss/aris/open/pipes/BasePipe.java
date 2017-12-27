@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import java.util.TreeSet;
@@ -365,6 +366,7 @@ public abstract class BasePipe {
 
     public interface AdvancedOutputCallback extends OutputCallback {
         void onOutput(String output, OnOutputClickListener listener);
+        void display(View view);
     }
 
     public interface OutputCallback {

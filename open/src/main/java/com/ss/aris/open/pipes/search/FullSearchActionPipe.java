@@ -2,9 +2,7 @@ package com.ss.aris.open.pipes.search;
 
 import android.annotation.TargetApi;
 import android.util.Log;
-
 import java.util.TreeSet;
-
 import com.ss.aris.open.pipes.BasePipe;
 import com.ss.aris.open.pipes.entity.Instruction;
 import com.ss.aris.open.pipes.entity.Pipe;
@@ -34,6 +32,7 @@ public abstract class FullSearchActionPipe extends SearchablePipe {
     }
 
     protected void end() {
+        onSecondStart = false;
         hasStarted = false;
         removeItemInMap(defaultExitPipe);
         pipeManager.reenableSearchAll();
@@ -105,12 +104,12 @@ public abstract class FullSearchActionPipe extends SearchablePipe {
     @Override
     public void onSelectedAsStart(Pipe result) {
         super.onSelectedAsStart(result);
-
         Log.d(TAG, "onSelectedAsStart: " + hasStarted + ", " +
                 (result.equals(getDefaultPipe())));
 
 //        if (result.equals(getDefaultPipe())) {
             if (hasStarted) {
+                Log.d(TAG, "second start");
                 onSecondStart = true;
             } else {
                 getConsole().setIndicator(result.getDisplayName());

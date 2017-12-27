@@ -1,6 +1,5 @@
 package com.ss.aris.open.util;
 
-
 import com.alibaba.fastjson.JSON;
 
 public class JsonUtil {

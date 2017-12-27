@@ -23,4 +23,5 @@ public class FeedItem {
 
     public FeedItem() {
     }
+
 }

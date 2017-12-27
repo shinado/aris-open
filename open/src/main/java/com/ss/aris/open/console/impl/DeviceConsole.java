@@ -3,7 +3,6 @@ package com.ss.aris.open.console.impl;
 import android.annotation.TargetApi;
 import android.graphics.Typeface;
 import android.widget.TextView;
-
 import java.util.Collection;
 import com.ss.aris.open.console.Console;
 import com.ss.aris.open.pipes.entity.Instruction;
