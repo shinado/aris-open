@@ -1,6 +1,7 @@
 package com.ss.aris.open.console.impl;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.widget.TextView;
 import java.util.Collection;
@@ -26,5 +27,13 @@ public interface DeviceConsole extends Console {
 
     @TargetApi(5)
     void requestPermission(String[] permissions, PermissionCallback callback);
+
+    @TargetApi(1188)
+    void requestResult(Intent intent, ResultCallback callback);
+
+    @TargetApi(1188)
+    interface ResultCallback{
+        void onActivityResult(int resultCode, Intent intent);
+    }
 
 }

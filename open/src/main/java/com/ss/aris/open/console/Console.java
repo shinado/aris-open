@@ -104,27 +104,6 @@ public interface Console {
     void waitForCharacterInput(CharacterInputCallback inputCallback);
 
     /**
-     * for system key such as BACK, MENU, etc.
-     * kinda deprecated
-     */
-    @Deprecated
-    @TargetVersion(4)
-    void waitForKeyDown(KeyDownCallback inputCallback);
-
-    /**
-     * under this mode, you won't get any result from system
-     * However, you will still find your input in the console
-     * In another word, search is disabled
-     */
-    @Deprecated
-    @TargetVersion(4)
-    void occupyMode();
-
-    @Deprecated
-    @TargetVersion(4)
-    void quitOccupy();
-
-    /**
      * under this mode, any input will not be received
      * whatever you type will not be displayed
      */
@@ -143,11 +122,9 @@ public interface Console {
     @TargetVersion(4)
     void setIndicator(String indicator);
 
-    @Deprecated
     @TargetVersion(11)
     void setInputType(int inputType);
 
-    @Deprecated
     @TargetVersion(11)
     int getInputType();
 

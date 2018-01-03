@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import com.ss.aris.open.pipes.action.SimpleActionPipe;
 import com.ss.aris.open.pipes.entity.Pipe;
 import com.ss.aris.open.util.HttpUtil;
+import com.ss.aris.open.util.JsonUtil;
+
 import java.util.List;
 
 public class TaobaoPipe extends SimpleActionPipe {
@@ -27,7 +29,8 @@ public class TaobaoPipe extends SimpleActionPipe {
         HttpUtil.post(url, new HttpUtil.OnSimpleStringResponse() {
             @Override
             public void onResponse(String string) {
-                onDataLoaded(null, callback);
+                TaobaoResponse response = JsonUtil.fromJson(string, TaobaoResponse.class);
+                onDataLoaded(response.listItem, callback);
             }
 
             @Override

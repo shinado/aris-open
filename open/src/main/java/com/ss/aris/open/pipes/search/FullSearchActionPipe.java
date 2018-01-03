@@ -145,8 +145,12 @@ public abstract class FullSearchActionPipe extends SearchablePipe {
             callback.onOutput("starting " + result.getDisplayName());
         } else {
             doExecute(result, callback);
-            end();
+            if (oneTime()) end();
         }
+    }
+
+    protected boolean oneTime() {
+        return true;
     }
 
     @Override
