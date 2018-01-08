@@ -16,6 +16,7 @@ import java.util.TreeSet;
 
 import com.aris.open.R;
 import com.ss.aris.open.TargetVersion;
+import com.ss.aris.open.console.impl.DeviceConsole;
 import com.ss.aris.open.icons.AbsIconPackManager;
 import com.ss.aris.open.pipes.configs.Configurations;
 import com.ss.aris.open.pipes.entity.Keys;
@@ -84,7 +85,6 @@ public abstract class BasePipe {
                     = new Pipe.PreviousPipes(previous);
 
             if (rs.donotExecute()) {
-//                setDonotExecute(rs);
                 acceptInput(rs, "", newPrevious, callback);
             } else {
                 BasePipe base = prev.getBasePipe();
@@ -92,7 +92,6 @@ public abstract class BasePipe {
                     base.execute(prev, new OutputCallback() {
                         @Override
                         public void onOutput(String input) {
-//                            getConsole().releaseInput();
                             acceptInput(rs, input, newPrevious, callback);
                         }
                     });
@@ -100,17 +99,6 @@ public abstract class BasePipe {
             }
         } else {
             tryGetOutput(rs, callback);
-        }
-    }
-
-    private void setDonotExecute(Pipe rs){
-        rs.setDonotExecute(true);
-        Pipe.PreviousPipes previous = rs.getPrevious();
-        if (previous != null){
-            TreeSet<Pipe> all = previous.getAll();
-            for (Pipe p: all){
-                setDonotExecute(p);
-            }
         }
     }
 
@@ -202,7 +190,7 @@ public abstract class BasePipe {
     }
 
     @TargetVersion(1184)
-    public void setIpManager(AbsIconPackManager ipManager){
+    public void setIpManager(AbsIconPackManager ipManager) {
         this.ipManager = ipManager;
     }
 
@@ -347,10 +335,12 @@ public abstract class BasePipe {
     }
 
     @TargetVersion(1144)
-    public void onResume(){}
+    public void onResume() {
+    }
 
     @TargetVersion(1144)
-    public void onPause(){}
+    public void onPause() {
+    }
 
 
     public interface OnItemsLoadedListener {
@@ -367,6 +357,7 @@ public abstract class BasePipe {
 
     public interface AdvancedOutputCallback extends OutputCallback {
         void onOutput(String output, OnOutputClickListener listener);
+
         void display(View view);
     }
 
@@ -389,25 +380,28 @@ public abstract class BasePipe {
     @TargetVersion(1132)
     protected void addNotifyTimeCircle(final long ms) {
         if (hasRunnable) return;
+        if (console instanceof DeviceConsole) {
 
-        hasRunnable = true;
-        final Pipe dp = getDefaultPipe();
-        if (dp != null) {
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (hasDestroyed) return;
+            hasRunnable = true;
+            final Pipe dp = getDefaultPipe();
+            if (dp != null) {
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (hasDestroyed) return;
 
-                    getConsole().notify(dp);
-                    handler.postDelayed(this, ms);
-                }
-            }, ms);
+                        ((DeviceConsole) getConsole()).notify(dp);
+                        handler.postDelayed(this, ms);
+                    }
+                }, ms);
+            }
         }
+
     }
 
     @TargetVersion(1182)
-    public int resolveDefaultIcon(Pipe pipe){
+    public int resolveDefaultIcon(Pipe pipe) {
         return R.drawable.ic_pipe;
 //        return new BitmapDrawable(context.getResources(),
 //                BitmapFactory.decodeResource(
@@ -416,11 +410,11 @@ public abstract class BasePipe {
 
     @TargetVersion(1182)
     public void displayIcon(Pipe pipe, ImageView imageView) {
-        if (ipManager == null){
+        if (ipManager == null) {
             imageView.setImageResource(resolveDefaultIcon(pipe));
-        }else {
+        } else {
             boolean b = ipManager.loadIconForPackage(
-                    imageView, new ComponentName("id="+getId(), ""));
+                    imageView, new ComponentName("id=" + getId(), ""));
             if (!b) imageView.setImageResource(resolveDefaultIcon(pipe));
         }
     }

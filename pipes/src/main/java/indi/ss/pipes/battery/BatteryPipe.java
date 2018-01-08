@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
 
+import com.ss.aris.open.console.impl.DeviceConsole;
 import com.ss.aris.open.pipes.action.SimpleActionPipe;
 import com.ss.aris.open.pipes.entity.Pipe;
 
@@ -57,7 +58,10 @@ public class BatteryPipe extends SimpleActionPipe {
 
                 float batteryPct = level / (float) scale;
                 battery = "Battery " + getBar((int) (batteryPct * 100))  + " " + (int)batteryPct + "%";
-                console.notify(getDefaultPipe());
+
+                if (getConsole() instanceof DeviceConsole){
+                    ((DeviceConsole) getConsole()).notify(getDefaultPipe());
+                }
             }
         }
     };

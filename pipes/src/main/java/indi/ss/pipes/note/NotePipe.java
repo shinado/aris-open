@@ -2,10 +2,12 @@ package indi.ss.pipes.note;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
 import java.util.Map;
 import java.util.TreeMap;
 
 import com.ss.aris.open.TargetVersion;
+import com.ss.aris.open.console.impl.DeviceConsole;
 import com.ss.aris.open.pipes.action.AcceptablePipe;
 import com.ss.aris.open.pipes.action.DefaultInputActionPipe;
 import com.ss.aris.open.pipes.entity.Keys;
@@ -20,7 +22,7 @@ import com.ss.aris.open.pipes.impl.interfaces.Helpable;
 //note >1.clear
 //note >=1.clear
 @TargetVersion(1136)
-public class NotePipe extends AcceptablePipe implements Clearable, Helpable{
+public class NotePipe extends AcceptablePipe implements Clearable, Helpable {
 
     private static final String NAME = "anote";
 
@@ -63,10 +65,10 @@ public class NotePipe extends AcceptablePipe implements Clearable, Helpable{
             }
         }
 
-        for (int key : treeMap.keySet()){
+        for (int key : treeMap.keySet()) {
             sb.append(key);
             sb.append(".");
-            sb.append(map.get(key+""));
+            sb.append(map.get(key + ""));
             sb.append("\n");
         }
 
@@ -80,10 +82,12 @@ public class NotePipe extends AcceptablePipe implements Clearable, Helpable{
 
     private void addNewNote(String note) {
         int index = sp.getInt("index", 0);
-        sp.edit().putString(index+"", note)
-                .putInt("index", index+1)
+        sp.edit().putString(index + "", note)
+                .putInt("index", index + 1)
                 .apply();
-        getConsole().notify(getDefaultPipe());
+        if (getConsole() instanceof DeviceConsole) {
+            ((DeviceConsole) getConsole()).notify(getDefaultPipe());
+        }
         getConsole().input("Note added. ");
     }
 
@@ -95,14 +99,18 @@ public class NotePipe extends AcceptablePipe implements Clearable, Helpable{
     @Override
     public void clear(Pipe rs) {
         String[] params = rs.getInstruction().params;
-        if (params.length == 0){
+        if (params.length == 0) {
             sp.edit().clear().apply();
-            getConsole().notify(getDefaultPipe());
-        }else {
+            if (getConsole() instanceof DeviceConsole) {
+                ((DeviceConsole) getConsole()).notify(getDefaultPipe());
+            }
+        } else {
             try {
                 int index = Integer.parseInt(params[0]);
-                sp.edit().remove(index+"").apply();
-                getConsole().notify(getDefaultPipe());
+                sp.edit().remove(index + "").apply();
+                if (getConsole() instanceof DeviceConsole) {
+                    ((DeviceConsole) getConsole()).notify(getDefaultPipe());
+                }
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }

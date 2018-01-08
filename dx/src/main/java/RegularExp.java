@@ -4,40 +4,51 @@ import java.util.regex.Pattern;
 public class RegularExp {
 
     public static void main(String[] args) {
-//        p0();
-
-        String input = "USD MYR";
-        String executable = "https://api.fixer.io/latest?base=$s&symbols=$s";
-        String[] split = input.split(" ");
-        for (String s : split) {
-            executable = executable.replaceFirst("\\$s", s);
-        }
-        System.out.println(executable);
+        p00();
     }
 
     public static void p00() {
         String line = "把微信的apk发给那谁";
+        String translation = "baweixindeapkfageinashui";
         String[] values = new String[]{"微信", "apk", "那谁"};
-        String code = "weixin->apk->nash";
+
+        String code = "weixin->apk->nashui";
+        String[] tValues = code.split("->");//new String[]{"weixin", "apk", "nashui"};
 
 //        String line = "跟Eric说下来打球";
 //        String[] values = new String[]{"Eric", "下来打球"};
 
-        String[] pattern = new String[values.length];
+        String[] pattern = new String[tValues.length];
 
-        for (int i = 0; i < values.length; i++) {
-            String[] split = line.split(values[i]);
+        String t = translation;
+        for (int i = 0; i < tValues.length; i++) {
+            String[] split = t.split(tValues[i]);
             pattern[i] = split[0];
             if (split.length >= 2) {
-                line = split[1];
+                t = split[1];
             }
         }
 
+        String newPattern = "";
         for (String p : pattern) {
-            System.out.println(p);
+            newPattern += (p + "(.*)");
+        }
+        System.out.println(newPattern);
+
+        // Create a Pattern object
+        Pattern r = Pattern.compile(newPattern);
+
+        // Now create matcher object.
+        Matcher m = r.matcher(translation);
+
+        if (m.find()) {
+            for (int i=1; i<=m.groupCount(); i++){
+                System.out.println("Found value: " + m.group(i));
+            }
+        } else {
+            System.out.println("NO MATCH");
         }
     }
-
 
     public static void p0() {
         String line = "把微信的apk发给那谁";
@@ -81,8 +92,10 @@ public class RegularExp {
     }
 
     public static void p2() {
-        String line = "把微信的apk发给那谁";
-        String pattern = "把(.*)的(.*)发给(.*)";
+        String line = "baweixindeapkfageinashui";
+        String pattern = "ba(.*)de(.*)fagei(.*)";
+//        String line = "把微信的apk发给那谁";
+//        String pattern = "把(.*)的(.*)发给(.*)";
 
         // Create a Pattern object
         Pattern r = Pattern.compile(pattern);
@@ -90,6 +103,7 @@ public class RegularExp {
         // Now create matcher object.
         Matcher m = r.matcher(line);
 
+        System.out.println(pattern);
         if (m.find()) {
             System.out.println("Found value: " + m.group(0));
             System.out.println("Found value: " + m.group(1));

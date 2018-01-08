@@ -140,7 +140,6 @@ public abstract class FullSearchActionPipe extends SearchablePipe {
 
     @Override
     public void getOutput(Pipe result, BasePipe.OutputCallback callback) {
-        //TODO for this case: cd folder?
         if (result.equals(getDefaultPipe())) {
             callback.onOutput("starting " + result.getDisplayName());
         } else {

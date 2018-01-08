@@ -8,6 +8,8 @@ import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
 import android.text.format.Formatter;
+
+import com.ss.aris.open.console.impl.DeviceConsole;
 import com.ss.aris.open.pipes.action.SimpleActionPipe;
 import com.ss.aris.open.pipes.entity.Pipe;
 import com.ss.aris.open.util.TimeUtil;
@@ -128,7 +130,9 @@ public class MonitorPipe extends SimpleActionPipe {
                 }
             }
 
-            getConsole().notify(getDefaultPipe());
+            if (getConsole() instanceof DeviceConsole){
+                ((DeviceConsole) getConsole()).notify(getDefaultPipe());
+            }
         }
     };
 

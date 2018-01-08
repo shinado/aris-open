@@ -1,39 +1,55 @@
 package com.ss.aris.open.console.impl;
 
-import android.annotation.TargetApi;
-import android.content.Intent;
 import android.graphics.Typeface;
+import android.view.View;
 import android.widget.TextView;
-import java.util.Collection;
-import com.ss.aris.open.console.Console;
-import com.ss.aris.open.pipes.entity.Instruction;
+
+import com.ss.aris.open.TargetVersion;
+import com.ss.aris.open.console.InputCallback;
 import com.ss.aris.open.pipes.entity.Pipe;
 
-public interface DeviceConsole extends Console {
+//for geek style console
+public interface DeviceConsole extends LauncherConsole{
 
     Typeface getTypeface();
 
-    void onSystemReady();
-
-    void displayResult(Collection<Pipe> pipe, Instruction instruction, int selection);
-
-    void onEnter(Pipe pipe);
-
-    void onSelected(Pipe pipe);
-
-    void onNothing();
-
     TextView getDisplayTextView();
 
-    @TargetApi(5)
-    void requestPermission(String[] permissions, PermissionCallback callback);
+    /**
+     * clear console
+     */
+    void clear();
 
-    @TargetApi(1188)
-    void requestResult(Intent intent, ResultCallback callback);
+    /**
+     * under this mode, any input will not be received
+     * whatever you type will not be displayed
+     */
+    @TargetVersion(4)
+    void blindMode();
 
-    @TargetApi(1188)
-    interface ResultCallback{
-        void onActivityResult(int resultCode, Intent intent);
-    }
+    @TargetVersion(4)
+    void quitBlind();
+
+    @TargetVersion(4)
+    void addInputCallback(InputCallback inputCallback);
+
+    @TargetVersion(4)
+    void removeInputCallback(InputCallback inputCallback);
+
+    @TargetVersion(11)
+    void setInputType(int inputType);
+
+    @TargetVersion(11)
+    int getInputType();
+
+    @TargetVersion(1144)
+    void reshowTerminal();
+
+    @TargetVersion(1144)
+    void replaceCurrentView(View view);
+
+    void notify(Pipe pipe);
+
+    void notifyByName(String name);
 
 }

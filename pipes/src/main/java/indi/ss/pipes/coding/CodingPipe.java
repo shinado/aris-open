@@ -510,9 +510,10 @@ public class CodingPipe extends DefaultInputActionPipe {
     }
 
     private void letsGo(OutputCallback callback) {
+        DeviceConsole console = (DeviceConsole) getConsole();
         if (callback == getConsoleCallback()) {
-            getConsole().blindMode();
-            getConsole().addInputCallback(mInputCallback);
+            console.blindMode();
+            console.addInputCallback(mInputCallback);
 
             DeviceConsole deviceConsole = (DeviceConsole) getConsole();
             textView = new TextView(context, null);
@@ -526,7 +527,7 @@ public class CodingPipe extends DefaultInputActionPipe {
 
             scrollView = new ScrollView(context, null);
             scrollView.addView(textView);
-            getConsole().replaceCurrentView(scrollView);
+            console.replaceCurrentView(scrollView);
         } else {
             callback.onOutput("shh~I am coding");
         }
@@ -540,10 +541,11 @@ public class CodingPipe extends DefaultInputActionPipe {
     private InputCallback mInputCallback = new InputCallback() {
         @Override
         public void onInput(String character) {
+            DeviceConsole console = (DeviceConsole) getConsole();
             if ("#".equals(character)) {
-                getConsole().quitBlind();
-                getConsole().removeInputCallback(mInputCallback);
-                getConsole().reshowTerminal();
+                console.quitBlind();
+                console.removeInputCallback(mInputCallback);
+                console.reshowTerminal();
             } else {
                 if (pointer >= CODE.length()) pointer = 0;
                 String random = CODE.substring(pointer, Math.min(CODE.length(),

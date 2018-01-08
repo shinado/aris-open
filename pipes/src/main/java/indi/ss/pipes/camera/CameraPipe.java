@@ -8,6 +8,7 @@ import android.provider.MediaStore;
 
 import com.ss.aris.open.console.impl.DeviceConsole;
 import com.ss.aris.open.console.impl.PermissionCallback;
+import com.ss.aris.open.console.impl.ResultCallback;
 import com.ss.aris.open.pipes.action.SimpleActionPipe;
 import com.ss.aris.open.pipes.entity.Pipe;
 import com.ss.aris.open.pipes.impl.ShareIntent;
@@ -62,7 +63,7 @@ public class CameraPipe extends SimpleActionPipe {
                         @Override
                         public void onPermissionResult(boolean granted, boolean firstTime) {
                             if (granted) {
-                                console.requestResult(takePictureIntent, new DeviceConsole.ResultCallback() {
+                                console.requestResult(takePictureIntent, new ResultCallback() {
                                     @Override
                                     public void onActivityResult(int resultCode, Intent data) {
                                         if (resultCode == RESULT_OK) {

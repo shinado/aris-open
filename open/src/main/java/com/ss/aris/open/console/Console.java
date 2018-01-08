@@ -1,8 +1,12 @@
 package com.ss.aris.open.console;
 
+import android.annotation.TargetApi;
+import android.content.Intent;
 import android.view.View;
 
 import com.ss.aris.open.TargetVersion;
+import com.ss.aris.open.console.impl.PermissionCallback;
+import com.ss.aris.open.console.impl.ResultCallback;
 import com.ss.aris.open.console.text.OnTextClickListener;
 import com.ss.aris.open.pipes.BasePipe;
 import com.ss.aris.open.pipes.entity.Pipe;
@@ -52,14 +56,6 @@ public interface Console {
     void display(String string, Pipe tag);
 
     /**
-     * to display a string on input area
-     * @param string
-     */
-    void displayInput(String string);
-
-    void replaceCurrentLine(String line);
-
-    /**
      * block user input
      * users won't be able to input
      */
@@ -69,11 +65,6 @@ public interface Console {
      * release user input
      */
     void releaseInput();
-
-    /**
-     * clear console
-     */
-    void clear();
 
     /**
      * to force any text to display, skipping animation
@@ -103,50 +94,14 @@ public interface Console {
     @TargetVersion(4)
     void waitForCharacterInput(CharacterInputCallback inputCallback);
 
-    /**
-     * under this mode, any input will not be received
-     * whatever you type will not be displayed
-     */
-    @TargetVersion(4)
-    void blindMode();
-
-    @TargetVersion(4)
-    void quitBlind();
-
-    @TargetVersion(4)
-    void addInputCallback(InputCallback inputCallback);
-
-    @TargetVersion(4)
-    void removeInputCallback(InputCallback inputCallback);
-
     @TargetVersion(4)
     void setIndicator(String indicator);
 
-    @TargetVersion(11)
-    void setInputType(int inputType);
+    @TargetApi(5)
+    void requestPermission(String[] permissions, PermissionCallback callback);
 
-    @TargetVersion(11)
-    int getInputType();
-
-    /**
-     * to notify a pipe that's been displayed in the console
-     * call it when display content has been changed
-     * for instance, when the pipe ANOTE is set as initializing text
-     * call it when your note has been modified
-     * so the display will correspond to it
-     */
-    void notify(Pipe pipe);
-
-    /**
-     * to notify a pipe by name to refresh
-     */
-    void notifyByName(String name);
-
-    @TargetVersion(1144)
-    void reshowTerminal();
-
-    @TargetVersion(1144)
-    void replaceCurrentView(View view);
+    @TargetApi(1188)
+    void requestResult(Intent intent, ResultCallback callback);
 
     BasePipe.OutputCallback getOutputCallback();
 

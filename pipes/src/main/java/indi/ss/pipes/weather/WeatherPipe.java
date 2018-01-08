@@ -53,7 +53,7 @@ public class WeatherPipe extends DefaultInputActionPipe {
                 getConsole().input("Loading...");
             }
 
-            ((DeviceConsole) getConsole()).requestPermission(
+            getConsole().requestPermission(
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     new PermissionCallback() {
                         @Override

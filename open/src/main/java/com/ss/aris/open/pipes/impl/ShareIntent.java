@@ -1,5 +1,6 @@
 package com.ss.aris.open.pipes.impl;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
 
@@ -14,6 +15,7 @@ public class ShareIntent {
     public String type = "";
     public String data = "";
     public String action;
+    public String componentName = "";
     public int flags;
     public HashMap<String, String> extras = new HashMap<>();
 
@@ -41,6 +43,10 @@ public class ShareIntent {
         intent.setType(type);
         if (!data.isEmpty()){
             intent.setData(Uri.parse(data));
+        }
+        if (componentName.contains(",")){
+            String[] split = componentName.split(",");
+            intent.setComponent(new ComponentName(split[0], split[1]));
         }
         intent.setFlags(flags);
 

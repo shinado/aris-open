@@ -105,8 +105,9 @@ public class SnakePipe extends DefaultInputActionPipe implements Console {
                 "Use 2 for up, 8 for down, 4 for left and 6 for right. Please enter maze width(for instance, 30) to start.";
         getConsole().display(help);
 
-        inputType = getConsole().getInputType();
-        getConsole().setInputType(InputType.TYPE_CLASS_NUMBER |
+        DeviceConsole console = (DeviceConsole) getConsole();
+        inputType = console.getInputType();
+        console.setInputType(InputType.TYPE_CLASS_NUMBER |
                 InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         getConsole().waitForCharacterInput(new CharacterInputCallback() {
             @Override
@@ -171,17 +172,19 @@ public class SnakePipe extends DefaultInputActionPipe implements Console {
                 int height = (int) (width * 0.8f);
 
                 Maze maze = new Maze(width, height);
-                getConsole().blindMode();
-                getConsole().clear();
+                ((DeviceConsole) getConsole()).blindMode();
+
+                if (getConsole() instanceof DeviceConsole){
+                    ((DeviceConsole) getConsole()).clear();
+                }
 
                 game.create(maze, new Snake(), SnakePipe.this);
                 game.start();
-                getConsole().addInputCallback(mInputCallback);
+                ((DeviceConsole) getConsole()).addInputCallback(mInputCallback);
             }
         });
 
-        getConsole().replaceCurrentView(textView);
-
+        ((DeviceConsole) getConsole()).replaceCurrentView(textView);
     }
 
     public String getTenCharPerLineString(String text) {
@@ -204,15 +207,16 @@ public class SnakePipe extends DefaultInputActionPipe implements Console {
 
     private void stop() {
         game.stop();
-        getConsole().quitBlind();
-        getConsole().setInputType(inputType);
-        getConsole().removeInputCallback(mInputCallback);
+        final DeviceConsole console = (DeviceConsole) getConsole();
+        console.quitBlind();
+        console.setInputType(inputType);
+        console.removeInputCallback(mInputCallback);
 
         textView.append("\nGame Over. Score: " + game.getScore());
         getConsole().waitForCharacterInput(new CharacterInputCallback() {
             @Override
             public void onCharacterInput(String character) {
-                getConsole().reshowTerminal();
+                console.reshowTerminal();
             }
         });
     }
