@@ -1,5 +1,12 @@
 package com.ss.aris.open.util;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+
+import java.util.List;
+
 /**
  * Created by shinado on 13/12/2016.
  */
@@ -89,5 +96,12 @@ public class IntentUtil {
                 type = MIME_MapTable[i][1];
         }
         return type;
+    }
+
+    public static boolean isIntentAvailable(Context context, Intent intent) {
+        PackageManager packageManager = context.getPackageManager();
+        List<ResolveInfo> resolveInfo = packageManager.queryIntentActivities(
+                intent, PackageManager.MATCH_DEFAULT_ONLY);
+        return resolveInfo.size() > 0;
     }
 }

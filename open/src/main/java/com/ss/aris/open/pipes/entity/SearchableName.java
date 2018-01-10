@@ -118,15 +118,6 @@ public class SearchableName {
         }
     }
 
-    public String toSimpleString() {
-        String string = "";
-        for (String str : name) {
-            if (str.length() > 0)
-                string += str.charAt(0);
-        }
-        return string;
-    }
-
     @Override
     public String toString() {
         String string = "";

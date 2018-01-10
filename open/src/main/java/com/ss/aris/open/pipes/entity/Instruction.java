@@ -27,7 +27,7 @@ public class Instruction {
 
     public String[] params;
 
-    public String getParams() {
+    public String params() {
         StringBuilder value = new StringBuilder();
         for (String str: params){
             value.append(str).append(" ");
@@ -36,7 +36,7 @@ public class Instruction {
         return (value.length() == 0) ? "" : value.substring(0, value.length()-1);
     }
 
-    public Map<String, String> getParameterMap() {
+    public Map<String, String> parameterMap() {
         HashMap<String, String> map = new HashMap<>();
         if (params.length > 0) {
             for (int i = 0; i < params.length / 2; i++) {
@@ -44,6 +44,10 @@ public class Instruction {
             }
         }
         return map;
+    }
+
+    public Instruction(){
+
     }
 
     /**

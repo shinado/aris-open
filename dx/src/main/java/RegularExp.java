@@ -8,24 +8,23 @@ public class RegularExp {
     }
 
     public static void p00() {
-        String line = "把微信的apk发给那谁";
-        String translation = "baweixindeapkfageinashui";
-        String[] values = new String[]{"微信", "apk", "那谁"};
+//        String translation = "baweixindeapkfageinashui";
+        String translation = "bagangpaidenazhangzhaopianfageinashui";
 
-        String code = "weixin->apk->nashui";
+//        String code = "weixin->apk->nashui";
+        String code = "dcim/camera->latest->nashui";
         String[] tValues = code.split("->");//new String[]{"weixin", "apk", "nashui"};
-
-//        String line = "跟Eric说下来打球";
-//        String[] values = new String[]{"Eric", "下来打球"};
 
         String[] pattern = new String[tValues.length];
 
         String t = translation;
         for (int i = 0; i < tValues.length; i++) {
             String[] split = t.split(tValues[i]);
-            pattern[i] = split[0];
             if (split.length >= 2) {
+                pattern[i] = split[0];
                 t = split[1];
+            }else {
+
             }
         }
 
@@ -42,7 +41,7 @@ public class RegularExp {
         Matcher m = r.matcher(translation);
 
         if (m.find()) {
-            for (int i=1; i<=m.groupCount(); i++){
+            for (int i = 1; i <= m.groupCount(); i++) {
                 System.out.println("Found value: " + m.group(i));
             }
         } else {
@@ -172,6 +171,9 @@ public class RegularExp {
     }
 
     public static void p6() {
+        String code[] = new String[]{"cd camera", "latest", "nashui"};
+        //cd camera 刚刚拍
+        //latest 那张照片
         String line = "把刚刚拍的那张照片发给那谁";
         String pattern = "把(.*)的(.*)发给(.*)";
 

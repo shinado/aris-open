@@ -49,7 +49,7 @@ public class HighLightPipe extends DefaultInputActionPipe implements Helpable{
                     getConsole().display(input);
                 } else {
                     String[] lines = input.split("\n");
-                    Map<String, String> map = result.getInstruction().getParameterMap();
+                    Map<String, String> map = result.getInstruction().parameterMap();
                     if (!tryStartsWith(lines, map)){
                         if (!tryEndsWith(lines, map)){
                             getConsole().display("Highlight failed to parse parameters. ");

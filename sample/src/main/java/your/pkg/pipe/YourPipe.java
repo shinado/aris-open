@@ -19,7 +19,9 @@ public class YourPipe extends SimpleActionPipe {
 
     @Override
     public void acceptInput(Pipe result, String input, Pipe.PreviousPipes previous, OutputCallback callback) {
-        callback.onOutput(result.getDisplayName() + " accept: " + input + " from " + previous.get().getDisplayName());
+        //get the previous pipe
+        Pipe previousPipe = previous.get();
+        callback.onOutput(result.getDisplayName() + " accept: " + input + " from " + previousPipe.getDisplayName());
     }
 
     @Override

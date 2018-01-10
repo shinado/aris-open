@@ -3,9 +3,7 @@ package com.ss.aris.open.pipes.impl;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
-
 import java.util.HashMap;
-
 import com.ss.aris.open.util.JsonUtil;
 
 public class ShareIntent {
@@ -32,9 +30,8 @@ public class ShareIntent {
         return JsonUtil.toJson(this);
     }
 
-    public static ShareIntent fromIntent(Intent intent) {
-        ShareIntent shareIntent = new ShareIntent(intent.getAction());
-        return shareIntent;
+    public static ShareIntent from(String json) {
+        return JsonUtil.fromJson(json, ShareIntent.class);
     }
 
     public Intent toIntent() {

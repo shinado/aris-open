@@ -32,8 +32,6 @@ public class Pipe implements Comparable<Pipe>, Displayable, Parcelable {
 
     private SearchableName searchableName = new SearchableName("");
 
-    private List<Pipe> acceptableParams = new ArrayList<>();
-
     private PreviousPipes previous;
 
     private Instruction instruction = new Instruction("");
@@ -284,19 +282,6 @@ public class Pipe implements Comparable<Pipe>, Displayable, Parcelable {
         this.frequency++;
     }
 
-    public List<Pipe> getAcceptableParams() {
-        return acceptableParams;
-    }
-
-    public void setAcceptableParams(List<Pipe> acceptableParams) {
-        this.acceptableParams = acceptableParams;
-    }
-
-    public void setAcceptableParams(Pipe... params) {
-        acceptableParams = new ArrayList<>();
-        Collections.addAll(acceptableParams, params);
-    }
-
     public void displayIcon(ImageView imageView) {
         BasePipe basePipe = getBasePipe();
         if (basePipe != null) basePipe.displayIcon(this, imageView);
@@ -441,7 +426,6 @@ public class Pipe implements Comparable<Pipe>, Displayable, Parcelable {
         this.setPrevious(another.getPrevious());
         this.setSearchableName(another.getSearchableName());
         this.setTypeIndex(another.getTypeIndex());
-        this.setAcceptableParams(another.getAcceptableParams());
     }
 
     //--------------------- parcel ---------------------//

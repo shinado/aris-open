@@ -25,7 +25,7 @@ public class ApplicationPipe extends SimpleActionPipe{
     public void acceptInput(Pipe result, String input, Pipe.PreviousPipes previous, OutputCallback callback) {
         try {
             //if input is an instance of ShareIntent,
-            ShareIntent shareIntent = JsonUtil.fromJson(input, ShareIntent.class);
+            ShareIntent shareIntent = ShareIntent.from(input);
             context.startActivity(shareIntent.toIntent());
         } catch (Exception e) {
             e.printStackTrace();

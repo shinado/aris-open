@@ -29,7 +29,7 @@ public class SharePipe extends SimpleActionPipe {
 
         ShareIntent shareIntent = null;
         try {
-            shareIntent = JsonUtil.fromJson(input, ShareIntent.class);
+            shareIntent = ShareIntent.from(input);
             //still fail
             if (Intent.ACTION_VIEW.equals(shareIntent.action)) {
                 shareIntent = null;
