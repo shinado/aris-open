@@ -288,13 +288,17 @@ public abstract class BasePipe {
 
     public abstract void load(AbsTranslator translator, OnItemsLoadedListener listener, int total);
 
+    //used by script executor
     public abstract Pipe getByValue(String value, String params);
 
     //added in 2016-03-16
     //intercept
     //since version 3
     public void intercept() {
+    }
 
+    @TargetVersion(1192)
+    public void onConnected(Pipe.PreviousPipes previous) {
     }
 
     @TargetApi(5)
@@ -341,7 +345,6 @@ public abstract class BasePipe {
     @TargetVersion(1144)
     public void onPause() {
     }
-
 
     public interface OnItemsLoadedListener {
         void onItemsLoaded(BasePipe pipe, int total);

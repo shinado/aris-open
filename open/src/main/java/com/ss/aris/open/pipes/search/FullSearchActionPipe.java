@@ -46,21 +46,36 @@ public abstract class FullSearchActionPipe extends SearchablePipe {
         startedAsSelected = false;
     }
 
-    private void start() {
+    protected void start() {
+        start(null);
+    }
+
+    @TargetApi(1192)
+    protected void start(Pipe result) {
         hasStarted = true;
         putItemInMap(defaultExitPipe);
         pipeManager.searchAction(this);
     }
 
+    @TargetApi(1192)
+    protected void justStart(Pipe result) {
+        start(result);
+    }
+
+    @TargetApi(1192)
+    protected void startAsSelected(Pipe result) {
+        startedAsSelected = true;
+        start(result);
+        Log.d("FullSearch", "startAsSelected: ");
+    }
+
     protected void justStart() {
-        start();
+        justStart(null);
     }
 
     @TargetApi(8)
     protected void startAsSelected() {
-        startedAsSelected = true;
-        start();
-        Log.d("FullSearch", "startAsSelected: ");
+        startAsSelected(null);
     }
 
     @Override
@@ -113,7 +128,7 @@ public abstract class FullSearchActionPipe extends SearchablePipe {
                 onSecondStart = true;
             } else {
                 getConsole().setIndicator(result.getDisplayName());
-                startAsSelected();
+                startAsSelected(result);
             }
 //        }
     }

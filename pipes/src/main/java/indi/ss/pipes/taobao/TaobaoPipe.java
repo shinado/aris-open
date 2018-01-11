@@ -29,8 +29,14 @@ public class TaobaoPipe extends SimpleActionPipe {
         HttpUtil.post(url, new HttpUtil.OnSimpleStringResponse() {
             @Override
             public void onResponse(String string) {
-                TaobaoResponse response = JsonUtil.fromJson(string, TaobaoResponse.class);
-                onDataLoaded(response.listItem, callback);
+                TaobaoResponse response = null;
+                try {
+                    response = JsonUtil.fromJson(string, TaobaoResponse.class);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                if (response != null) onDataLoaded(response.listItem, callback);
             }
 
             @Override

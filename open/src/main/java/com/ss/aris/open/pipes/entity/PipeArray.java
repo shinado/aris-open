@@ -6,7 +6,6 @@ import com.ss.aris.open.util.JsonUtil;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-
 import indi.shinado.piping.pipes.impl.manage.ScriptConvertor;
 
 public class PipeArray {

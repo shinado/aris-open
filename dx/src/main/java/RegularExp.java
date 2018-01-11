@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -7,46 +9,83 @@ public class RegularExp {
         p00();
     }
 
-    public static void p00() {
-//        String translation = "baweixindeapkfageinashui";
-        String translation = "bagangpaidenazhangzhaopianfageinashui";
-
-//        String code = "weixin->apk->nashui";
-        String code = "dcim/camera->latest->nashui";
+    public static String createPattern(String translation, String code) {
         String[] tValues = code.split("->");//new String[]{"weixin", "apk", "nashui"};
 
-        String[] pattern = new String[tValues.length];
+        List<String> pattern = new ArrayList<>();
+//        String[] pattern = new String[tValues.length];
+
+        List<Integer> indexes = new ArrayList<>();
+        for (int i = 0; i < tValues.length; i++) {
+            int idx = translation.indexOf(tValues[i]);
+            indexes.add(idx);
+        }
 
         String t = translation;
+        String pre = "";
         for (int i = 0; i < tValues.length; i++) {
-            String[] split = t.split(tValues[i]);
+            String key = pre + tValues[i];
+            String[] split = t.split(key);
             if (split.length >= 2) {
-                pattern[i] = split[0];
-                t = split[1];
-            }else {
-
+                if (split[1].isEmpty()) {
+                    //reverse?
+                } else {
+                    pattern.add(split[0]);
+                    t = split[1];
+                }
+            } else {
+                //not matched
+                if (t.startsWith(split[0])) {
+                    pattern.add(split[0]);
+                } else {
+                    pre += key + "->";
+                }
             }
         }
 
         String newPattern = "";
-        for (String p : pattern) {
-            newPattern += (p + "(.*)");
+        if (pattern.isEmpty()) {
+            newPattern = null;
+        } else {
+            for (String p : pattern) {
+                newPattern += (p + "(.*)");
+            }
         }
-        System.out.println(newPattern);
 
-        // Create a Pattern object
-        Pattern r = Pattern.compile(newPattern);
+        return newPattern;
+    }
 
-        // Now create matcher object.
-        Matcher m = r.matcher(translation);
+    public static void p00() {
+//        String translation = "baweixindeapkfageinashui";
+        String translation = "gennashuishuoxialaidaqiu";
+//        String translation = "bagangpaidenazhangzhaopianfageinashui";
+//        String translation = "gangpaidenazhangzhaopian";
 
-        if (m.find()) {
-            for (int i = 1; i <= m.groupCount(); i++) {
-                System.out.println("Found value: " + m.group(i));
+//        String code = "weixin->apk->nashui";
+        String code = "xialaidaqiu->nashui";
+//        String code = "dcim/camera->endw jpg->latest";
+
+        String newPattern = createPattern(translation, code);
+
+        System.out.println("new pattern: " + newPattern);
+
+        if (newPattern != null) {
+            Pattern r = Pattern.compile(newPattern);
+
+            // Now create matcher object.
+            Matcher m = r.matcher(translation);
+
+            if (m.find()) {
+                for (int i = 1; i <= m.groupCount(); i++) {
+                    System.out.println("Found value: " + m.group(i));
+                }
+            } else {
+                System.out.println("NO MATCH");
             }
         } else {
-            System.out.println("NO MATCH");
+            System.out.println("Found value: " + code);
         }
+
     }
 
     public static void p0() {

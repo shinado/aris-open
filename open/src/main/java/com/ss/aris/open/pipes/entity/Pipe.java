@@ -313,15 +313,20 @@ public class Pipe implements Comparable<Pipe>, Displayable, Parcelable {
         }
     }
 
+    //TODO test me
+    @TargetApi(1192)
+    public void onConnected(Pipe.PreviousPipes previous) {
+        BasePipe basePipe = getBasePipe();
+        if (basePipe != null) {
+            basePipe.onConnected(previous);
+        }
+    }
+
     @TargetApi(5)
     public void onSelectedAsPrevious() {
-        //NullPointerException caused by uninstall and re-install
         BasePipe basePipe = getBasePipe();
         if (basePipe != null) {
             basePipe.onSelectedAsPrevious(this);
-            //TODO think about it
-//            Console console = basePipe.getConsole();
-//            if (console != null) console.setIndicator(getDisplayName());
         }
     }
 
