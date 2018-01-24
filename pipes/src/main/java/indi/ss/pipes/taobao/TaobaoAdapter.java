@@ -3,7 +3,7 @@ package indi.ss.pipes.taobao;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
-import com.ss.aris.open.image.WrapImageLoader;
+
 import java.util.List;
 
 public class TaobaoAdapter extends RecyclerView.Adapter<TaobaoAdapter.TaobaoViewHolder>{
@@ -27,8 +27,8 @@ public class TaobaoAdapter extends RecyclerView.Adapter<TaobaoAdapter.TaobaoView
         holder.viewGenerator.title.setText(item.getTitle());
         holder.viewGenerator.origin.setText(item.getSellerLoc());
         holder.viewGenerator.price.setText(item.getPrice());
-        WrapImageLoader.getInstance().displayImage(
-                item.getImg2(), holder.viewGenerator.icon);
+//        WrapImageLoader.getInstance().displayImage(
+//                item.getImg2(), holder.viewGenerator.icon);
     }
 
     @Override

@@ -6,7 +6,6 @@ import com.ss.aris.open.pipes.action.SimpleActionPipe;
 import com.ss.aris.open.pipes.entity.Pipe;
 import com.ss.aris.open.util.HttpUtil;
 import com.ss.aris.open.util.JsonUtil;
-
 import java.util.List;
 
 public class TaobaoPipe extends SimpleActionPipe {

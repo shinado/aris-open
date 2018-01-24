@@ -32,6 +32,7 @@ public class SearchableName {
      */
     public boolean contains(String key) {
         key = removeSpace(key).toLowerCase();
+        if (key.equals(toString())) return true;
         for (int i = 0; i < name.length; i++) {
             String str = name[i].toLowerCase();
             if (str.isEmpty()) continue;

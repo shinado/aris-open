@@ -27,7 +27,6 @@ public class CameraPipe extends SimpleActionPipe {
         super(id);
     }
 
-
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());

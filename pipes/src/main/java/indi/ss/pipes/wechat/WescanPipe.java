@@ -26,6 +26,8 @@ public class WescanPipe extends SimpleActionPipe {
             } catch (Exception e) {
                 callback.onOutput(e.getMessage());
             }
+        }else {
+            callback.onOutput("wescan");
         }
     }
 

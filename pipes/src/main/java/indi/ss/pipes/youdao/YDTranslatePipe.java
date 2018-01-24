@@ -9,6 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 import com.ss.aris.open.TargetVersion;
 import com.ss.aris.open.pipes.action.AcceptablePipe;
+import com.ss.aris.open.pipes.entity.Instruction;
 import com.ss.aris.open.pipes.entity.Keys;
 import com.ss.aris.open.pipes.entity.Pipe;
 import com.ss.aris.open.pipes.entity.SearchableName;
@@ -26,7 +27,7 @@ public class YDTranslatePipe extends AcceptablePipe implements Helpable{
     //&
     private static final String URL = "https://openapi.youdao.com/api?appKey=" +
             KEY +
-            "&q=%s&from=auto&to=auto&salt=%s&sign=%s";
+            "&q=%s&from=auto&to=%s&salt=%s&sign=%s";
 
     private static final String HELP = "Usage of " + NAME + ":\n" +
             "[your words]" + Keys.PIPE + "translating";
@@ -39,7 +40,12 @@ public class YDTranslatePipe extends AcceptablePipe implements Helpable{
     public void acceptInput(Pipe result, String input, Pipe.PreviousPipes previous, OutputCallback callback) {
 //        callback.onOutput("Translating...");
         try {
-            requestTranslation(input, callback);
+            String to = null;
+            Instruction instruction = result.getInstruction();
+            if (!instruction.isParamsEmpty()){
+                to = instruction.params[0];
+            }
+            requestTranslation(input, to, callback);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -65,12 +71,13 @@ public class YDTranslatePipe extends AcceptablePipe implements Helpable{
         callback.onOutput("You got to translate something, dude\n" + HELP);
     }
 
-    private void requestTranslation(String q, final OutputCallback callback) throws UnsupportedEncodingException {
+    private void requestTranslation(String q, String to, final OutputCallback callback) throws UnsupportedEncodingException {
         int salt = new Random().nextInt();
         String key = KEY + q + salt + SECRET;
         String sign = getMD5(key);
 
-        String url = String.format(URL, URLEncoder.encode(q, "utf-8"), "" + salt, sign);
+        String url = String.format(URL, to == null ? "auto":to,
+                URLEncoder.encode(q, "utf-8"), "" + salt, sign);
 
         HttpUtil.post(url, new HttpUtil.OnSimpleStringResponse() {
             @Override

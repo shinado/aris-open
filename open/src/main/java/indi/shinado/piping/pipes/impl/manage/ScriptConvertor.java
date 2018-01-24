@@ -38,6 +38,20 @@ public class ScriptConvertor {
         }
     }
 
+    public static String getScript(String executable, int id) throws UnsupportedEncodingException {
+        String script;
+        if (id == PConstants.ID_MANAGER) {
+            script = executable;
+        } else {
+            String exe = URLEncoder.encode(executable, "utf-8");
+            script = new PRI("pipe", "id=" + id + "/" +
+                    "exe=" + exe)
+                    .toString();
+        }
+
+        return script;
+    }
+
     public static String getScript(Pipe input) throws UnsupportedEncodingException {
         Pipe prev = input.getPrevious().get();
 

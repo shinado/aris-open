@@ -1,5 +1,8 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,15 +13,22 @@ public class RegularExp {
     }
 
     public static String createPattern(String translation, String code) {
-        String[] tValues = code.split("->");//new String[]{"weixin", "apk", "nashui"};
+        String[] originalValues = code.split("->");//new String[]{"weixin", "apk", "nashui"};
 
         List<String> pattern = new ArrayList<>();
 //        String[] pattern = new String[tValues.length];
 
-        List<Integer> indexes = new ArrayList<>();
-        for (int i = 0; i < tValues.length; i++) {
-            int idx = translation.indexOf(tValues[i]);
-            indexes.add(idx);
+        //reverse
+        Map<Integer, Integer> indexes = new TreeMap<>();
+        for (int i = 0; i < originalValues.length; i++) {
+            int idx = translation.indexOf(originalValues[i]);
+            indexes.put(idx, i);
+        }
+
+        String[] tValues = new String[indexes.size()];
+        int j=0;
+        for (int i: indexes.values()){
+            tValues[j++] = originalValues[i];
         }
 
         String t = translation;
@@ -27,12 +37,8 @@ public class RegularExp {
             String key = pre + tValues[i];
             String[] split = t.split(key);
             if (split.length >= 2) {
-                if (split[1].isEmpty()) {
-                    //reverse?
-                } else {
-                    pattern.add(split[0]);
-                    t = split[1];
-                }
+                pattern.add(split[0]);
+                t = split[1];
             } else {
                 //not matched
                 if (t.startsWith(split[0])) {
@@ -57,13 +63,13 @@ public class RegularExp {
 
     public static void p00() {
 //        String translation = "baweixindeapkfageinashui";
-        String translation = "gennashuishuoxialaidaqiu";
+//        String translation = "gennashuishuoxialaidaqiu";
 //        String translation = "bagangpaidenazhangzhaopianfageinashui";
-//        String translation = "gangpaidenazhangzhaopian";
+        String translation = "gangpaidezhaopian";
 
 //        String code = "weixin->apk->nashui";
-        String code = "xialaidaqiu->nashui";
-//        String code = "dcim/camera->endw jpg->latest";
+//        String code = "xialaidaqiu->nashui";
+        String code = "dcim/camera->endw jpg->latest";
 
         String newPattern = createPattern(translation, code);
 

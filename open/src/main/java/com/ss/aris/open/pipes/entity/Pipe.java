@@ -237,11 +237,6 @@ public class Pipe implements Comparable<Pipe>, Displayable, Parcelable {
 
     @Override
     public int compareTo(@NonNull Pipe another) {
-        //search results always ahead of action
-//        int compare = another.typeIndex - typeIndex;
-        //same type
-//        if (compare == 0) {
-
         if (another.getExecutable().equals(executable)) {
             return 0;
         }
@@ -313,7 +308,6 @@ public class Pipe implements Comparable<Pipe>, Displayable, Parcelable {
         }
     }
 
-    //TODO test me
     @TargetApi(1192)
     public void onConnected(Pipe.PreviousPipes previous) {
         BasePipe basePipe = getBasePipe();
@@ -405,7 +399,6 @@ public class Pipe implements Comparable<Pipe>, Displayable, Parcelable {
                     (Pipe) previous.toArray()[pointer];
         }
 
-        //TODO
         public TreeSet<Pipe> getMultiple() {
             return previous;
         }

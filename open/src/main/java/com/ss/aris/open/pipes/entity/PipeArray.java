@@ -1,8 +1,6 @@
 package com.ss.aris.open.pipes.entity;
 
-import com.ss.aris.open.pipes.IPipeManager;
 import com.ss.aris.open.util.JsonUtil;
-
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;

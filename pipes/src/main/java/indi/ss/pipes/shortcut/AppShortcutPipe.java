@@ -1,19 +1,20 @@
 package indi.ss.pipes.shortcut;
 
+import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
+import android.os.Process;
 import android.os.UserHandle;
-
 import com.ss.aris.open.TargetVersion;
 import com.ss.aris.open.pipes.PConstants;
 import com.ss.aris.open.pipes.entity.Pipe;
 import com.ss.aris.open.pipes.search.FullSearchActionPipe;
 import com.ss.aris.open.pipes.search.translator.AbsTranslator;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AppShortcutPipe extends FullSearchActionPipe{
+public class AppShortcutPipe extends FullSearchActionPipe {
 
     private AbsTranslator mTranslator;
     private Pipe starter;
@@ -26,14 +27,18 @@ public class AppShortcutPipe extends FullSearchActionPipe{
     @Override
     protected void doAcceptInput(Pipe result, String input, Pipe.PreviousPipes previous, OutputCallback callback) {
         ShortcutInfoCompat shortcut = shortcutInfos.get(result.getExecutable());
-        if (shortcut != null){
-//            DeepShortcutManager.getInstance(context).startShortcut();
+        if (shortcut != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                DeepShortcutManager.getInstance(context).startShortcut(
+                        shortcut.getPackage(), shortcut.getId(), new Intent(),
+                        new Bundle(), Process.myUserHandle());
+            }
         }
     }
 
     @Override
     protected void doExecute(Pipe rs, OutputCallback callback) {
-
+        callback.onOutput("shortcut");
     }
 
     @Override
@@ -63,7 +68,7 @@ public class AppShortcutPipe extends FullSearchActionPipe{
         doStart(result);
     }
 
-    private void doStart(Pipe result){
+    private void doStart(Pipe result) {
         if (result.getPrevious().isEmpty()) {
             getConsole().input("previous is empty");
         } else {
@@ -75,21 +80,28 @@ public class AppShortcutPipe extends FullSearchActionPipe{
                     List<ShortcutInfoCompat> list =
                             DeepShortcutManager.getInstance(getContext()).queryForFullDetails(
                                     split[0], null, new UserHandle(null));
-                    for (ShortcutInfoCompat shortcut: list){
-                        String label = shortcut.getShortLabel().toString();
-                        String id = shortcut.getId();
-                        shortcutInfos.put(id, shortcut);
-                        putItemInMap(new Pipe(getId(), label, mTranslator.getName(label), id));
+                    if (list != null && !list.isEmpty()) {
+                        for (ShortcutInfoCompat shortcut : list) {
+                            String label = shortcut.getShortLabel().toString();
+                            String id = shortcut.getId();
+                            shortcutInfos.put(id, shortcut);
+                            putItemInMap(new Pipe(getId(), label, mTranslator.getName(label), id));
+                        }
+                        return;
                     }
-                }else {
-                    getConsole().input("Not supported below Android8.0. ");
+                } else {
+                    getConsole().input("Not supported for systems under Android 8.0. ");
                 }
-                return;
-            }else {
+            } else {
                 getConsole().input("previous is not an application");
             }
         }
         end();
     }
 
+    @Override
+    protected void end() {
+        super.end();
+        shortcutInfos.clear();
+    }
 }

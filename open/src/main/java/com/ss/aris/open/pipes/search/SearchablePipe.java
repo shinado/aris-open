@@ -2,6 +2,7 @@ package com.ss.aris.open.pipes.search;
 
 import android.util.Log;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -66,7 +67,7 @@ public abstract class SearchablePipe extends BasePipe {
             Log.d("PipeSearcher", "app search body: " + body);
         }
 
-        //TODO if the application has been uninstalled once,
+        //if the application has been uninstalled once,
         //the searching result will be removed
         //therefore can not be searched when re-installed
         if (key == null) {
@@ -132,8 +133,6 @@ public abstract class SearchablePipe extends BasePipe {
                 body = body.substring(0, body.length() - 1);
                 return getKey(body);
             } else {
-                //TODO replace it if something happens
-//                return null;
                 return "";
             }
         } else {
@@ -162,8 +161,8 @@ public abstract class SearchablePipe extends BasePipe {
         TreeSet<String> searchKeys = deletedSearchKeys.get(vo.getExecutable());
         if (searchKeys == null) {
             searchKeys = new TreeSet<>();
+            deletedSearchKeys.put(vo.getExecutable(), searchKeys);
         }
-        deletedSearchKeys.put(vo.getExecutable(), searchKeys);
         searchKeys.add(key);
     }
 
@@ -175,14 +174,21 @@ public abstract class SearchablePipe extends BasePipe {
         Set<String> keys = resultMap.keySet();
         for (String key : keys) {
             TreeSet<Pipe> results = resultMap.get(key);
-//            results.remove(vo);
-            if (results.contains(vo)) {
-                cacheDeletedSearchKeys(key, vo);
 
+            //check this out
+            //https://www.jianshu.com/p/7b7455aad793
+            boolean contains = false;//results.contains(vo);
+            for (Pipe p: results){
+                if (p.getExecutable().equals(vo.getExecutable())){
+                    contains = true;
+                }
+            }
+
+            if (contains) {
+                cacheDeletedSearchKeys(key, vo);
                 results.remove(vo);
             }
         }
-
         resultMap.remove(vo.getExecutable());
     }
 
@@ -193,7 +199,8 @@ public abstract class SearchablePipe extends BasePipe {
         String className = getClass().getSimpleName();
         Log.d("PipeSearcher", "put item in map: " + vo.getDisplayName());
 
-        //TODO ?????
+        //if this item is found in the list that has been deleted,
+        //simply put it back
         boolean b = reenableSearchKeys(vo);
         if (className.contains("Application")) {
             if (b) {
@@ -211,8 +218,6 @@ public abstract class SearchablePipe extends BasePipe {
                     Log.d("PipeSearcher", "name: " + n);
                 }
 
-                //TODO replace it if something happens
-//                if (n.isEmpty()) continue;
                 String c = n.isEmpty() ? "" : n.charAt(0) + "";
 
                 TreeSet<Pipe> list = resultMap.get(c);//allItemMap.get(c);
