@@ -360,9 +360,11 @@ public class Pipe implements Comparable<Pipe>, Displayable, Parcelable {
             if (prev == null) {
                 return;
             }
-            this.previous = new TreeSet<>();
-            this.previous.addAll(prev.getPrevious());
-            this.pointer = prev.getPointer();
+            previous = new TreeSet<>();
+            if (prev.getPrevious() != null){
+                previous.addAll(prev.getPrevious());
+            }
+            pointer = prev.getPointer();
         }
 
         public PreviousPipes(TreeSet<Pipe> previous, int pointer) {
@@ -419,9 +421,9 @@ public class Pipe implements Comparable<Pipe>, Displayable, Parcelable {
         this.setExecutable(another.getExecutable());
         this.setFrequency(another.getFrequency());
         this.setId(another.getId());
-        this.setInstruction(another.getInstruction());
+        this.setInstruction(new Instruction(another.getInstruction()));
         this.setKeyIndex(another.getKeyIndex());
-        this.setPrevious(another.getPrevious());
+        this.setPrevious(new PreviousPipes(another.getPrevious()));
         this.setSearchableName(another.getSearchableName());
         this.setTypeIndex(another.getTypeIndex());
     }

@@ -48,11 +48,16 @@ public class ShareIntent {
         intent.setFlags(flags);
 
         for (String key : extras.keySet()) {
-            Uri uri = Uri.parse(extras.get(key));
+            String value = extras.get(key);
+            if (key.equals(Intent.EXTRA_TEXT)){
+                intent.putExtra(key, value);
+            }else {
+                intent.putExtra(key, Uri.parse(value));
+            }
+
 //            ArrayList<Uri> arrayList = new ArrayList<>();
 //            arrayList.add(uri);
 //            intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, arrayList);
-            intent.putExtra(key, uri);
         }
 
         return intent;

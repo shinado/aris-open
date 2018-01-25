@@ -47,7 +47,14 @@ public class Instruction {
     }
 
     public Instruction(){
+    }
 
+    public Instruction(Instruction another){
+        this.input = another.input;
+        this.body = another.body;
+        this.pre = another.pre;
+        this.length = another.length;
+        this.params = another.params;
     }
 
     /**

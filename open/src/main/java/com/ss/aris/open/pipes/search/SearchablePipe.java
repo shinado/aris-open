@@ -2,9 +2,12 @@ package com.ss.aris.open.pipes.search;
 
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -75,19 +78,17 @@ public abstract class SearchablePipe extends BasePipe {
             return new TreeSet<>();
         }
 
-        if (!isParameterAllowded() && !value.isParamsEmpty()){
+        if (!isParameterAllowded() && !value.isParamsEmpty()) {
             //does not take parameters
             return new TreeSet<>();
-        }
-
-        else {
+        } else {
             TreeSet<Pipe> result = search(key, body);
             result = fulfill(result, value);
             return result;
         }
     }
 
-    protected boolean isParameterAllowded(){
+    protected boolean isParameterAllowded() {
         return false;
     }
 
@@ -178,8 +179,8 @@ public abstract class SearchablePipe extends BasePipe {
             //check this out
             //https://www.jianshu.com/p/7b7455aad793
             boolean contains = false;//results.contains(vo);
-            for (Pipe p: results){
-                if (p.getExecutable().equals(vo.getExecutable())){
+            for (Pipe p : results) {
+                if (p.getExecutable().equals(vo.getExecutable())) {
                     contains = true;
                 }
             }
@@ -247,7 +248,11 @@ public abstract class SearchablePipe extends BasePipe {
         HashSet<Pipe> all = new HashSet<>();
         for (String key : resultMap.keySet()) {
             if (key.length() == 1) {
-                all.addAll(resultMap.get(key));
+                Collection<Pipe> list = resultMap.get(key);
+                for (Pipe item : list) {
+                    if (!all.contains(item))
+                        all.add(item);
+                }
             }
         }
         return all;
