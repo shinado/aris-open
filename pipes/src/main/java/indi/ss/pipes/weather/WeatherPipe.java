@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import com.ss.aris.open.TargetVersion;
-import com.ss.aris.open.console.impl.DeviceConsole;
 import com.ss.aris.open.console.impl.PermissionCallback;
 import com.ss.aris.open.pipes.PConstants;
 import com.ss.aris.open.pipes.action.DefaultInputActionPipe;
@@ -61,7 +60,7 @@ public class WeatherPipe extends DefaultInputActionPipe {
                             if (granted) {
                                 ArisWeather weather = ArisWeather.getInstance();
                                 weather.setNeedDownloadIcons(false);
-                                weather.china(VersionUtils.isChina());
+                                weather.china(VersionUtils.isChinese());
                                 weather.queryYahooWeatherByGPS(getContext(),
                                         new YahooWeatherInfoListener() {
 

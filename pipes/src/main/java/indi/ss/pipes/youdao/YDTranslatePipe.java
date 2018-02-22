@@ -1,12 +1,16 @@
 package indi.ss.pipes.youdao;
 
+import android.media.MediaPlayer;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
+
 import com.ss.aris.open.TargetVersion;
 import com.ss.aris.open.pipes.action.AcceptablePipe;
 import com.ss.aris.open.pipes.entity.Instruction;
@@ -17,10 +21,11 @@ import com.ss.aris.open.pipes.impl.interfaces.Helpable;
 import com.ss.aris.open.util.HttpUtil;
 
 @TargetVersion(1170)
-public class YDTranslatePipe extends AcceptablePipe implements Helpable{
+public class YDTranslatePipe extends AcceptablePipe implements Helpable {
 
     private static final String NAME = "$translating";
 
+    //52f61e48a7384721
     private static final String KEY = "52f61e48a7384721";
     private static final String SECRET = "7QjyoXKoFbFPKRF0hBTD2lcAsUqvg7Jj";
 
@@ -41,11 +46,14 @@ public class YDTranslatePipe extends AcceptablePipe implements Helpable{
 //        callback.onOutput("Translating...");
         try {
             String to = null;
+            boolean needSpeak = false;
             Instruction instruction = result.getInstruction();
-            if (!instruction.isParamsEmpty()){
+            if (!instruction.isParamsEmpty()) {
                 to = instruction.params[0];
+                needSpeak = instruction.params.length >= 2 &&
+                        "-s".equals(instruction.params[1]);
             }
-            requestTranslation(input, to, callback);
+            requestTranslation(input, to, needSpeak, callback);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -71,13 +79,13 @@ public class YDTranslatePipe extends AcceptablePipe implements Helpable{
         callback.onOutput("You got to translate something, dude\n" + HELP);
     }
 
-    private void requestTranslation(String q, String to, final OutputCallback callback) throws UnsupportedEncodingException {
+    private void requestTranslation(String q, String to, final boolean needSpeak, final OutputCallback callback) throws UnsupportedEncodingException {
         int salt = new Random().nextInt();
         String key = KEY + q + salt + SECRET;
-        String sign = getMD5(key);
+        String sign = md5(key);
 
-        String url = String.format(URL, to == null ? "auto":to,
-                URLEncoder.encode(q, "utf-8"), "" + salt, sign);
+        String url = String.format(URL, URLEncoder.encode(q, "utf-8"),
+                to == null ? "auto" : to, "" + salt, sign);
 
         HttpUtil.post(url, new HttpUtil.OnSimpleStringResponse() {
             @Override
@@ -90,6 +98,21 @@ public class YDTranslatePipe extends AcceptablePipe implements Helpable{
                         sb.append(array.getString(i))
                                 .append("\n");
                     }
+
+                    if (needSpeak) {
+                        String speakUrl = json.getString("tSpeakUrl");
+                        MediaPlayer player = new MediaPlayer();
+                        player.setDataSource(speakUrl);
+                        player.prepareAsync();
+                        player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                            @Override
+                            public void onPrepared(MediaPlayer mp) {
+                                mp.start();
+                            }
+                        });
+                        getConsole().input("Playing audio...");
+                    }
+
                 } catch (Exception e) {
                     e.printStackTrace();
                     sb.append(e.getMessage());
@@ -105,27 +128,29 @@ public class YDTranslatePipe extends AcceptablePipe implements Helpable{
         });
     }
 
-    private static String getMD5(String sourceStr) {
-        String result = "";
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(sourceStr.getBytes());
-            byte b[] = md.digest();
-            int i;
-            StringBuilder buf = new StringBuilder();
-            for (byte aB : b) {
-                i = aB;
-                if (i < 0)
-                    i += 256;
-                if (i < 16)
-                    buf.append("0");
-                buf.append(Integer.toHexString(i));
-            }
-            result = buf.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+    private static String md5(String string) {
+        if (string == null) {
+            return null;
         }
-        return result;
+        char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                'A', 'B', 'C', 'D', 'E', 'F'};
+
+        try {
+            byte[] btInput = string.getBytes("utf-8");
+            MessageDigest mdInst = MessageDigest.getInstance("MD5");
+            mdInst.update(btInput);
+            byte[] md = mdInst.digest();
+            int j = md.length;
+            char str[] = new char[j * 2];
+            int k = 0;
+            for (byte byte0 : md) {
+                str[k++] = hexDigits[byte0 >>> 4 & 0xf];
+                str[k++] = hexDigits[byte0 & 0xf];
+            }
+            return new String(str);
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+            return null;
+        }
     }
 
     @Override

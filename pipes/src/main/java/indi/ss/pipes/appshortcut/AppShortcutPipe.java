@@ -1,4 +1,4 @@
-package indi.ss.pipes.shortcut;
+package indi.ss.pipes.appshortcut;
 
 import android.content.Intent;
 import android.os.Build;

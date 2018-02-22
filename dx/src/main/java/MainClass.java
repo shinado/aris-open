@@ -24,7 +24,7 @@ public class MainClass {
 //        }
 
         //if you wish to dex only one item
-        String NAME = null;//"camera";
+        String NAME = "youdao";
         String dxPath = "/Users/ss/Library/Android/sdk/build-tools/26.0.1/";
 
         String PACKAGE = "indi/ss/pipes";

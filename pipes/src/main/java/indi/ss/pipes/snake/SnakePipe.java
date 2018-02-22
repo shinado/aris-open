@@ -100,7 +100,7 @@ public class SnakePipe extends DefaultInputActionPipe implements Console {
     }
 
     private void ready() {
-        String help = VersionUtils.isChina() ?
+        String help = VersionUtils.isChinese() ?
                 "输入2控制向上，8下4左6右，建议调整键盘到数字模式。请输入任意字母以开始。" :
                 "Use 2 for up, 8 for down, 4 for left and 6 for right. Please enter maze width(for instance, 30) to start.";
         getConsole().display(help);
@@ -131,7 +131,7 @@ public class SnakePipe extends DefaultInputActionPipe implements Console {
         } catch (NumberFormatException e) {
             e.printStackTrace();
 
-            String help = VersionUtils.isChina() ?
+            String help = VersionUtils.isChinese() ?
                     "请输入迷宫长度（如30）以开始。" :
                     "Please enter maze width(for instance, 30) to start.";
             getConsole().display(help);

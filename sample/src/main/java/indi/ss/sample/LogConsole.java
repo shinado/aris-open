@@ -1,12 +1,17 @@
 package indi.ss.sample;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
+
 import com.ss.aris.open.console.CharacterInputCallback;
 import com.ss.aris.open.console.InputCallback;
 import com.ss.aris.open.console.KeyDownCallback;
 import com.ss.aris.open.console.OnEnterListener;
 import com.ss.aris.open.console.SingleLineInputCallback;
+import com.ss.aris.open.console.impl.ResultCallback;
 import com.ss.aris.open.console.text.OnTextClickListener;
 import com.ss.aris.open.pipes.BasePipe;
 import com.ss.aris.open.pipes.entity.Instruction;
@@ -34,6 +39,11 @@ public class LogConsole implements DeviceConsole {
     }
 
     @Override
+    public void shareIntentByScript(String script) {
+
+    }
+
+    @Override
     public void showInputMethod() {
 
     }
@@ -51,16 +61,6 @@ public class LogConsole implements DeviceConsole {
     @Override
     public void display(String string, Pipe tag) {
         log("display with tag: " + string);
-    }
-
-    @Override
-    public void displayInput(String string) {
-
-    }
-
-    @Override
-    public void replaceCurrentLine(String line) {
-        log("replaceCurrentLine: " + line);
     }
 
     @Override
@@ -84,8 +84,8 @@ public class LogConsole implements DeviceConsole {
     }
 
     @Override
-    public String getLastInput() {
-        return "";
+    public String getLastInput(int index) {
+        return null;
     }
 
     @Override
@@ -102,22 +102,6 @@ public class LogConsole implements DeviceConsole {
     public void waitForCharacterInput(CharacterInputCallback inputCallback) {
         log("wait for character");
         inputCallback.onCharacterInput("f");
-    }
-
-    @Override
-    public void waitForKeyDown(KeyDownCallback inputCallback) {
-        log("wait for key down");
-        inputCallback.onKeyDown(3);
-    }
-
-    @Override
-    public void occupyMode() {
-        log("occupy");
-    }
-
-    @Override
-    public void quitOccupy() {
-        log("quit occupy");
     }
 
     @Override
@@ -157,6 +141,16 @@ public class LogConsole implements DeviceConsole {
     }
 
     @Override
+    public void reshowTerminal() {
+
+    }
+
+    @Override
+    public void replaceCurrentView(View view) {
+
+    }
+
+    @Override
     public void notify(Pipe pipe) {
         log("notify pipe");
     }
@@ -178,6 +172,11 @@ public class LogConsole implements DeviceConsole {
 
     @Override
     public Typeface getTypeface() {
+        return null;
+    }
+
+    @Override
+    public TextView getDisplayTextView() {
         return null;
     }
 
@@ -216,6 +215,11 @@ public class LogConsole implements DeviceConsole {
 
     @Override
     public void requestPermission(String[] permissions, PermissionCallback callback) {
+
+    }
+
+    @Override
+    public void requestResult(Intent intent, ResultCallback callback) {
 
     }
 

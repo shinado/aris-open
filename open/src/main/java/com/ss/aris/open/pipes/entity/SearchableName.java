@@ -128,6 +128,14 @@ public class SearchableName {
         return string;
     }
 
+    public String getSimpleName(){
+        String string = "";
+        for (String str : name) {
+            string += str.charAt(0);
+        }
+        return string;
+    }
+
     public boolean equals(String name) {
         return toString().equals(name) ||
                 (syntax != null && name.startsWith(syntax) && name.endsWith(syntax));

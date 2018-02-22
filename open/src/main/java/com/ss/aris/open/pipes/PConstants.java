@@ -14,11 +14,14 @@ public class PConstants {
     public static final int ID_DIRECTORY = 22;
     public static final int ID_CONTACT_ARIS = 23;
 
-    public static final int ID_POST = 60;
 
     public static final int ID_TEXT = 3;
     public static final int ID_APPLICATION = 2;
     public static final int ID_CONTACT = 1;
     public static final int ID_MAX_DEFAULT = 100;
+
+    public static boolean isGuidance(int id){
+        return id >=30 && id < 40;
+    }
 
 }

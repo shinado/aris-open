@@ -1,5 +1,7 @@
 package com.ss.aris.open.pipes.action;
 
+import android.content.Context;
+
 import com.ss.aris.open.pipes.entity.Instruction;
 import com.ss.aris.open.pipes.entity.Keys;
 import com.ss.aris.open.pipes.entity.Pipe;
@@ -15,7 +17,6 @@ public abstract class DefaultInputActionPipe extends ActionPipe {
         mResult.setBasePipe(this);
         mResult.setDisplayName(getDisplayName());
         mResult.setSearchableName(getSearchable());
-//        mResult.setExecutable("pipe://id="+getId()+"/exe="+mResult.getDisplayName());
         mResult.setExecutable("$" + mResult.getDisplayName());
     }
 

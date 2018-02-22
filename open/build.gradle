@@ -8,13 +8,18 @@ android {
     defaultConfig {
         minSdkVersion project.ext.mMinSdkVersion
         targetSdkVersion project.ext.mTargetSdkVersion
+
+        versionCode 1024
+        versionName "1.2.4"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 dependencies {

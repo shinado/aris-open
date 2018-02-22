@@ -18,7 +18,7 @@ import java.util.TreeSet;
 import com.ss.aris.open.console.Console;
 import com.ss.aris.open.pipes.BasePipe;
 
-public class Pipe implements Comparable<Pipe>, Displayable, Parcelable {
+public class Pipe implements Comparable<Pipe>, Parcelable {
 
     public static final int TYPE_SEARCHABLE = 100;
 
@@ -282,16 +282,6 @@ public class Pipe implements Comparable<Pipe>, Displayable, Parcelable {
         if (basePipe != null) basePipe.displayIcon(this, imageView);
     }
 
-    @Override
-    public String getName() {
-        return displayName;
-    }
-
-    @Override
-    public String getDescription() {
-        return desc;
-    }
-
     @TargetApi(12)
     public void onSelectedAsStart() {
         BasePipe basePipe = getBasePipe();
@@ -397,7 +387,7 @@ public class Pipe implements Comparable<Pipe>, Displayable, Parcelable {
         }
 
         public Pipe get() {
-            return previous == null || previous.size() == 0 ? null :
+            return previous == null || previous.size() == 0 || pointer >= previous.size() ? null :
                     (Pipe) previous.toArray()[pointer];
         }
 

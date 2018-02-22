@@ -5,20 +5,18 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-
 import com.ss.aris.open.console.impl.DeviceConsole;
 import com.ss.aris.open.console.impl.PermissionCallback;
 import com.ss.aris.open.console.impl.ResultCallback;
 import com.ss.aris.open.pipes.action.SimpleActionPipe;
+import com.ss.aris.open.pipes.entity.Instruction;
 import com.ss.aris.open.pipes.entity.Pipe;
 import com.ss.aris.open.pipes.impl.ShareIntent;
 import com.ss.aris.open.util.IntentUtil;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import static android.app.Activity.RESULT_OK;
 
 public class CameraPipe extends SimpleActionPipe {
@@ -50,11 +48,13 @@ public class CameraPipe extends SimpleActionPipe {
             // Continue only if the File was successfully created
             if (photoFile != null) {
                 Uri photoURI = Uri.fromFile(photoFile);
-//            FileProvider.getUriForFile(context,
-//                    "com.example.android.fileprovider",
-//                    photoFile);
 
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                Instruction ins = rs.getInstruction();
+                if (!ins.isParamsEmpty() && "f".equals(ins.params[0])){
+                    takePictureIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
+                }
+
                 if (takePictureIntent.resolveActivity(context.getPackageManager()) != null) {
                     final DeviceConsole console = (DeviceConsole) getConsole();
                     console.requestPermission(new String[]{Manifest.permission.CAMERA,
@@ -82,11 +82,10 @@ public class CameraPipe extends SimpleActionPipe {
                             }
                         }
                     });
-
-
                 }
             }
         } catch (IOException ex) {
+            ex.printStackTrace();
         }
 
     }

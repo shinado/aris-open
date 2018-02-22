@@ -1,16 +1,11 @@
 package com.ss.aris.open.pipes.search;
 
 import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-
 import com.ss.aris.open.pipes.BasePipe;
 import com.ss.aris.open.pipes.entity.Instruction;
 import com.ss.aris.open.pipes.entity.Pipe;
@@ -93,8 +88,10 @@ public abstract class SearchablePipe extends BasePipe {
     }
 
     private TreeSet<Pipe> search(String key, String body) {
-        String className = getClass().getSimpleName();
         TreeSet<Pipe> result = new TreeSet<>();
+        if (body.isEmpty()) return result;
+
+        String className = getClass().getSimpleName();
         TreeSet<Pipe> all = resultMap.get(key);
         if (body.equals(key)) {
             if (className.contains("Application")) {
@@ -244,8 +241,8 @@ public abstract class SearchablePipe extends BasePipe {
         resultMap.put(vo.getExecutable(), list);
     }
 
-    public HashSet<Pipe> getAll() {
-        HashSet<Pipe> all = new HashSet<>();
+    public ArrayList<Pipe> getAll() {
+        ArrayList<Pipe> all = new ArrayList<>();
         for (String key : resultMap.keySet()) {
             if (key.length() == 1) {
                 Collection<Pipe> list = resultMap.get(key);

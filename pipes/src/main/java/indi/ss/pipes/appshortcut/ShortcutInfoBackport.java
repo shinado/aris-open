@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package indi.ss.pipes.shortcut;
+package indi.ss.pipes.appshortcut;
 
 import android.annotation.TargetApi;
 import android.content.ComponentName;
