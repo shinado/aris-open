@@ -15,6 +15,8 @@ public abstract class AbsIconPackManager {
         this.packageName = packageName;
     }
 
+    public abstract void load();
+
     public abstract boolean loadIconForPackage(ImageView imageView, ComponentName componentName);
 
     public void setThemeColor(int color){

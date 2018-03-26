@@ -14,6 +14,7 @@ public interface ISObject {
     String getString(String key);
     int getInt(String key);
     long getLong(String key);
+    boolean getBoolean(String key);
     Date getDate(String key);
 
     ISObject getObject(String key);

@@ -19,6 +19,14 @@ public class Configurations {
         return sharedPreferences.getBoolean("history", true);
     }
 
+    public boolean needAlias() {
+        return sharedPreferences.getBoolean("alias", true);
+    }
+
+    public void needAlias(boolean b) {
+        sharedPreferences.edit().putBoolean("alias", b).apply();
+    }
+
     public void setDeveloper(boolean b){
         sharedPreferences.edit().putBoolean("isDeveloper", b).apply();
     }

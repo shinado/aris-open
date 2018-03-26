@@ -239,6 +239,7 @@ public abstract class SearchablePipe extends BasePipe {
         TreeSet<Pipe> list = new TreeSet<>();
         list.add(vo);
         resultMap.put(vo.getExecutable(), list);
+
     }
 
     public ArrayList<Pipe> getAll() {

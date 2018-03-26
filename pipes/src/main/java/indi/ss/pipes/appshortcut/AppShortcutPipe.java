@@ -5,7 +5,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Process;
 import android.os.UserHandle;
-import com.ss.aris.open.TargetVersion;
 import com.ss.aris.open.pipes.PConstants;
 import com.ss.aris.open.pipes.entity.Pipe;
 import com.ss.aris.open.pipes.search.FullSearchActionPipe;
@@ -26,7 +25,36 @@ public class AppShortcutPipe extends FullSearchActionPipe {
 
     @Override
     protected void doAcceptInput(Pipe result, String input, Pipe.PreviousPipes previous, OutputCallback callback) {
-        ShortcutInfoCompat shortcut = shortcutInfos.get(result.getExecutable());
+        Pipe prev = previous.get();
+        if (prev.getId() == PConstants.ID_APPLICATION) {
+            String[] split = prev.getExecutable().split(",");
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                List<ShortcutInfoCompat> list =
+                        DeepShortcutManager.getInstance(getContext()).queryForFullDetails(
+                                split[0], null, new UserHandle(null));
+                if (list != null && !list.isEmpty()) {
+                    for (ShortcutInfoCompat shortcut : list) {
+                        String label = shortcut.getShortLabel().toString();
+                        String id = shortcut.getId();
+                        shortcutInfos.put(id, shortcut);
+                        putItemInMap(new Pipe(getId(), label, mTranslator.getName(label), id));
+                    }
+                    return;
+                }
+            } else {
+                getConsole().input("Not supported for systems under Android 8.0. ");
+            }
+        } else {
+            getConsole().input("previous is not an application");
+        }
+
+        end();
+    }
+
+    @Override
+    protected void doExecute(Pipe rs, OutputCallback callback) {
+        ShortcutInfoCompat shortcut = shortcutInfos.get(rs.getExecutable());
         if (shortcut != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 DeepShortcutManager.getInstance(context).startShortcut(
@@ -34,11 +62,6 @@ public class AppShortcutPipe extends FullSearchActionPipe {
                         new Bundle(), Process.myUserHandle());
             }
         }
-    }
-
-    @Override
-    protected void doExecute(Pipe rs, OutputCallback callback) {
-        callback.onOutput("shortcut");
     }
 
     @Override
@@ -53,50 +76,6 @@ public class AppShortcutPipe extends FullSearchActionPipe {
     @Override
     public Pipe getDefaultPipe() {
         return starter;
-    }
-
-    @TargetVersion(1192)
-    @Override
-    protected void start(Pipe result) {
-        super.start(result);
-        doStart(result);
-    }
-
-    @Override
-    protected void startAsSelected(Pipe result) {
-        super.startAsSelected(result);
-        doStart(result);
-    }
-
-    private void doStart(Pipe result) {
-        if (result.getPrevious().isEmpty()) {
-            getConsole().input("previous is empty");
-        } else {
-            Pipe prev = result.getPrevious().get();
-            if (prev.getId() == PConstants.ID_APPLICATION) {
-                String[] split = prev.getExecutable().split(",");
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    List<ShortcutInfoCompat> list =
-                            DeepShortcutManager.getInstance(getContext()).queryForFullDetails(
-                                    split[0], null, new UserHandle(null));
-                    if (list != null && !list.isEmpty()) {
-                        for (ShortcutInfoCompat shortcut : list) {
-                            String label = shortcut.getShortLabel().toString();
-                            String id = shortcut.getId();
-                            shortcutInfos.put(id, shortcut);
-                            putItemInMap(new Pipe(getId(), label, mTranslator.getName(label), id));
-                        }
-                        return;
-                    }
-                } else {
-                    getConsole().input("Not supported for systems under Android 8.0. ");
-                }
-            } else {
-                getConsole().input("previous is not an application");
-            }
-        }
-        end();
     }
 
     @Override

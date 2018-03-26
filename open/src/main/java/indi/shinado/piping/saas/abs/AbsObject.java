@@ -54,6 +54,11 @@ public class AbsObject implements ISObject{
     }
 
     @Override
+    public boolean getBoolean(String key) {
+        return false;
+    }
+
+    @Override
     public Date getDate(String key) {
         return null;
     }

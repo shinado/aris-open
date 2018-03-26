@@ -16,7 +16,7 @@ import java.io.OutputStream;
  * directory
  * ...
  */
-public class LiveMainClass {
+public class WidgetMainClass {
     public static void main(String[] args) {
 //        String[] l = new File("/").list();
 //        for (String p : l) {
@@ -24,13 +24,13 @@ public class LiveMainClass {
 //        }
 
         //if you wish to dex only one item
-        String NAME = "digital";
+        String NAME = "monitor";
         String dxPath = "/Users/ss/Library/Android/sdk/build-tools/26.0.1/";
 
-        String PACKAGE = "com/ss/live";
+        String PACKAGE = "com/ss/widget";
         String dx = "/Users/ss/workspace/application/dx/temp/";
         String output = "/Users/ss/workspace/application/dx/output/";
-        File pipes = new File("/Users/ss/workspace/application/app/simple/build/intermediates/classes/debug/" + PACKAGE);
+        File pipes = new File("/Users/ss/workspace/application/app/factory/build/intermediates/classes/debug/" + PACKAGE);
 
         new File(output).mkdirs();
         String[] list = pipes.list();

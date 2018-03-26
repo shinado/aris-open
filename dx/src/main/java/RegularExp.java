@@ -1,5 +1,5 @@
+import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -8,8 +8,15 @@ import java.util.regex.Pattern;
 
 public class RegularExp {
 
-    public static void main(String[] args) {
-        p00();
+    public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException {
+//        p00();
+
+        Class clazz = Class.forName("C0873a");
+        Field[] fields = clazz.getFields();
+
+        for( Field field : fields ){
+            System.out.println( field.getName() + ": " + (int) field.get(clazz).toString().charAt(0) );
+        }
     }
 
     public static String createPattern(String translation, String code) {

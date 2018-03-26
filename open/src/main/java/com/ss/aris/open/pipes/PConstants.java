@@ -13,6 +13,7 @@ public class PConstants {
     public static final int ID_ENABLE = 21;
     public static final int ID_DIRECTORY = 22;
     public static final int ID_CONTACT_ARIS = 23;
+    public static final int ID_WIDGETS = 24;
 
 
     public static final int ID_TEXT = 3;
