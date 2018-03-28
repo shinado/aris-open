@@ -2,10 +2,13 @@ package com.ss.aris.open.util;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
-
 import java.util.Locale;
 
 public class VersionUtils {
+
+    public static boolean isChina(){
+        return isChinese();
+    }
 
     public static boolean isChinese(){
         String lang = Locale.getDefault().getLanguage();

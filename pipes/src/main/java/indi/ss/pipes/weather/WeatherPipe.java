@@ -60,7 +60,7 @@ public class WeatherPipe extends DefaultInputActionPipe {
                             if (granted) {
                                 ArisWeather weather = ArisWeather.getInstance();
                                 weather.setNeedDownloadIcons(false);
-                                weather.china(VersionUtils.isChinese());
+                                weather.china(VersionUtils.isChina());
                                 weather.queryYahooWeatherByGPS(getContext(),
                                         new YahooWeatherInfoListener() {
 

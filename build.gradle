@@ -6,7 +6,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0-beta6'
+        classpath 'com.android.tools.build:gradle:2.3.3'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -17,14 +17,18 @@ allprojects {
     repositories {
         jcenter()
         google()
+
+        flatDir {
+            dirs project(':open').file('libs')
+        }
     }
 
     project.ext {
-        mBuildToolsVersion = "26.0.1"
+        mBuildToolsVersion = "25.0.2"
         mMinSdkVersion = 15
         mTargetSdkVersion = 25
-        mCompileSdkVersion = 26
-        supportLibraryVersion = "26.1.0"
+        mCompileSdkVersion = 25
+        supportLibraryVersion = "25.3.0"
         sourceCompatibilityVersion = JavaVersion.VERSION_1_7
         targetCompatibilityVersion = JavaVersion.VERSION_1_7
     }

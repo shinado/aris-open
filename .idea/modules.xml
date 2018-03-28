@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/aris-open.iml" filepath="$PROJECT_DIR$/aris-open.iml" />
       <module fileurl="file://$PROJECT_DIR$/dx/dx.iml" filepath="$PROJECT_DIR$/dx/dx.iml" />
       <module fileurl="file://$PROJECT_DIR$/open/open.iml" filepath="$PROJECT_DIR$/open/open.iml" />
+      <module fileurl="file://$PROJECT_DIR$/open-source/open-source.iml" filepath="$PROJECT_DIR$/open-source/open-source.iml" />
       <module fileurl="file://$PROJECT_DIR$/pipes/pipes.iml" filepath="$PROJECT_DIR$/pipes/pipes.iml" />
       <module fileurl="file://$PROJECT_DIR$/sample/sample.iml" filepath="$PROJECT_DIR$/sample/sample.iml" />
     </modules>
