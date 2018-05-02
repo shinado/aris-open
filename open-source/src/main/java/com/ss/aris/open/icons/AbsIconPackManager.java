@@ -2,7 +2,6 @@ package com.ss.aris.open.icons;
 
 import android.content.ComponentName;
 import android.content.Context;
-import android.widget.ImageView;
 
 public abstract class AbsIconPackManager {
 
@@ -17,7 +16,7 @@ public abstract class AbsIconPackManager {
 
     public abstract void load();
 
-    public abstract boolean loadIconForPackage(ImageView imageView, ComponentName componentName);
+    public abstract boolean loadIconForPackage(FolderItemLayout layout, ComponentName componentName);
 
     public void setThemeColor(int color){
         theme = color;

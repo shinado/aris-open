@@ -239,7 +239,10 @@ public abstract class SearchablePipe extends BasePipe {
         TreeSet<Pipe> list = new TreeSet<>();
         list.add(vo);
         resultMap.put(vo.getExecutable(), list);
+    }
 
+    public TreeSet<Pipe> getFrequents(){
+        return new TreeSet<>();
     }
 
     public ArrayList<Pipe> getAll() {

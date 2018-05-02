@@ -2,8 +2,6 @@ package com.ss.aris.open.console;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.view.View;
-
 import com.ss.aris.open.TargetVersion;
 import com.ss.aris.open.console.impl.PermissionCallback;
 import com.ss.aris.open.console.impl.ResultCallback;

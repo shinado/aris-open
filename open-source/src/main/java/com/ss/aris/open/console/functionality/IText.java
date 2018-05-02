@@ -1,6 +1,8 @@
 package com.ss.aris.open.console.functionality;
 
 
+import android.graphics.Typeface;
+
 public interface IText {
 
     enum ColorType{
@@ -15,17 +17,13 @@ public interface IText {
     void selectTextColor(ColorType type, OnTextColorSelectListener listener);
     void setTextColor(ColorType type, int color);
 
-    void selectTextSize(OnTextSizeSetListener listener);
     void setTextSize(float textSize);
+    void setTypeface(Typeface typeface);
+    void setResultTypeface(Typeface typeface);
     void reloadExecutingString();
-    void loadFont(String value);
 
     interface OnTextColorSelectListener{
         void onTextColorSelected(int color);
-    }
-
-    interface OnTextSizeSetListener{
-        void onTextSizeSet(int size);
     }
 
 }

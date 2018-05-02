@@ -24,13 +24,15 @@ public class MainClass {
 //        }
 
         //if you wish to dex only one item
-        String NAME = "youdao";
+        String NAME = "dos";
         String dxPath = "/Users/ss/Library/Android/sdk/build-tools/26.0.1/";
 
-        String PACKAGE = "indi/ss/pipes";
+        String PACKAGE = "com/ss/console";
         String dx = "/Users/ss/workspace/application/dx/temp/";
         String output = "/Users/ss/workspace/application/dx/output/";
-        File pipes = new File("/Users/ss/workspace/application/aris-open/pipes/build/intermediates/classes/release/" + PACKAGE);
+//        String module = "aris-open/pipes";
+        String module = "app/factory";
+        File pipes = new File("/Users/ss/workspace/application/" + module + "/build/intermediates/classes/debug/" + PACKAGE);
 
         new File(output).mkdirs();
         String[] list = pipes.list();

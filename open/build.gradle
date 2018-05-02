@@ -25,13 +25,8 @@ android {
 }
 
 dependencies {
-    compile(name: 'open-release-1.0.24', ext: 'aar')
-    testCompile 'junit:junit:4.12'
-    androidTestCompile('com.android.support.test.espresso:espresso-core:3.0.1', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+    compile(name: 'open-1.2.6', ext: 'aar')
 
-    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:' + project.ext.supportLibraryVersion
     compile 'com.android.support:recyclerview-v7:' + project.ext.supportLibraryVersion
     compile 'com.android.support:cardview-v7:' + project.ext.supportLibraryVersion

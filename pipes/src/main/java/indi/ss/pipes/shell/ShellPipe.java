@@ -34,7 +34,12 @@ public class ShellPipe extends FullSearchActionPipe {
 
     @Override
     protected void doAcceptInput(Pipe rs, String input, Pipe.PreviousPipes previous, OutputCallback callback) {
+    }
 
+    @Override
+    protected void start() {
+        super.start();
+        getConsole().input("You're in shell now. Please use 'exit' to quit");
     }
 
     @Override

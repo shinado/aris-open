@@ -1,7 +1,6 @@
 package com.ss.aris.open.util;
 
 import android.content.Context;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,9 +10,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * Created by Administrator on 2015/11/9.
- */
 public class FileUtil {
 
     public static void checkDir(String dir) {
@@ -24,6 +20,8 @@ public class FileUtil {
     }
 
     public static String getFileName(String url){
+        if (url == null) return "";
+
         int start = url.lastIndexOf("/");
         int end = url.length();
         try {

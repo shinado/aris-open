@@ -3,10 +3,6 @@ package com.ss.aris.open.pipes;
 import android.annotation.TargetApi;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +14,7 @@ import com.aris.open.R;
 import com.ss.aris.open.TargetVersion;
 import com.ss.aris.open.console.impl.DeviceConsole;
 import com.ss.aris.open.icons.AbsIconPackManager;
+import com.ss.aris.open.icons.FolderItemLayout;
 import com.ss.aris.open.pipes.configs.Configurations;
 import com.ss.aris.open.pipes.entity.Keys;
 import com.ss.aris.open.console.Console;
@@ -400,7 +397,6 @@ public abstract class BasePipe {
                 }, ms);
             }
         }
-
     }
 
     @TargetVersion(1182)
@@ -412,13 +408,20 @@ public abstract class BasePipe {
     }
 
     @TargetVersion(1182)
-    public void displayIcon(Pipe pipe, ImageView imageView) {
+    public void displayIcon(Pipe pipe, FolderItemLayout layout) {
         if (ipManager == null) {
-            imageView.setImageResource(resolveDefaultIcon(pipe));
+            ImageView imageView = layout.getIconView();
+            if (imageView != null)
+                imageView.setImageResource(resolveDefaultIcon(pipe));
         } else {
             boolean b = ipManager.loadIconForPackage(
-                    imageView, new ComponentName("id=" + getId(), ""));
-            if (!b) imageView.setImageResource(resolveDefaultIcon(pipe));
+                    layout, new ComponentName("id=" + getId(),
+                            pipe.getDisplayName()));
+            if (!b) {
+                ImageView imageView = layout.getIconView();
+                if (imageView != null)
+                    imageView.setImageResource(resolveDefaultIcon(pipe));
+            }
         }
     }
 

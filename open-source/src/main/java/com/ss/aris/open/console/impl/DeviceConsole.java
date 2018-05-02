@@ -3,7 +3,6 @@ package com.ss.aris.open.console.impl;
 import android.graphics.Typeface;
 import android.view.View;
 import android.widget.TextView;
-
 import com.ss.aris.open.TargetVersion;
 import com.ss.aris.open.console.InputCallback;
 import com.ss.aris.open.pipes.entity.Pipe;

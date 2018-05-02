@@ -9,8 +9,8 @@ android {
         minSdkVersion project.ext.mMinSdkVersion
         targetSdkVersion project.ext.mTargetSdkVersion
 
-        versionCode 1024
-        versionName "1.2.4"
+        versionCode 1026
+        versionName "1.2.6"
     }
 
     buildTypes {
@@ -20,6 +20,17 @@ android {
         }
     }
 
+    version "1.2.6"
+
+    libraryVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.aar')) {
+                def fileName = "${archivesBaseName}-${version}.aar"
+                output.outputFile = new File(outputFile.parent, fileName)
+            }
+        }
+    }
 }
 
 dependencies {

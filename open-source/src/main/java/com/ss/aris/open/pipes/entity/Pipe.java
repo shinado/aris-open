@@ -2,20 +2,16 @@ package com.ss.aris.open.pipes.entity;
 
 import android.annotation.TargetApi;
 import android.app.PendingIntent;
-import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.ImageView;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.TreeSet;
 
 import com.ss.aris.open.console.Console;
+import com.ss.aris.open.icons.FolderItemLayout;
 import com.ss.aris.open.pipes.BasePipe;
 
 public class Pipe implements Comparable<Pipe>, Parcelable {
@@ -277,9 +273,9 @@ public class Pipe implements Comparable<Pipe>, Parcelable {
         this.frequency++;
     }
 
-    public void displayIcon(ImageView imageView) {
+    public void displayIcon(FolderItemLayout layout) {
         BasePipe basePipe = getBasePipe();
-        if (basePipe != null) basePipe.displayIcon(this, imageView);
+        if (basePipe != null) basePipe.displayIcon(this, layout);
     }
 
     @TargetApi(12)

@@ -1,5 +1,8 @@
 package com.ss.aris.open.wallpaper;
 
+import com.ss.aris.open.TargetVersion;
+import com.ss.aris.open.console.Console;
+
 public interface ILiveWallpaper {
 
     void start();
@@ -12,6 +15,11 @@ public interface ILiveWallpaper {
 
     interface IBackground{
         void setColor(int color);
+    }
+
+    @TargetVersion(1230)
+    interface IConsole{
+        void setConsole(Console console);
     }
 
 }
