@@ -214,6 +214,13 @@ public class SLockPipe extends ExecuteOnlyPipe {
                 public void onUnlocked() {
                     isLocked = false;
                 }
+            }, new ILock.LockedAfterPwdCallback() {
+                @Override
+                public void onLockedAfterPwdCallback() {
+                    isRunning = true;
+                    isLocked = true;
+                    startOutput();
+                }
             });
 
             if (b) {

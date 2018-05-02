@@ -4,9 +4,6 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Build;
 import java.util.Locale;
-
-import com.ss.aris.open.pipes.BasePipe;
-import com.ss.aris.open.pipes.action.DefaultInputActionPipe;
 import com.ss.aris.open.pipes.action.SimpleActionPipe;
 import com.ss.aris.open.pipes.entity.Pipe;
 import com.ss.aris.open.pipes.entity.SearchableName;

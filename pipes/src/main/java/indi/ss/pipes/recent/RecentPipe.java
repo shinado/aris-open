@@ -11,6 +11,11 @@ import java.util.List;
 
 public class RecentPipe extends DefaultInputActionPipe{
 
+    private final String USAGE = "To list the most recently installed apps.files.\n" +
+            "usage:\n" +
+            "apps->recent [(optional)size of list]\n" +
+            "[directory]->recent [(optional)size of list]";
+
     public RecentPipe(int id) {
         super(id);
     }
@@ -30,7 +35,7 @@ public class RecentPipe extends DefaultInputActionPipe{
         }
 
         if (!(basePrev instanceof SearchablePipe)){
-            callback.onOutput("Plugin " + prev.getDisplayName() + " is not applicable for this. ");
+            callback.onOutput("not applicable");
             return;
         }
 
@@ -69,10 +74,12 @@ public class RecentPipe extends DefaultInputActionPipe{
 
     @Override
     public void onParamsEmpty(Pipe rs, OutputCallback callback) {
+        callback.onOutput(USAGE);
     }
 
     @Override
     public void onParamsNotEmpty(Pipe rs, OutputCallback callback) {
+        callback.onOutput(USAGE);
     }
 
 }

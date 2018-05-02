@@ -9,6 +9,10 @@ import java.util.Set;
 
 public class MostPipe extends DefaultInputActionPipe{
 
+    private final String USAGE = "To list the most frequently used apps/contacts." +
+            "\nusage:" +
+            "\n[apps/contacts]->most [(optional)size of list] ";
+
     public MostPipe(int id) {
         super(id);
     }
@@ -28,7 +32,7 @@ public class MostPipe extends DefaultInputActionPipe{
         }
 
         if (!(basePrev instanceof SearchablePipe)){
-            callback.onOutput("Plugin " + prev.getDisplayName() + " is not applicable for this. ");
+            callback.onOutput("not applicable");
             return;
         }
 
@@ -60,10 +64,12 @@ public class MostPipe extends DefaultInputActionPipe{
 
     @Override
     public void onParamsEmpty(Pipe rs, OutputCallback callback) {
+        callback.onOutput(USAGE);
     }
 
     @Override
     public void onParamsNotEmpty(Pipe rs, OutputCallback callback) {
+        callback.onOutput(USAGE);
     }
 
 }
