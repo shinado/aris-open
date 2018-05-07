@@ -24,10 +24,11 @@ public class MainClass {
 //        }
 
         //if you wish to dex only one item
-        String NAME = "dos";
+        String NAME = "terminal2";
         String dxPath = "/Users/ss/Library/Android/sdk/build-tools/26.0.1/";
 
-        String PACKAGE = "com/ss/console";
+        String PACKAGE = "com/ss/widget";
+//        String PACKAGE = "indi/ss/pipes";
         String dx = "/Users/ss/workspace/application/dx/temp/";
         String output = "/Users/ss/workspace/application/dx/output/";
 //        String module = "aris-open/pipes";

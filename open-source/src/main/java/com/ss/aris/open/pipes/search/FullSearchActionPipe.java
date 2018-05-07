@@ -23,7 +23,7 @@ public abstract class FullSearchActionPipe extends SearchablePipe {
 
     public FullSearchActionPipe(int id) {
         super(id);
-        defaultExitPipe = new Pipe(getId(), "$exit", new SearchableName("exit"), "$#exit");
+        defaultExitPipe = new Pipe(getId(), "$exit", new SearchableName("exit"), "_$exit");
     }
 
     @Override

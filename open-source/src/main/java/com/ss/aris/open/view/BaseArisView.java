@@ -1,6 +1,7 @@
 package com.ss.aris.open.view;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,7 @@ public abstract class BaseArisView {
 
     public void onResume() {
         hasPaused = false;
-        mHandler.post(runnable);
+        mHandler.postDelayed(runnable, 500);
     }
 
     public void onPause() {
@@ -53,7 +54,7 @@ public abstract class BaseArisView {
         @Override
         public void run() {
             if (!hasPaused) {
-                if (task != null) task.run();
+                try {if (task != null) task.run();} catch (Exception e) {e.printStackTrace();}
             }
 
             if (!hasDestroyed) mHandler.postDelayed(this, interval);

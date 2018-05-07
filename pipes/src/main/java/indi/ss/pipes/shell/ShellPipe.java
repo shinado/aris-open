@@ -13,7 +13,7 @@ public class ShellPipe extends FullSearchActionPipe {
     public ShellPipe(int id) {
         super(id);
 
-        starter = new Pipe(id, "shell", new SearchableName("shell"), "$#shell");
+        starter = new Pipe(id, "shell", new SearchableName("shell"), "_$shell");
         starter.setBasePipe(this);
     }
 
@@ -37,9 +37,9 @@ public class ShellPipe extends FullSearchActionPipe {
     }
 
     @Override
-    protected void start() {
-        super.start();
-        getConsole().input("You're in shell now. Please use 'exit' to quit");
+    protected void start(Pipe p) {
+        super.start(p);
+        getConsole().input("You're in shell now. Please use 'exit' to exit");
     }
 
     @Override

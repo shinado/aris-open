@@ -11,7 +11,7 @@ import java.util.List;
 
 public class RecentPipe extends DefaultInputActionPipe{
 
-    private final String USAGE = "To list the most recently installed apps.files.\n" +
+    private final String USAGE = "To list the most recently installed apps/modified files.\n" +
             "usage:\n" +
             "apps->recent [(optional)size of list]\n" +
             "[directory]->recent [(optional)size of list]";
@@ -44,7 +44,7 @@ public class RecentPipe extends DefaultInputActionPipe{
         Collections.sort(all, new Comparator<Pipe>() {
             @Override
             public int compare(Pipe o1, Pipe o2) {
-                return (int) (o1.lastModified - o2.lastModified);
+                return (int) (o2.lastModified - o1.lastModified);
             }
         });
 

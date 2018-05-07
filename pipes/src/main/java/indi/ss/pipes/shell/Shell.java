@@ -139,8 +139,10 @@ public class Shell {
       stderrGobbler.join();
       process.destroy();
     } catch (InterruptedException e) {
+      stderr.add(e.getMessage());
       exitCode = ShellExitCode.WATCHDOG_EXIT;
     } catch (IOException e) {
+      stderr.add(e.getMessage());
       exitCode = ShellExitCode.SHELL_WRONG_UID;
     }
 

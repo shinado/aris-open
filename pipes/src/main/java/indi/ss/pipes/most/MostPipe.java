@@ -55,8 +55,7 @@ public class MostPipe extends DefaultInputActionPipe{
                 break;
             }
 
-            sb.append(p.getDisplayName())
-                    .append("\n");
+            if (p != null) sb.append(p.getDisplayName()).append("\n");
         }
 
         callback.onOutput(sb.toString());

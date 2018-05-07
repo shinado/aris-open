@@ -259,6 +259,10 @@ public abstract class SearchablePipe extends BasePipe {
         return all;
     }
 
+    public ArrayList<Pipe> getAll(Pipe rs) {
+        return getAll();
+    }
+
     protected void register(Pipe... pipes) {
         for (Pipe p : pipes) {
             p.setBasePipe(this);
