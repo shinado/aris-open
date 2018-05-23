@@ -24,7 +24,7 @@ public class MainClass {
 //        }
 
         //if you wish to dex only one item
-        String NAME = "terminal2";
+        String NAME = "digital";
         String dxPath = "/Users/ss/Library/Android/sdk/build-tools/26.0.1/";
 
         String PACKAGE = "com/ss/widget";
@@ -32,8 +32,8 @@ public class MainClass {
         String dx = "/Users/ss/workspace/application/dx/temp/";
         String output = "/Users/ss/workspace/application/dx/output/";
 //        String module = "aris-open/pipes";
-        String module = "app/factory";
-        File pipes = new File("/Users/ss/workspace/application/" + module + "/build/intermediates/classes/debug/" + PACKAGE);
+        String module = "app/items";
+        File pipes = new File("/Users/ss/workspace/application/" + module + "/build/intermediates/classes/release/" + PACKAGE);
 
         new File(output).mkdirs();
         String[] list = pipes.list();

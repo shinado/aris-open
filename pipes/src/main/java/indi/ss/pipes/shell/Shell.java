@@ -306,7 +306,7 @@ public class Shell {
      */
     @WorkerThread
     public static CommandResult run(@NonNull String... commands) {
-      return Shell.run("sh", commands);
+      return Shell.run("sh", null, commands);
     }
 
   }
@@ -413,7 +413,7 @@ public class Shell {
       if (suVersion[idx] == null) {
         String version = null;
 
-        CommandResult result = Shell.run(internal ? "su -V" : "su -v", "exit");
+        CommandResult result = Shell.run(internal ? "su -V" : "su -v", null, "exit");
 
         for (String line : result.stdout) {
           if (!internal) {

@@ -87,7 +87,7 @@ public abstract class BaseResultView implements IResultView {
                 if (i++ == 0) {
                     item.setTextColor(ContextCompat.getColor(context, getTextColor()));
                     if (hasPrevious) {
-                        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) item.getView().getLayoutParams();
+//                        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) item.getView().getLayoutParams();
 //                        params.leftMargin = -context.getResources().getDimensionPixelSize(R.dimen.dp_4);
                         switch (id) {
                             case PConstants.ID_APPLICATION:

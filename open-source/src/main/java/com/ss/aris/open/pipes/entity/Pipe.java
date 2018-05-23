@@ -445,4 +445,12 @@ public class Pipe implements Comparable<Pipe>, Parcelable {
         return pipe;
     }
 
+    public boolean equalWithExecutable(String value) {
+        return value != null && executable.replace("_$", "")
+                .replace("$", "")
+                .equals(value.replace("_$", "")
+                        .replace("$", ""));
+
+    }
+
 }

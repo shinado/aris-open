@@ -4,6 +4,7 @@ import com.ss.aris.open.pipes.entity.Instruction;
 import com.ss.aris.open.pipes.entity.Pipe;
 import com.ss.aris.open.pipes.entity.SearchableName;
 import com.ss.aris.open.pipes.search.FullSearchActionPipe;
+
 import java.util.TreeSet;
 
 public class ShellPipe extends FullSearchActionPipe {
@@ -19,11 +20,14 @@ public class ShellPipe extends FullSearchActionPipe {
 
     @Override
     protected void doExecute(Pipe rs, OutputCallback callback) {
-        CommandResult result = Shell.run(rs.getExecutable());
-        if (result.isSuccessful()) {
-            callback.onOutput(result.getStdout());
-        } else {
-            callback.onOutput(result.getStderr());
+        String exe = rs.getExecutable();
+        if (!exe.isEmpty()) {
+            CommandResult result = Shell.run(exe);
+            if (result.isSuccessful()) {
+                callback.onOutput(result.getStdout());
+            } else {
+                callback.onOutput(result.getStderr());
+            }
         }
     }
 
@@ -39,7 +43,9 @@ public class ShellPipe extends FullSearchActionPipe {
     @Override
     protected void start(Pipe p) {
         super.start(p);
-        getConsole().input("You're in shell now. Please use 'exit' to exit");
+        getConsole().input("You're in shell now. Please use 'exit' to exit. " +
+                "\nPlease note that you CAN NOT use 'cd' in shell. " +
+                "\nAlternatively, you can use 'cd' outside shell in Aris.");
     }
 
     @Override

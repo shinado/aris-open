@@ -2,6 +2,8 @@ package com.ss.aris.open.pipes.search;
 
 import android.annotation.TargetApi;
 import android.util.Log;
+
+import java.util.List;
 import java.util.TreeSet;
 import com.ss.aris.open.pipes.BasePipe;
 import com.ss.aris.open.pipes.entity.Instruction;
@@ -90,7 +92,13 @@ public abstract class FullSearchActionPipe extends SearchablePipe {
             return search(newInstruction);
         } else {
             if (hasStarted) {
-                return super.search(input);
+                if (input.isEmpty()){
+                    TreeSet<Pipe> set = new TreeSet<>();
+                    set.addAll(getAll());
+                    return set;
+                }else {
+                    return super.search(input);
+                }
             } else {
                 TreeSet<Pipe> results = new TreeSet<>();
                 if (!input.isEmpty()) {

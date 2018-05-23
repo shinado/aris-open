@@ -1,21 +1,35 @@
 package com.ss.aris.open.results;
 
+import android.content.Context;
 import android.graphics.Typeface;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 
-public interface IResultTextView {
+import com.ss.aris.open.view.BaseArisView;
 
-    enum Type {
+public abstract class IResultTextView extends BaseArisView{
+
+    public enum Type {
         NONE,
         INPUT,
         OUTPUT,
         BOTH
     }
 
-    void setTypeface(Typeface typeface);
-    void setText(CharSequence text);
-    void setTextColor(int color);
-    void setup(int color, boolean solid, Type type);
-    View getView();
+    protected Context context;
+
+    public IResultTextView(Context context, ViewGroup parent) {
+        this.context = context;
+    }
+
+    public abstract void setTypeface(Typeface typeface);
+    public abstract void setText(CharSequence text);
+    public abstract void setTextColor(int color);
+    public abstract void setup(int color, boolean solid, Type type);
+
+    public View getView(){
+        return getView(null, "");
+    }
 
 }

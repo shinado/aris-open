@@ -20,7 +20,7 @@ public class Configurations {
     }
 
     public boolean needAlias() {
-        return sharedPreferences.getBoolean("alias", true);
+        return sharedPreferences.getBoolean("alias", false);
     }
 
     public void needAlias(boolean b) {

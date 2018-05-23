@@ -1,25 +1,19 @@
 package indi.ss.pipes.shortcut;
 
-
-import android.app.AppOpsManager;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.util.Log;
-
 import com.ss.aris.open.TargetVersion;
 import com.ss.aris.open.console.impl.ResultCallback;
 import com.ss.aris.open.pipes.PConstants;
 import com.ss.aris.open.pipes.entity.Pipe;
 import com.ss.aris.open.pipes.search.FullSearchActionPipe;
 import com.ss.aris.open.pipes.search.translator.AbsTranslator;
-
 import java.util.List;
-import java.util.TreeSet;
 
 public class ShortcutPipe extends FullSearchActionPipe {
 
@@ -79,15 +73,18 @@ public class ShortcutPipe extends FullSearchActionPipe {
         String[] split = value.split(",");
         ComponentName cn = new ComponentName(split[0], split[1]);
 
-        final Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE);
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+//        final Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         //with FLAG_ACTIVITY_MULTIPLE_TASK, QQLite would not launch occasionally
-//        Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.setComponent(cn);
         getConsole().requestResult(intent, new ResultCallback() {
             @Override
             public void onActivityResult(int resultCode, Intent intent) {
-                Bundle bundle = intent.getExtras();
-
+                if (intent != null){
+                    Bundle bundle = intent.getExtras();
+                }
             }
         });
     }

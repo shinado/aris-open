@@ -15,7 +15,7 @@ public abstract class DefaultInputActionPipe extends ActionPipe {
         mResult.setBasePipe(this);
         mResult.setDisplayName(getDisplayName());
         mResult.setSearchableName(getSearchable());
-        mResult.setExecutable("$" + mResult.getDisplayName());
+        mResult.setExecutable("_$" + mResult.getDisplayName());
     }
 
     @Override
@@ -78,4 +78,3 @@ public abstract class DefaultInputActionPipe extends ActionPipe {
     public abstract void onParamsNotEmpty(Pipe rs, OutputCallback callback);
 
 }
-
