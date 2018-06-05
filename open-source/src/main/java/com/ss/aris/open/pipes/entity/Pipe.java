@@ -46,7 +46,7 @@ public class Pipe implements Comparable<Pipe>, Parcelable {
     private boolean donotExecute = false;
 
     //????
-    public PendingIntent pendingIntent = null;
+    public Object pendingIntent = null;
 
     public long lastModified = 0;
 
@@ -163,11 +163,16 @@ public class Pipe implements Comparable<Pipe>, Parcelable {
 
     public boolean startExecution() {
         if (pendingIntent != null) {
-            try {
-                pendingIntent.send();
+            if (pendingIntent instanceof PendingIntent) {
+                try {
+                    ((PendingIntent)pendingIntent).send();
+                    return true;
+                } catch (PendingIntent.CanceledException e) {
+                    e.printStackTrace();
+                }
+            }else if (pendingIntent instanceof Runnable){
+                ((Runnable) pendingIntent).run();
                 return true;
-            } catch (PendingIntent.CanceledException e) {
-                e.printStackTrace();
             }
         }
 
@@ -347,7 +352,7 @@ public class Pipe implements Comparable<Pipe>, Parcelable {
                 return;
             }
             previous = new TreeSet<>();
-            if (prev.getPrevious() != null){
+            if (prev.getPrevious() != null) {
                 previous.addAll(prev.getPrevious());
             }
             pointer = prev.getPointer();

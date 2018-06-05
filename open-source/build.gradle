@@ -9,8 +9,8 @@ android {
         minSdkVersion project.ext.mMinSdkVersion
         targetSdkVersion project.ext.mTargetSdkVersion
 
-        versionCode 1028
-        versionName "1.2.8"
+        versionCode 1029
+        versionName "1.2.9"
     }
 
     buildTypes {
@@ -20,7 +20,7 @@ android {
         }
     }
 
-    version "1.2.8"
+    version "1.2.9"
 
     libraryVariants.all { variant ->
         variant.outputs.each { output ->

@@ -11,11 +11,9 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
-
 import com.ss.aris.open.console.Console;
 import com.ss.aris.open.console.impl.DeviceConsole;
 import com.ss.aris.open.widget.ArisWidget;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
