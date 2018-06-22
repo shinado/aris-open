@@ -1,11 +1,15 @@
 package com.ss.aris.open.pipes.search;
 
 import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
+
 import com.ss.aris.open.pipes.BasePipe;
 import com.ss.aris.open.pipes.entity.Instruction;
 import com.ss.aris.open.pipes.entity.Pipe;
@@ -13,7 +17,7 @@ import com.ss.aris.open.pipes.entity.SearchableName;
 
 public abstract class SearchablePipe extends BasePipe {
 
-    private static final String TAG = "SearchablePipe";
+    private String TAG = this.getClass().getSimpleName();
     protected HashMap<String, TreeSet<Pipe>> resultMap = new HashMap<>();
     protected HashMap<String, TreeSet<String>> deletedSearchKeys = new HashMap<>();
 
@@ -91,23 +95,16 @@ public abstract class SearchablePipe extends BasePipe {
         TreeSet<Pipe> result = new TreeSet<>();
         if (body.isEmpty()) return result;
 
-        String className = getClass().getSimpleName();
         TreeSet<Pipe> all = resultMap.get(key);
         if (body.equals(key)) {
-            if (className.contains("Application")) {
-                Log.d("PipeSearcher", "return all: " + (all == null ? 0 : all.size()));
-            }
             return all;
         }
 
         if (all == null) {
             return new TreeSet<>();
         } else {
-            //search
+            //do the search
             for (Pipe pipe : all) {
-                if (className.contains("Application")) {
-                    Log.d("PipeSearcher", "found: " + pipe.getDisplayName());
-                }
                 if (pipe.getSearchableName().contains(body)) {
                     result.add(pipe);
                 }
@@ -142,6 +139,7 @@ public abstract class SearchablePipe extends BasePipe {
         TreeSet<String> keys = deletedSearchKeys.get(vo.getExecutable());
         if (keys != null) {
             for (String key : keys) {
+                Log.d(TAG, "re-enable: " + key);
                 TreeSet<Pipe> list = resultMap.get(key);
                 if (list == null) {
                     list = new TreeSet<>();
@@ -160,6 +158,8 @@ public abstract class SearchablePipe extends BasePipe {
         if (searchKeys == null) {
             searchKeys = new TreeSet<>();
             deletedSearchKeys.put(vo.getExecutable(), searchKeys);
+
+            Log.d(TAG, "cache: " + vo.getExecutable() + "->" + key);
         }
         searchKeys.add(key);
     }
@@ -176,24 +176,26 @@ public abstract class SearchablePipe extends BasePipe {
             //check this out
             //https://www.jianshu.com/p/7b7455aad793
             boolean contains = false;//results.contains(vo);
-            for (Pipe p : results) {
+            for (Iterator<Pipe> iterator = results.iterator(); iterator.hasNext(); ) {
+                Pipe p = iterator.next();
                 if (p.getExecutable().equals(vo.getExecutable())) {
+                    iterator.remove();
                     contains = true;
                 }
             }
 
             if (contains) {
                 cacheDeletedSearchKeys(key, vo);
-                results.remove(vo);
             }
         }
         resultMap.remove(vo.getExecutable());
     }
 
-    /**
-     * ["face", "book"] = > ["f" -> "facebook", "b" -> "facebook"]
-     */
-    protected void putItemInMap(Pipe vo) {
+    protected void addItemInMap(Pipe vo){
+        putItemInMap(vo, true);
+    }
+
+    protected void putItemInMap(Pipe vo, boolean adding) {
         String className = getClass().getSimpleName();
         Log.d("PipeSearcher", "put item in map: " + vo.getDisplayName());
 
@@ -218,19 +220,24 @@ public abstract class SearchablePipe extends BasePipe {
 
                 String c = n.isEmpty() ? "" : n.charAt(0) + "";
 
-                TreeSet<Pipe> list = resultMap.get(c);//allItemMap.get(c);
-                if (list == null) {
-
-                    list = new TreeSet<>();
-                    resultMap.put(c, list);
-                }
-
-                list.add(vo);
-                if (c.equals("k")) {
-                    if (className.contains("Application")) {
-                        Log.d("PipeSearcher", "addK: " + ", " + vo.getDisplayName());
+                if (adding) {
+                    for (String k : resultMap.keySet()) {
+                        if (k.contains(c) && !k.contains(".")) {
+                            TreeSet<Pipe> list = resultMap.get(k);
+                            if (list != null) {
+                                list.add(vo);
+                            }
+                        }
                     }
+                } else {
+                    TreeSet<Pipe> list = resultMap.get(c);//allItemMap.get(c);
+                    if (list == null) {
+                        list = new TreeSet<>();
+                        resultMap.put(c, list);
+                    }
+                    list.add(vo);
                 }
+
             }
         }
 
@@ -241,7 +248,14 @@ public abstract class SearchablePipe extends BasePipe {
         resultMap.put(vo.getExecutable(), list);
     }
 
-    public TreeSet<Pipe> getFrequents(){
+    /**
+     * ["face", "book"] = > ["f" -> "facebook", "b" -> "facebook"]
+     */
+    protected void putItemInMap(Pipe vo) {
+        putItemInMap(vo, false);
+    }
+
+    public TreeSet<Pipe> getFrequents() {
         return new TreeSet<>();
     }
 

@@ -23,4 +23,24 @@ public class DialogHelper {
         }
     }
 
+    public static void show(Context context, String title, String msg,
+                            String positive, IDialog.OnClickListener yesListener,
+                            String negative, IDialog.OnClickListener noListener){
+        try {
+            String clsName = ManifestUtil.getMetaData(context, "dialog");
+            IDialog dialog = (IDialog) Class.forName(clsName).newInstance();
+            dialog.show(context, title, msg,
+                    positive, yesListener,
+                    negative, noListener);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
