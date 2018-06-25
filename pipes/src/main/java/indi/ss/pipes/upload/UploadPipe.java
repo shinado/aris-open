@@ -28,7 +28,6 @@ public class UploadPipe extends SimpleActionPipe{
 
     @Override
     public void acceptInput(Pipe result, String input, Pipe.PreviousPipes previous, final OutputCallback callback) {
-        //do upload
         ShareIntent intent = ShareIntent.from(input);
         if (intent != null) {
             if (Intent.ACTION_SEND.equals(intent.action)) {
@@ -39,12 +38,10 @@ public class UploadPipe extends SimpleActionPipe{
                         try {
                             ISFile f = SaasFactory.getFile(context, FileUtil.getName(path), read(file));
                             f.save(new ISucceedCallback() {
-
                                 @Override
                                 public void onSucceed(String key) {
                                     callback.onOutput(key);
                                 }
-
                                 @Override
                                 public void onFail(String msg) {
                                     getConsole().input("Abort since " + msg);
@@ -77,7 +74,7 @@ public class UploadPipe extends SimpleActionPipe{
             }
         }
 
-        super.acceptInput(result, input, previous, callback);
+        callback.onOutput("Nothing to upload. ");
     }
 
     public byte[] read(File file) throws IOException {
@@ -87,23 +84,22 @@ public class UploadPipe extends SimpleActionPipe{
             byte[] buffer = new byte[4096];
             ous = new ByteArrayOutputStream();
             ios = new FileInputStream(file);
-            int read = 0;
+            int read;
             while ((read = ios.read(buffer)) != -1) {
                 ous.write(buffer, 0, read);
             }
         } finally {
             try {
-                if (ous != null)
-                    ous.close();
+                if (ous != null) ous.close();
             } catch (IOException e) {
             }
 
             try {
-                if (ios != null)
-                    ios.close();
+                if (ios != null) ios.close();
             } catch (IOException e) {
             }
         }
+
         return ous.toByteArray();
     }
 

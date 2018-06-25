@@ -3,7 +3,7 @@ package com.ss.aris.open.pipes.pri;
 import android.content.Intent;
 import com.ss.aris.open.pipes.impl.ShareIntent;
 
-public class FeedItem {
+public class NotificationItem {
 
     public int pid = 0;
     public String title = "";
@@ -11,7 +11,7 @@ public class FeedItem {
     public String image = "";
     public ShareIntent intent;
 
-    public FeedItem(String title, String content, String url) {
+    public NotificationItem(String title, String content, String url) {
         this.title = title;
         this.content = content;
 
@@ -21,7 +21,7 @@ public class FeedItem {
         intent.extras.put(Intent.EXTRA_TEXT, url);
     }
 
-    public FeedItem() {
+    public NotificationItem() {
     }
 
 }

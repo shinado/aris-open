@@ -24,16 +24,16 @@ public class MainClass {
 //        }
 
         //if you wish to dex only one item
-        String MODULE = "app/items";
-        String PACKAGE = "com/ss/widget";
-        String NAME = "tech";
+        String MODULE = "aris-open/pipes";
+//        String MODULE = "app/items";
+//        String PACKAGE = "com/ss/widget";
+        String PACKAGE = "indi/ss/pipes";
+        String NAME = "upload";
 
         String dxPath = "/Users/ss/Library/Android/sdk/build-tools/26.0.1/";
 
-//        String PACKAGE = "indi/ss/pipes";
         String dx = "/Users/ss/workspace/application/dx/temp/";
         String output = "/Users/ss/workspace/application/dx/output/";
-//        String module = "aris-open/pipes";
         File pipes = new File("/Users/ss/workspace/application/" + MODULE + "/build/intermediates/classes/release/" + PACKAGE);
 
         new File(output).mkdirs();
