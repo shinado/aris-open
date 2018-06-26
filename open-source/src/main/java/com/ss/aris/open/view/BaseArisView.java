@@ -7,9 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ss.aris.open.console.Console;
+import com.ss.aris.open.pipes.pri.PRI;
 import com.ss.aris.open.widget.IResource;
 
-public abstract class BaseArisView {
+public abstract class BaseArisView{
 
     protected boolean hasPaused = false;
     protected boolean hasDestroyed = false;
@@ -68,6 +69,12 @@ public abstract class BaseArisView {
         mHandler.post(task);
     }
 
-    public abstract View getView(ViewGroup parent, String value);
+    public View getView(ViewGroup parent, PRI pri){
+        return null;
+    }
+
+    public View getView(ViewGroup parent, String value){
+        return getView(parent, PRI.parse(value));
+    }
 
 }

@@ -5,13 +5,16 @@ import com.ss.aris.open.pipes.impl.ShareIntent;
 
 public class NotificationItem {
 
+    public long timestamp;
     public int pid = 0;
+    public String executable = "";
     public String title = "";
     public String content = "";
     public String image = "";
     public ShareIntent intent;
 
     public NotificationItem(String title, String content, String url) {
+        this();
         this.title = title;
         this.content = content;
 
@@ -22,6 +25,7 @@ public class NotificationItem {
     }
 
     public NotificationItem() {
+        timestamp = System.currentTimeMillis();
     }
 
 }

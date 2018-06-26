@@ -6,28 +6,15 @@ import android.view.View;
 import com.ss.aris.open.console.Console;
 import com.ss.aris.open.widget.IResource;
 
-public abstract class IFeedView {
+public interface IFeedView {
 
-    protected boolean hasDestroyed = false;
-    protected Context context;
-    protected Console console;
-    protected IResource resource = null;
+    void onCreate(Context context, Console console);
 
-    public void onCreate(Context context, Console console){
-        this.context = context;
-        this.console = console;
-        hasDestroyed = false;
-    }
+    void setResource(IResource res);
 
-    public void setResource(IResource res){
-        this.resource = res;
-    }
+    void onDestroy();
 
-    public void onDestroy(){
-        hasDestroyed = true;
-    }
-
-    public abstract View onCreateView();
-    public abstract void onBindView(FeedItem item);
+    View onCreateView();
+    void onBindView(FeedItem item);
 
 }
