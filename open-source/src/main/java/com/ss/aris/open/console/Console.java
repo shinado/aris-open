@@ -7,6 +7,7 @@ import com.ss.aris.open.console.impl.PermissionCallback;
 import com.ss.aris.open.console.impl.ResultCallback;
 import com.ss.aris.open.console.text.OnTextClickListener;
 import com.ss.aris.open.pipes.BasePipe;
+import com.ss.aris.open.pipes.IPipeManager;
 import com.ss.aris.open.pipes.entity.Pipe;
 import com.ss.aris.open.console.text.OnTypingFinishCallback;
 import com.ss.aris.open.console.text.TypingOption;
@@ -102,5 +103,7 @@ public interface Console {
     void requestResult(Intent intent, ResultCallback callback);
 
     BasePipe.OutputCallback getOutputCallback();
+
+    IPipeManager getPipeManager();
 
 }
