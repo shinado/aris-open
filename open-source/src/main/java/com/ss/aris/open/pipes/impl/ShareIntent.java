@@ -31,6 +31,10 @@ public class ShareIntent {
         intent.setType(type);
     }
 
+    public String getType(){
+        return intent.getType();
+    }
+
     public void setData(String data){
         intent.setData(Uri.parse(data));
     }
@@ -65,7 +69,7 @@ public class ShareIntent {
     }
 
     public static ShareIntent from(String uri) {
-        if(uri.startsWith("android-app:")){
+        if(uri.startsWith("#Intent;")){
             try {
                 ShareIntent intent = new ShareIntent();
                 intent.intent = Intent.parseUri(uri, 0);

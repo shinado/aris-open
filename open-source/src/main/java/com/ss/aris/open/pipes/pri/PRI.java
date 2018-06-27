@@ -22,6 +22,7 @@ public class PRI {
     }
 
     public PRI addExecutable(String exe) {
+        remove("exe=");
         try {
             value += "exe=" + URLEncoder.encode(exe, ENCODING) + "/";
         } catch (UnsupportedEncodingException e) {
@@ -31,15 +32,18 @@ public class PRI {
     }
 
     public PRI addId(int id) {
+        remove("id=");
         value += "id=" + id + "/";
         return this;
     }
 
     public void addKeep(String keep) {
-        value += "keep=" + keep + "/";
+        remove("keep=");
+        value += "keep=" + keep;
     }
 
     public PRI addAction(String action) {
+        remove("action=");
         try {
             value += "action=" + URLEncoder.encode(action, ENCODING) + "/";
         } catch (UnsupportedEncodingException e) {
@@ -66,16 +70,24 @@ public class PRI {
         }
     }
 
+    private void remove(String key) {
+        String[] split = value.split("/");
+        for (String base : split) {
+            if (base.startsWith(key)) {
+                value = value.replaceFirst(base+"/", "");
+                return;
+            }
+        }
+    }
+
     public String getAction() {
         String[] split = value.split("/");
-        if (split.length > 0) {
-            for (String base : split) {
-                if (base.contains("action=")) {
-                    try {
-                        return URLDecoder.decode(base.replace("action=", ""), ENCODING);
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
+        for (String base : split) {
+            if (base.startsWith("action=")) {
+                try {
+                    return URLDecoder.decode(base.replace("action=", ""), ENCODING);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -87,7 +99,7 @@ public class PRI {
         String[] split = value.split("/");
         if (split.length > 0) {
             String base = split[0];
-            if (base.contains("id=")) {
+            if (base.startsWith("id=")) {
                 try {
                     return Integer.parseInt(base.replace("id=", ""));
                 } catch (NumberFormatException e) {
@@ -102,7 +114,7 @@ public class PRI {
         if (value.contains("/")) {
             String[] split = value.split("/");
             for (String base : split) {
-                if (base.contains("exe=")) {
+                if (base.startsWith("exe=")) {
                     try {
                         return URLDecoder.decode(base.replace("exe=", ""), ENCODING);
                     } catch (UnsupportedEncodingException e) {
@@ -127,7 +139,7 @@ public class PRI {
         if (value.contains("/")) {
             String[] split = value.split("/");
             for (String base : split) {
-                if (base.contains("params=")) {
+                if (base.startsWith("params=")) {
                     try {
                         return URLDecoder.decode(base.replace("params=", ""), "utf-8");
                     } catch (UnsupportedEncodingException e) {
