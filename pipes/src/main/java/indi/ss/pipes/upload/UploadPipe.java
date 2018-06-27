@@ -30,9 +30,9 @@ public class UploadPipe extends SimpleActionPipe{
     public void acceptInput(Pipe result, String input, Pipe.PreviousPipes previous, final OutputCallback callback) {
         ShareIntent intent = ShareIntent.from(input);
         if (intent != null) {
-            if (Intent.ACTION_SEND.equals(intent.action)) {
-                if (intent.extras.containsKey(Intent.EXTRA_STREAM)) {
-                    String path = intent.extras.get(Intent.EXTRA_STREAM);
+            if (Intent.ACTION_SEND.equals(intent.getAction())) {
+                if (intent.containsKey(Intent.EXTRA_STREAM)) {
+                    String path = intent.getStringExtra(Intent.EXTRA_STREAM);
                     File file = new File(path.replaceFirst("file://", ""));
                     if (file.exists() && file.isFile()) {
                         try {

@@ -19,9 +19,9 @@ public class NotificationItem {
         this.content = content;
 
         intent = new ShareIntent(Intent.ACTION_VIEW);
-        intent.data = url;
-        intent.type = "text/plain";
-        intent.extras.put(Intent.EXTRA_TEXT, url);
+        intent.setData(url);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, url);
     }
 
     public NotificationItem() {

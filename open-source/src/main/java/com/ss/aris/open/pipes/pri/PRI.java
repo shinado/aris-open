@@ -35,6 +35,10 @@ public class PRI {
         return this;
     }
 
+    public void addKeep(String keep) {
+        value += "keep=" + keep + "/";
+    }
+
     public PRI addAction(String action) {
         try {
             value += "action=" + URLEncoder.encode(action, ENCODING) + "/";

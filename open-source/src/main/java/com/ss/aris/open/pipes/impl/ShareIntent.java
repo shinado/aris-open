@@ -3,63 +3,82 @@ package com.ss.aris.open.pipes.impl;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
-import java.util.HashMap;
-import com.ss.aris.open.util.JsonUtil;
+import android.os.Bundle;
+import java.net.URISyntaxException;
 
 public class ShareIntent {
 
-    @Deprecated
-    public String target;
-    public String type = "";
-    public String data = "";
-    public String action;
-    public String componentName = "";
-    public int flags;
-    public HashMap<String, String> extras = new HashMap<>();
+    private Intent intent;
 
     public ShareIntent(String action) {
-        this.action = action;
+        intent = new Intent(action);
     }
 
     public ShareIntent() {
-        action = Intent.ACTION_VIEW;
+        String action = Intent.ACTION_VIEW;
+        intent = new Intent(action);
     }
 
-    @Override
-    public String toString() {
-        return JsonUtil.toJson(this);
-    }
-
-    public static ShareIntent from(String json) {
-        return JsonUtil.fromJson(json, ShareIntent.class);
-    }
-
-    public Intent toIntent() {
-        Intent intent = new Intent();
+    public void setAction(String action){
         intent.setAction(action);
+    }
+
+    public String getAction(){
+        return intent.getAction();
+    }
+
+    public void setType(String type){
         intent.setType(type);
-        if (!data.isEmpty()){
-            intent.setData(Uri.parse(data));
-        }
+    }
+
+    public void setData(String data){
+        intent.setData(Uri.parse(data));
+    }
+
+    public void setComponentName(String pkg, String cls){
+        intent.setComponent(new ComponentName(pkg, cls));
+    }
+
+    public void setComponentName(String componentName){
         if (componentName.contains(",")){
             String[] split = componentName.split(",");
             intent.setComponent(new ComponentName(split[0], split[1]));
         }
-        intent.setFlags(flags);
+    }
 
-        for (String key : extras.keySet()) {
-            String value = extras.get(key);
-            if (key.equals(Intent.EXTRA_TEXT)){
-                intent.putExtra(key, value);
-            }else {
-                intent.putExtra(key, Uri.parse(value));
+    public void putExtra(String key, String value){
+        intent.putExtra(key, value);
+    }
+
+    public String getStringExtra(String key){
+        return intent.getStringExtra(key);
+    }
+
+    public boolean containsKey(String key){
+        Bundle bundle = intent.getExtras();
+        return bundle != null && bundle.containsKey(key);
+    }
+
+    @Override
+    public String toString() {
+        return intent.toUri(0);
+    }
+
+    public static ShareIntent from(String uri) {
+        if(uri.startsWith("android-app:")){
+            try {
+                ShareIntent intent = new ShareIntent();
+                intent.intent = Intent.parseUri(uri, 0);
+                return intent;
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
             }
-
-//            ArrayList<Uri> arrayList = new ArrayList<>();
-//            arrayList.add(uri);
-//            intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, arrayList);
         }
 
+        return null;
+    }
+
+    public Intent toIntent() {
         return intent;
     }
 

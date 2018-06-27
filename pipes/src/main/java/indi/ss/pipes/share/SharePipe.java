@@ -31,7 +31,7 @@ public class SharePipe extends SimpleActionPipe {
         try {
             shareIntent = ShareIntent.from(input);
             //still fail
-            if (Intent.ACTION_VIEW.equals(shareIntent.action)) {
+            if (Intent.ACTION_VIEW.equals(shareIntent.getAction())) {
                 shareIntent = null;
             }
         } catch (Exception e) {

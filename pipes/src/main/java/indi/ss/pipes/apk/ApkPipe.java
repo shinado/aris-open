@@ -43,11 +43,11 @@ public class ApkPipe extends DefaultInputActionPipe {
     public void acceptInput(Pipe result, String input, Pipe.PreviousPipes previous, OutputCallback callback) {
         if (previous.get().getId() == PConstants.ID_APPLICATION) {
             ShareIntent shareIntent = new ShareIntent(Intent.ACTION_SEND);
-            shareIntent.type = "application/vnd.android.package-archive";
+            shareIntent.setType("application/vnd.android.package-archive");;
             PackageManager pm = getContext().getPackageManager();
             try {
                 ApplicationInfo appInfo = pm.getApplicationInfo(input.split(",")[0], 0);
-                shareIntent.extras.put(Intent.EXTRA_STREAM, "file://" + appInfo.publicSourceDir);
+                shareIntent.putExtra(Intent.EXTRA_STREAM, "file://" + appInfo.publicSourceDir);
                 callback.onOutput(shareIntent.toString());
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();

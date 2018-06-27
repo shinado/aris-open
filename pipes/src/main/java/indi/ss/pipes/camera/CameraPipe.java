@@ -68,10 +68,10 @@ public class CameraPipe extends SimpleActionPipe {
                                         if (resultCode == RESULT_OK) {
                                             String file = photoFile.getAbsolutePath();
                                             ShareIntent shareIntent = new ShareIntent();
-                                            shareIntent.action = Intent.ACTION_SEND;
-                                            shareIntent.type = IntentUtil.getMIMEType(file);
+                                            shareIntent.setAction(Intent.ACTION_SEND);
+                                            shareIntent.setType(IntentUtil.getMIMEType(file));
 
-                                            shareIntent.extras.put(Intent.EXTRA_STREAM, "file://" + file);
+                                            shareIntent.putExtra(Intent.EXTRA_STREAM, "file://" + file);
 
                                             callback.onOutput(shareIntent.toString());
                                         }
