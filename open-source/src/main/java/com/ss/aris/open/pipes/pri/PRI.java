@@ -21,6 +21,16 @@ public class PRI {
         this.head = head;
     }
 
+    public PRI addParameter(String key, String exe) {
+        remove(key + "=");
+        try {
+            value += key + "=" + URLEncoder.encode(exe, ENCODING) + "/";
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return this;
+    }
+
     public PRI addExecutable(String exe) {
         remove("exe=");
         try {
@@ -74,83 +84,46 @@ public class PRI {
         String[] split = value.split("/");
         for (String base : split) {
             if (base.startsWith(key)) {
-                value = value.replaceFirst(base+"/", "");
+                value = value.replaceFirst(base + "/", "");
                 return;
             }
         }
     }
 
-    public String getAction() {
+    public String getParameter(String key) {
         String[] split = value.split("/");
         for (String base : split) {
-            if (base.startsWith("action=")) {
+            if (base.startsWith(key + "=")) {
                 try {
-                    return URLDecoder.decode(base.replace("action=", ""), ENCODING);
+                    return URLDecoder.decode(base.replace(key + "=", ""), ENCODING);
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
             }
         }
-
         return null;
     }
 
+    public String getAction() {
+        return getParameter("action");
+    }
+
     public int getId() {
-        String[] split = value.split("/");
-        if (split.length > 0) {
-            String base = split[0];
-            if (base.startsWith("id=")) {
-                try {
-                    return Integer.parseInt(base.replace("id=", ""));
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
-            }
+        try {
+            return Integer.parseInt(getParameter("id"));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return -1;
     }
 
     public String getExecutable() {
-        if (value.contains("/")) {
-            String[] split = value.split("/");
-            for (String base : split) {
-                if (base.startsWith("exe=")) {
-                    try {
-                        return URLDecoder.decode(base.replace("exe=", ""), ENCODING);
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                        return "";
-                    }
-                }
-            }
-
-            //if not founded
-//            try {
-//                return URLDecoder.decode(split[split.length - 1], "utf-8");
-//            } catch (UnsupportedEncodingException e) {
-//                e.printStackTrace();
-//            }
-        }
-
-        return value;
+        String exe = getParameter("exe");
+        return exe == null ? value : exe;
     }
 
     public String getParams() {
-        if (value.contains("/")) {
-            String[] split = value.split("/");
-            for (String base : split) {
-                if (base.startsWith("params=")) {
-                    try {
-                        return URLDecoder.decode(base.replace("params=", ""), "utf-8");
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                        return "";
-                    }
-                }
-            }
-        }
-
-        return "";
+        return getParameter("params");
     }
 
     public String toString() {

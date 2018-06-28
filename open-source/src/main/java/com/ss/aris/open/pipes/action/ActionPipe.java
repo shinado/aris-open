@@ -77,7 +77,7 @@ public abstract class ActionPipe extends BasePipe{
     public Pipe getByValue(String value, String params){
         Pipe result = getResult();
         if (result.equalWithExecutable(value)){
-            if (!params.isEmpty()){
+            if (params !=null && !params.isEmpty()){
                 result.getInstruction().params = params.split(" ");
             }
             return result;

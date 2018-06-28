@@ -3,6 +3,8 @@ package com.ss.aris.open.feed;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
+
 import com.ss.aris.open.console.Console;
 import com.ss.aris.open.widget.IResource;
 
@@ -16,5 +18,6 @@ public interface IFeedView {
 
     View onCreateView();
     void onBindView(FeedItem item);
+    ViewGroup getViewContainer();
 
 }
