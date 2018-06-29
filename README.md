@@ -1,7 +1,7 @@
 # Aris Launcher
 [CoolAPK](https://www.coolapk.com/apk/shinado.indi.piping) 
 
-Hi there, you've reached Aris open API project. You can develop pipes(plugins) for Airs with this project. 
+Hi there, you've reached Aris open API project. You can develop pipes(plugins) for Aris with this project. 
 
 Before you get started, you should probably know what kind of pipe you are going to develop. If you don't know what it can do, please first go to Pipe Store in Aris and check out all the pipes, the source code of which are available in module "pipes". 
 
