@@ -1,7 +1,12 @@
 # Aris Launcher
 [CoolAPK](https://www.coolapk.com/apk/shinado.indi.piping) 
+[Google Play](https://play.google.com/store/apps/details?id=com.ss.aris) 
+# Berris(coming soon)
+# Cherries(coming soon)
 
-Hi there, you've reached Aris open API project. You can develop pipes(plugins) for Airs with this project. 
+Aris open project is initially designed for Aris launcher, a terminal launcher where you use your Android with commands. The fundamental idea of Aris Launcher is to expand the capability of data sharing in Android to make things easier, int the same way which you finish a complex task with shell in Linux, rahter than using clicking and dragging. For instance, it takes a lot of steps to 'extract an app's apk, and upload it to server, get a link, and sent this link to some of your friends'. In Aris Launcher, you do it with one single command. Sounds cool, right? Now, since we've decided to relaunch a few apps and include them into Aris Open Universe(AOU), we're working on more features and open source Berries(An elegant simplistic Launcher) and Cherries. 
+
+You can develope plugins that can run on Aris Launcher, Berries, Cherries, and all coming apps in AOU. You can even develope a new app based on Aris open project and become part of AOU!   
 
 Before you get started, you should probably know what kind of pipe you are going to develop. If you don't know what it can do, please first go to Pipe Store in Aris and check out all the pipes, the source code of which are available in module "pipes". 
 

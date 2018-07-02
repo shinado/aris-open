@@ -28,7 +28,7 @@ public class MainClass {
 //        String MODULE = "app/items";
 //        String PACKAGE = "com/ss/widget";
         String PACKAGE = "indi/ss/pipes";
-        String NAME = "upload";
+        String NAME = "mylocation";
 
         String dxPath = "/Users/ss/Library/Android/sdk/build-tools/26.0.1/";
 
