@@ -5,8 +5,16 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 
 public class ShareIntent {
+
+    @Deprecated
+    public String action = null;
+    @Deprecated
+    public String type = null;
+    @Deprecated
+    public HashMap<String, String> extras = new HashMap<>();
 
     private Intent intent;
 
@@ -65,7 +73,7 @@ public class ShareIntent {
 
     @Override
     public String toString() {
-        return intent.toUri(0);
+        return toIntent().toUri(0);
     }
 
     public static ShareIntent from(String uri) {
@@ -83,6 +91,14 @@ public class ShareIntent {
     }
 
     public Intent toIntent() {
+        if (action != null) intent.setAction(action);
+        if (type != null) intent.setType(type);
+        if (!extras.isEmpty()){
+            for (String key: extras.keySet()){
+                intent.putExtra(key, extras.get(key));
+            }
+        }
+
         return intent;
     }
 

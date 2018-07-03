@@ -25,7 +25,7 @@ android {
 }
 
 dependencies {
-    compile(name: 'open-1.3.2', ext: 'aar')
+    compile(name: 'open-1.0.33', ext: 'aar')
 
     compile 'com.android.support:appcompat-v7:' + project.ext.supportLibraryVersion
     compile 'com.android.support:recyclerview-v7:' + project.ext.supportLibraryVersion
