@@ -9,12 +9,13 @@ import com.ss.aris.open.console.IConsoleHelper;
 import com.ss.aris.open.pipes.entity.Pipe;
 import com.ss.aris.open.widget.IResource;
 import java.util.Collection;
+import java.util.List;
 
 public interface IResultView {
     void refresh();
     void setResource(IResource resource);
     void setup(Context context, Console console, IConsoleHelper consoleHelper, ViewGroup selections);
-    void displayResult(Collection<Pipe> results, int selection);
+    void displayResult(List<Pipe> results);
     void setTypeface(Typeface typeface);
     View findViewByPipeName(String name);
     void clear();

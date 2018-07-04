@@ -26,7 +26,6 @@ public interface Console {
     @TargetVersion(8)
     void runScript(String script, OnEnterListener onEnterListener);
 
-    @TargetVersion(1143)
     void shareIntentByScript(String script);
 
     /**
@@ -51,7 +50,6 @@ public interface Console {
      * to display a string with pipe as tag
      * when this string is clicked, the pipe will be executed
      */
-    @TargetVersion(1106)
     void display(String string, Pipe tag);
 
     /**
@@ -99,11 +97,13 @@ public interface Console {
     @TargetApi(5)
     void requestPermission(String[] permissions, PermissionCallback callback);
 
-    @TargetApi(1188)
     void requestResult(Intent intent, ResultCallback callback);
 
     BasePipe.OutputCallback getOutputCallback();
 
     IPipeManager getPipeManager();
+
+    @TargetApi(1034)
+    void hold(Pipe target, String msg);
 
 }

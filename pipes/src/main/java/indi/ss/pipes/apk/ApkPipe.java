@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+
 import com.ss.aris.open.pipes.PConstants;
 import com.ss.aris.open.pipes.action.DefaultInputActionPipe;
 import com.ss.aris.open.pipes.entity.Pipe;
@@ -42,16 +43,20 @@ public class ApkPipe extends DefaultInputActionPipe {
     @Override
     public void acceptInput(Pipe result, String input, Pipe.PreviousPipes previous, OutputCallback callback) {
         if (previous.get().getId() == PConstants.ID_APPLICATION) {
-            ShareIntent shareIntent = new ShareIntent(Intent.ACTION_SEND);
-            shareIntent.setType("application/vnd.android.package-archive");
-            PackageManager pm = getContext().getPackageManager();
-            try {
-                ApplicationInfo appInfo = pm.getApplicationInfo(input.split(",")[0], 0);
-                shareIntent.putExtra(Intent.EXTRA_STREAM, "file://" + appInfo.publicSourceDir);
-                callback.onOutput(shareIntent.toString());
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-                callback.onOutput("Error. Can not find application.");
+            if (callback == getConsoleCallback()) {
+                getConsole().hold(result, "Share with");
+            } else {
+                ShareIntent shareIntent = new ShareIntent(Intent.ACTION_SEND);
+                shareIntent.setType("application/vnd.android.package-archive");
+                PackageManager pm = getContext().getPackageManager();
+                try {
+                    ApplicationInfo appInfo = pm.getApplicationInfo(input.split(",")[0], 0);
+                    shareIntent.putExtra(Intent.EXTRA_STREAM, "file://" + appInfo.publicSourceDir);
+                    callback.onOutput(shareIntent.toString());
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                    callback.onOutput("Error. Can not find application.");
+                }
             }
         } else {
             callback.onOutput("Target " + previous.get().getDisplayName() + " is not an application.");

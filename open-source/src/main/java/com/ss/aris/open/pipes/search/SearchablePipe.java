@@ -17,6 +17,8 @@ import com.ss.aris.open.pipes.entity.SearchableName;
 
 public abstract class SearchablePipe extends BasePipe {
 
+    public static final String START_WITH = "start:";
+
     private String TAG = this.getClass().getSimpleName();
     protected HashMap<String, TreeSet<Pipe>> resultMap = new HashMap<>();
     protected HashMap<String, TreeSet<String>> deletedSearchKeys = new HashMap<>();
@@ -61,13 +63,14 @@ public abstract class SearchablePipe extends BasePipe {
 
     protected TreeSet<Pipe> search(Instruction value) {
         String body = value.body;
-        String key = getKey(body);
 
-        String className = getClass().getSimpleName();
-        if (className.contains("Application")) {
-            Log.d("PipeSearcher", "app search key: " + key);
-            Log.d("PipeSearcher", "app search body: " + body);
+        boolean startsWith = false;
+        if (body.startsWith(START_WITH)) {
+            body = body.replace(START_WITH, "");
+            startsWith = true;
         }
+
+        String key = getKey(body);
 
         //if the application has been uninstalled once,
         //the searching result will be removed
@@ -81,7 +84,7 @@ public abstract class SearchablePipe extends BasePipe {
             //does not take parameters
             return new TreeSet<>();
         } else {
-            TreeSet<Pipe> result = search(key, body);
+            TreeSet<Pipe> result = search(key, body, startsWith);
             result = fulfill(result, value);
             return result;
         }
@@ -91,11 +94,23 @@ public abstract class SearchablePipe extends BasePipe {
         return false;
     }
 
-    private TreeSet<Pipe> search(String key, String body) {
+    private TreeSet<Pipe> search(String key, String body, boolean startsWith) {
         TreeSet<Pipe> result = new TreeSet<>();
         if (body.isEmpty()) return result;
 
         TreeSet<Pipe> all = resultMap.get(key);
+        if (startsWith) {
+            if (all != null) {
+                Iterator<Pipe> it = all.iterator();
+                while (it.hasNext()) {
+                    Pipe p = it.next();
+                    if (!p.getSearchableName().toString().startsWith(key)) {
+                        it.remove();
+                    }
+                }
+            }
+        }
+
         if (body.equals(key)) {
             return all;
         }
@@ -191,7 +206,7 @@ public abstract class SearchablePipe extends BasePipe {
         resultMap.remove(vo.getExecutable());
     }
 
-    protected void addItemInMap(Pipe vo){
+    protected void addItemInMap(Pipe vo) {
         putItemInMap(vo, true);
     }
 
