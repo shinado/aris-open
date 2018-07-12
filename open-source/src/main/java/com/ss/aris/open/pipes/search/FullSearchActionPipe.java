@@ -5,11 +5,14 @@ import android.util.Log;
 
 import java.util.List;
 import java.util.TreeSet;
+
 import com.ss.aris.open.pipes.BasePipe;
 import com.ss.aris.open.pipes.entity.Instruction;
 import com.ss.aris.open.pipes.entity.Pipe;
 import com.ss.aris.open.pipes.entity.SearchableName;
 import com.ss.aris.open.pipes.search.translator.AbsTranslator;
+
+import static com.ss.aris.open.pipes.entity.Keys.START_WITH;
 
 //start
 //-> dosth
@@ -92,11 +95,11 @@ public abstract class FullSearchActionPipe extends SearchablePipe {
             return search(newInstruction);
         } else {
             if (hasStarted) {
-                if (input.isEmpty()){
+                if (input.isEmpty()) {
                     TreeSet<Pipe> set = new TreeSet<>();
                     set.addAll(getAll());
                     return set;
-                }else {
+                } else {
                     return super.search(input);
                 }
             } else {
@@ -107,8 +110,17 @@ public abstract class FullSearchActionPipe extends SearchablePipe {
                     if (defaultPipe != null) {
                         Pipe result = new Pipe(defaultPipe);
                         fulfill(result, new Instruction(input));
-                        if (result.getSearchableName().contains(result.getInstruction().body)) {
-                            results.add(result);
+
+                        String body = result.getInstruction().body;
+                        if (body.startsWith(START_WITH)) {
+                            body = body.replace(START_WITH, "");
+                            if (result.getSearchableName().toString().startsWith(body)) {
+                                results.add(result);
+                            }
+                        } else {
+                            if (result.getSearchableName().contains(body)) {
+                                results.add(result);
+                            }
                         }
                     }
                 } else {
@@ -131,13 +143,13 @@ public abstract class FullSearchActionPipe extends SearchablePipe {
                 (result.equals(getDefaultPipe())));
 
 //        if (result.equals(getDefaultPipe())) {
-            if (hasStarted) {
-                Log.d(TAG, "second start");
-                onSecondStart = true;
-            } else {
-                getConsole().setIndicator(result.getDisplayName());
-                startAsSelected(result);
-            }
+        if (hasStarted) {
+            Log.d(TAG, "second start");
+            onSecondStart = true;
+        } else {
+            getConsole().setIndicator(result.getDisplayName());
+            startAsSelected(result);
+        }
 //        }
     }
 
@@ -154,11 +166,7 @@ public abstract class FullSearchActionPipe extends SearchablePipe {
 
     @Override
     public void acceptInput(Pipe result, String input, Pipe.PreviousPipes previous, BasePipe.OutputCallback callback) {
-        //accept anyway
-        //so script executor shall work
-//        if (hasStarted) {
         doAcceptInput(result, input, previous, callback);
-//        }
     }
 
     @Override

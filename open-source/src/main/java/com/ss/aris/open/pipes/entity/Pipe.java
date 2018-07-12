@@ -154,8 +154,7 @@ public class Pipe implements Comparable<Pipe>, Parcelable {
 
     public boolean startExecution(BasePipe.OutputCallback callback) {
         if (basePipe != null) {
-            basePipe.startExecution(this, callback);
-            return true;
+            return basePipe.startExecution(this, callback);
         } else {
             return false;
         }
@@ -177,8 +176,7 @@ public class Pipe implements Comparable<Pipe>, Parcelable {
         }
 
         if (basePipe != null) {
-            basePipe.startExecution(this);
-            return true;
+            return basePipe.startExecution(this);
         } else {
             return false;
         }

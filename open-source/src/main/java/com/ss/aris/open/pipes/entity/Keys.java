@@ -2,6 +2,8 @@ package com.ss.aris.open.pipes.entity;
 
 public class Keys {
 
+    public static final String START_WITH = "start:";
+
     public static final String PIPE = "->";
     public static final String PIPE_REGEX = "->";
 

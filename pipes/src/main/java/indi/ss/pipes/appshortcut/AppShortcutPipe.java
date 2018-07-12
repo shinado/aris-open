@@ -74,6 +74,13 @@ public class AppShortcutPipe extends FullSearchActionPipe {
     }
 
     @Override
+    protected void start(Pipe result) {
+        super.start(result);
+
+
+    }
+
+    @Override
     public Pipe getDefaultPipe() {
         return starter;
     }

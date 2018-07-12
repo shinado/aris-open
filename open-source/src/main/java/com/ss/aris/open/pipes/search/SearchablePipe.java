@@ -15,9 +15,9 @@ import com.ss.aris.open.pipes.entity.Instruction;
 import com.ss.aris.open.pipes.entity.Pipe;
 import com.ss.aris.open.pipes.entity.SearchableName;
 
-public abstract class SearchablePipe extends BasePipe {
+import static com.ss.aris.open.pipes.entity.Keys.START_WITH;
 
-    public static final String START_WITH = "start:";
+public abstract class SearchablePipe extends BasePipe {
 
     private String TAG = this.getClass().getSimpleName();
     protected HashMap<String, TreeSet<Pipe>> resultMap = new HashMap<>();

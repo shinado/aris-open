@@ -53,24 +53,23 @@ public abstract class BasePipe {
         return id;
     }
 
-    public void startExecution(Pipe item) {
-        execute(item, mConsoleCallback);
+    public boolean startExecution(Pipe item) {
+        return execute(item, mConsoleCallback);
     }
 
-    public void startExecution(Pipe item, OutputCallback callback) {
-        execute(item, callback);
+    public boolean startExecution(Pipe item, OutputCallback callback) {
+        return execute(item, callback);
     }
 
     /**
      * execute an instruction
      * if rs has previous items, accept input from the previous ones.
      */
-    private void execute(final Pipe rs, final OutputCallback callback) {
+    private boolean execute(final Pipe rs, final OutputCallback callback) {
 //        Instruction instruction = rs.getInstruction();
         Pipe.PreviousPipes previous = rs.getPrevious();
         if (previous == null) {
-            tryGetOutput(rs, callback);
-            return;
+            return tryGetOutput(rs, callback);
         }
 
         if (!previous.isEmpty()) {
@@ -95,16 +94,20 @@ public abstract class BasePipe {
                 }
             }
         } else {
-            tryGetOutput(rs, callback);
+            return tryGetOutput(rs, callback);
         }
+
+        return true;
     }
 
-    private void tryGetOutput(Pipe rs, OutputCallback callback) {
+    private boolean tryGetOutput(Pipe rs, OutputCallback callback) {
         if (callback != null && callback.equals(mConsoleCallback)) {
-            execute(rs);
+            return doExecuteWithStatus(rs);
         } else {
             getOutput(rs, callback);
         }
+
+        return true;
     }
 
     //fulfill with KeyIndex and Instruction
@@ -277,6 +280,11 @@ public abstract class BasePipe {
      * @param callback use callback.onOutput() to input text of execution
      */
     public abstract void getOutput(Pipe result, OutputCallback callback);
+
+    protected boolean doExecuteWithStatus(Pipe rs){
+        execute(rs);
+        return true;
+    }
 
     /**
      * execute with no previous

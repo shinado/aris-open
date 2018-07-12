@@ -24,11 +24,11 @@ public class MainClass {
 //        }
 
         //if you wish to dex only one item
-        String MODULE = "aris-open/pipes";
-//        String MODULE = "app/items";
-//        String PACKAGE = "com/ss/widget";
-        String PACKAGE = "indi/ss/pipes";
-        String NAME = "mylocation";
+//        String MODULE = "aris-open/pipes";
+        String MODULE = "app/items";
+        String PACKAGE = "com/ss/widget";
+//        String PACKAGE = "indi/ss/pipes";
+        String NAME = "tech";
 
         String dxPath = "/Users/ss/Library/Android/sdk/build-tools/26.0.1/";
 

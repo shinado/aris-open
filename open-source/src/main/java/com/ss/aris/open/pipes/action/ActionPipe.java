@@ -7,6 +7,8 @@ import com.ss.aris.open.pipes.entity.Instruction;
 import com.ss.aris.open.pipes.entity.Pipe;
 import com.ss.aris.open.pipes.search.translator.AbsTranslator;
 
+import static com.ss.aris.open.pipes.entity.Keys.START_WITH;
+
 public abstract class ActionPipe extends BasePipe{
 
     public ActionPipe(int id) {
@@ -46,6 +48,12 @@ public abstract class ActionPipe extends BasePipe{
 //        if (body.startsWith(Keys.ACTION)){
 //            body = body.replaceFirst(Keys.ACTION, "");
 //        }
+
+        if (body.startsWith(START_WITH)) {
+            body = body.replace(START_WITH, "");
+            if (result.getSearchableName().toString().startsWith(body)) return result;
+            else return null;
+        }
 
         if (!result.getSearchableName().contains(body)){
             return null;
