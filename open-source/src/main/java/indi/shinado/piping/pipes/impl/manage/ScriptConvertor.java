@@ -27,6 +27,7 @@ public class ScriptConvertor {
     }
 
     public static String getNames(Pipe input) throws UnsupportedEncodingException {
+        if (input == null) return "";
         Pipe prev = input.getPrevious().get();
 
         String script = input.getSearchableName().toString();
@@ -53,6 +54,7 @@ public class ScriptConvertor {
     }
 
     public static String getScript(Pipe input) throws UnsupportedEncodingException {
+        if (input == null) return "";
         Pipe prev = input.getPrevious().get();
 
         String script;

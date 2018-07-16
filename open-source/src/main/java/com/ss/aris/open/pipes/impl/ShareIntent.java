@@ -77,7 +77,7 @@ public class ShareIntent {
     }
 
     public static ShareIntent from(String uri) {
-        if(uri.startsWith("#Intent;")){
+        if(uri != null && uri.startsWith("#Intent;")){
             try {
                 ShareIntent intent = new ShareIntent();
                 intent.intent = Intent.parseUri(uri, 0);

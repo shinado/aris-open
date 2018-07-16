@@ -3,7 +3,6 @@ package indi.ss.sample.system;
 import com.ss.aris.open.pipes.action.SimpleActionPipe;
 import com.ss.aris.open.pipes.entity.Pipe;
 import com.ss.aris.open.pipes.impl.ShareIntent;
-import com.ss.aris.open.util.JsonUtil;
 
 public class ApplicationPipe extends SimpleActionPipe{
 

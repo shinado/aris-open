@@ -26,9 +26,9 @@ public class MainClass {
         //if you wish to dex only one item
 //        String MODULE = "aris-open/pipes";
         String MODULE = "app/items";
-        String PACKAGE = "com/ss/widget";
+        String PACKAGE = "com/ss/feed";
 //        String PACKAGE = "indi/ss/pipes";
-        String NAME = "tech";
+        String NAME = "future";
 
         String dxPath = "/Users/ss/Library/Android/sdk/build-tools/26.0.1/";
 
@@ -74,7 +74,7 @@ public class MainClass {
             BufferedReader reader =
                     new BufferedReader(new InputStreamReader(p.getInputStream()));
 
-            String line = "";
+            String line;
             while ((line = reader.readLine()) != null) {
                 output.append(line + "\n");
             }
