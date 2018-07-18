@@ -45,8 +45,8 @@ public class ManifestPipe extends DefaultInputActionPipe {
     @Override
     public void acceptInput(Pipe result, String input, Pipe.PreviousPipes previous, OutputCallback callback) {
         Pipe prev = previous.get();
-        if (prev.getId() == PConstants.ID_APPLICATION) {
-            String[] split = prev.getExecutable().split(",");
+        String[] split = prev.getExecutable().split(",");
+        if (prev.getId() == PConstants.ID_APPLICATION && split.length == 2) {
             String packageName = split[0];
             String activityName = split[1];
             try {

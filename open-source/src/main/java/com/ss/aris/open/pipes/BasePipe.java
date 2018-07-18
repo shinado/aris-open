@@ -83,14 +83,18 @@ public abstract class BasePipe {
             if (rs.donotExecute()) {
                 acceptInput(rs, "", newPrevious, callback);
             } else {
-                BasePipe base = prev.getBasePipe();
-                if (base != null) {
-                    base.execute(prev, new OutputCallback() {
-                        @Override
-                        public void onOutput(String input) {
-                            acceptInput(rs, input, newPrevious, callback);
-                        }
-                    });
+                if (prev != null) {
+                    BasePipe base = prev.getBasePipe();
+                    if (base != null) {
+                        base.execute(prev, new OutputCallback() {
+                            @Override
+                            public void onOutput(String input) {
+                                acceptInput(rs, input, newPrevious, callback);
+                            }
+                        });
+                    }
+                }else {
+                    return tryGetOutput(rs, callback);
                 }
             }
         } else {
@@ -281,7 +285,7 @@ public abstract class BasePipe {
      */
     public abstract void getOutput(Pipe result, OutputCallback callback);
 
-    protected boolean doExecuteWithStatus(Pipe rs){
+    protected boolean doExecuteWithStatus(Pipe rs) {
         execute(rs);
         return true;
     }
