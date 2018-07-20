@@ -5,7 +5,9 @@ Aris Open Project is initially designed for Aris Launcher, a terminal launcher w
 # Aris Launcher
 [CoolAPK](https://www.coolapk.com/apk/shinado.indi.piping) 
 [Google Play](https://play.google.com/store/apps/details?id=com.ss.aris) 
-# Berris(coming soon)
+# Berris(Trailer)
+[CoolAPK](https://www.coolapk.com/apk/197272) 
+[Google Play](https://play.google.com/store/apps/details?id=com.ss.berris.trailer) 
 # Cherries(coming soon)
 
 You can develope plugins that can run on Aris Launcher, Berris, Cherries, and all coming apps in AOU. You can even develop a new app based on Aris open project and become part of AOU!   
