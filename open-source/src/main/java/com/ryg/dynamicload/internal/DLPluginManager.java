@@ -85,6 +85,8 @@ public class DLPluginManager {
      * @param dexPath
      */
     public DLPluginPackage loadApk(String dexPath) {
+        if (dexPath == null) return null;
+
         // when loadApk is called by host apk, we assume that plugin is invoked by host.
         mFrom = DLConstants.FROM_EXTERNAL;
 

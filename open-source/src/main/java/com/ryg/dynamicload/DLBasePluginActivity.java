@@ -38,6 +38,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.aris.open.R;
 import com.ryg.dynamicload.internal.DLIntent;
 import com.ryg.dynamicload.internal.DLPluginManager;
 import com.ryg.dynamicload.internal.DLPluginPackage;
@@ -65,7 +66,7 @@ public class DLBasePluginActivity extends AppCompatActivity implements DLPlugin 
     @Override
     public void attach(Activity proxyActivity, DLPluginPackage pluginPackage) {
         Log.d(TAG, "attach: proxyActivity= " + proxyActivity);
-        mProxyActivity = (Activity)proxyActivity;
+        mProxyActivity = proxyActivity;
         that = mProxyActivity;
         mPluginPackage = pluginPackage;
     }

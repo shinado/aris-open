@@ -105,6 +105,7 @@ public class DLProxyImpl {
             Object instance = localConstructor.newInstance(new Object[] {});
             mRemoteActivity = (DLPlugin) instance;
             ((DLProxy) mActivity).attach(mRemoteActivity, mPluginManager);
+
             Log.d(TAG, "instance = " + instance);
 
             mRemoteActivity.attach(mActivity, mPluginPackage);
