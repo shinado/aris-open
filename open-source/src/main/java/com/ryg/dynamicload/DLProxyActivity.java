@@ -1,11 +1,11 @@
 package com.ryg.dynamicload;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.content.res.Resources.Theme;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,7 +16,7 @@ import com.ryg.dynamicload.internal.DLPluginManager;
 import com.ryg.dynamicload.internal.DLProxyImpl;
 import com.ryg.dynamicload.internal.DLProxyImpl.DLProxy;
 
-public class DLProxyActivity extends AppCompatActivity implements DLProxy {
+public class DLProxyActivity extends Activity implements DLProxy {
 
     protected DLPlugin mRemoteActivity;
     private DLProxyImpl impl = new DLProxyImpl(this);
