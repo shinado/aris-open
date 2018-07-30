@@ -139,9 +139,6 @@ public class DLPluginManager {
         return resources;
     }
 
-    /**
-     * {@link #startPluginActivityForResult(Activity, DLIntent, int)}
-     */
     public int startPluginActivity(Context context, DLIntent dlIntent) {
         return startPluginActivityForResult(context, dlIntent, -1);
     }
@@ -176,6 +173,7 @@ public class DLPluginManager {
         if (className.startsWith(".")) {
             className = packageName + className;
         }
+
         Class<?> clazz = null;
         try {
             clazz = classLoader.loadClass(className);

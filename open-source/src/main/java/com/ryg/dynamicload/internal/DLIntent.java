@@ -21,6 +21,7 @@ import android.content.Intent;
 
 public class DLIntent extends Intent {
 
+    public Class<?> targetActivity;
     private String mPluginPackage;
     private String mPluginClass;
 

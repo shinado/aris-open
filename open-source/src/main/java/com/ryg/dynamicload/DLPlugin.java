@@ -20,6 +20,7 @@ package com.ryg.dynamicload;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,23 +32,43 @@ import com.ryg.dynamicload.internal.DLPluginPackage;
 public interface DLPlugin {
 
     void onCreate(Bundle savedInstanceState);
+
     void onStart();
+
     void onRestart();
+
     void onActivityResult(int requestCode, int resultCode, Intent data);
+
     void onResume();
+
     void onPause();
+
     void onStop();
+
     void onDestroy();
+
     void attach(Activity proxyActivity, DLPluginPackage pluginPackage);
+
     void onSaveInstanceState(Bundle outState);
+
     void onNewIntent(Intent intent);
+
     void onRestoreInstanceState(Bundle savedInstanceState);
+
     boolean onTouchEvent(MotionEvent event);
+
     boolean onKeyDown(int keyCode, KeyEvent event);
+
     void onWindowAttributesChanged(LayoutParams params);
+
     void onWindowFocusChanged(boolean hasFocus);
+
     void onBackPressed();
+
     boolean onCreateOptionsMenu(Menu menu);
+
     boolean onOptionsItemSelected(MenuItem item);
+
+    void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults);
 
 }
